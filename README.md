@@ -166,12 +166,12 @@ The following endpoints should be available demonstrating different features, lo
 ## Roadmap
 
 1. Add hystrix or failsafe circuit braker
-2. USE CEP REST API
+2. Use CEP REST API
 3. Implement Windows and Partitions SiddhiQL features
 
 ## Contributing
 
-1. [Fork it](https://github.com/redborder/cep/fork)
+1. [Fork it](https://github.com/Bera/Json2SiddhiCEP)
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
