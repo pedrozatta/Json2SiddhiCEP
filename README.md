@@ -1,7 +1,8 @@
 # Json2Siddhi Query generator from JSON
 
-[![Build Status](https://travis-ci.org/redBorder/cep.svg)](https://travis-ci.org/redBorder/cep)
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/de3ffaee924c418f8a3d4465d3d360cd)](https://www.codacy.com/app/redBorder/cep)
+[![Build Status](https://travis-ci.org/Bera/Json2SiddhiCEP.svg?branch=master)](https://travis-ci.org/Bera/Json2SiddhiCEP)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e7da0eab5128486ebca9996c3b3a0449)](https://www.codacy.com/app/brunormoura/Json2SiddhiCEP)
+
 
 > Transform a JSON in a SiddhiQL valid sentence.
 
