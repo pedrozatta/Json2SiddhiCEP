@@ -8,9 +8,8 @@
 
 > Transform a JSON in a SiddhiQL valid sentence.
 
-***
 
-## The problem that this project aims to solve
+## What this project aims to solve or improve 
 
 This project is an attemp to deal with the difficult of business guys to elaborate queries and filters for use with events an them produce de desirable alerts in WSO2 CEP Complex Event Processor, at Produban Brazil.
 
@@ -109,7 +108,6 @@ insert into InputStreamName;
 }
 ```
 
-***
 
 ##  Requirements for setup and to run
 
@@ -164,6 +162,12 @@ The following endpoints should be available demonstrating different features, lo
 
 * 0.0.1
     * Work in progress
+
+## Roadmap
+
+1. Add hystrix or failsafe circuit braker
+2. USE CEP REST API
+3. Implement Windows and Partitions SiddhiQL features
 
 ## Contributing
 
