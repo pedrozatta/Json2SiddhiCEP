@@ -65,8 +65,8 @@ insert into InputStreamName;
 ```json
 {
   "ruleid": "xb1825091352016111717889",
-  "created_by_user": "xb182509",
-  "edited_by_user": "xb182509: (13/5/2016)-(11:17:17)",
+  "created_by_user": "b18er45",
+  "edited_by_user": "b18er45: (13/5/2016)-(11:17:17)",
   "tool": "openbus_br_zabbix_v2",
   "rule_filters": [
     {
@@ -84,7 +84,7 @@ insert into InputStreamName;
     {
       "field": "hostname",
       "operator": "==",
-      "value": "BSBRSP389",
+      "value": "SBRSP3",
       "condition": "AND"
     },
     {
@@ -103,7 +103,7 @@ insert into InputStreamName;
       "field": "value",
       "operator": "<",
       "value": "99",
-      "condition": "FIM"
+      "condition": "END"
     }
   ]
 }
