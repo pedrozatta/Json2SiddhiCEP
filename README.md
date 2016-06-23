@@ -126,7 +126,7 @@ Windows, OS X & Linux:
 Grab the jar in some place that you want or build your self, first clone this repo. 
 
 ```sh
-git clone XXX
+git clone git@github.com:Bera/Json2SiddhiCEP.git
 ```
 After access de directory XXX and perform the maven goals bellow
 
@@ -197,7 +197,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Bruno Moura – [@_Bera_](https://twitter.com/dbader_org) – brunormoura@gmail.com
+Bruno Moura – [@_Bera_](https://twitter.com/_Bera_) – brunormoura@gmail.com
 
 
 
