@@ -126,7 +126,7 @@ Grab the jar in some place that you want or build your self, first clone this re
 ```sh
 git clone git@github.com:Bera/Json2SiddhiCEP.git
 ```
-After access de directory XXX and perform the maven goals bellow
+After access de directory Json2SiddhiCEP and perform the maven goals bellow
 
 ```sh
 mvn clean package
