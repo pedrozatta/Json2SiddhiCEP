@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/Bera/Json2SiddhiCEP.png?label=ready&title=Ready)](https://waffle.io/Bera/Json2SiddhiCEP)
 # Json2Siddhi Query generator from JSON
 
 [![Build Status](https://travis-ci.org/Bera/Json2SiddhiCEP.svg?branch=master)](https://travis-ci.org/Bera/Json2SiddhiCEP)
