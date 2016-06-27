@@ -1,6 +1,7 @@
-[![Stories in Ready](https://badge.waffle.io/Bera/Json2SiddhiCEP.png?label=ready&title=Ready)](https://waffle.io/Bera/Json2SiddhiCEP)
+
 # Json2Siddhi Query generator from JSON
 
+[![Stories in Ready](https://badge.waffle.io/Bera/Json2SiddhiCEP.png?label=ready&title=Ready)](https://waffle.io/Bera/Json2SiddhiCEP)
 [![Build Status](https://travis-ci.org/Bera/Json2SiddhiCEP.svg?branch=master)](https://travis-ci.org/Bera/Json2SiddhiCEP)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e7da0eab5128486ebca9996c3b3a0449)](https://www.codacy.com/app/brunormoura/Json2SiddhiCEP)
 [![Coverage Status](https://coveralls.io/repos/github/Bera/Json2SiddhiCEP/badge.svg?branch=master)](https://coveralls.io/github/Bera/Json2SiddhiCEP?branch=master)
