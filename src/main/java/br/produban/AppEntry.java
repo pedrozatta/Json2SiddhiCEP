@@ -80,16 +80,16 @@ public class AppEntry extends AbstractVerticle {
 
     private void addRule(RoutingContext routingContext) {
         // Read the request's content and create an instance of Rule.
-        final Rule Rule = Json.decodeValue(routingContext.getBodyAsString(),
+        final Rule rule = Json.decodeValue(routingContext.getBodyAsString(),
                 Rule.class);
         // Add it to the backend map
-        rules.put(Rule.getId(), Rule);
+        rules.put(rule.getId(), rule);
 
         // Return the created Rule as JSON
         routingContext.response()
                 .setStatusCode(201)
                 .putHeader("content-type", "application/json; charset=utf-8")
-                .end(Json.encodePrettily(Rule));
+                .end(Json.encodePrettily(rule));
     }
 
     private void getRule(RoutingContext routingContext) {
@@ -98,13 +98,13 @@ public class AppEntry extends AbstractVerticle {
             routingContext.response().setStatusCode(400).end();
         } else {
             final Integer idAsInteger = Integer.valueOf(id);
-            Rule Rule = rules.get(idAsInteger);
-            if (Rule == null) {
+            Rule rule = rules.get(idAsInteger);
+            if (rule == null) {
                 routingContext.response().setStatusCode(404).end();
             } else {
                 routingContext.response()
                         .putHeader("content-type", "application/json; charset=utf-8")
-                        .end(Json.encodePrettily(Rule));
+                        .end(Json.encodePrettily(rule));
             }
         }
     }
@@ -116,18 +116,18 @@ public class AppEntry extends AbstractVerticle {
             routingContext.response().setStatusCode(400).end();
         } else {
             final Integer idAsInteger = Integer.valueOf(id);
-            Rule Rule = rules.get(idAsInteger);
-            if (Rule == null) {
+            Rule rule = rules.get(idAsInteger);
+            if (rule == null) {
                 routingContext.response().setStatusCode(404).end();
             } else {
-                Rule.setTool(json.getString("tool"));
-                Rule.setCreated_by_user(json.getString("created_by_user"));
-                Rule.setEdited_by_user(json.getString("edited_by_user"));
-                Rule.setRuleid(json.getString("ruleid"));
+                rule.setTool(json.getString("tool"));
+                rule.setCreated_by_user(json.getString("created_by_user"));
+                rule.setEdited_by_user(json.getString("edited_by_user"));
+                rule.setRuleid(json.getString("ruleid"));
 
                 routingContext.response()
                         .putHeader("content-type", "application/json; charset=utf-8")
-                        .end(Json.encodePrettily(Rule));
+                        .end(Json.encodePrettily(rule));
             }
         }
     }
