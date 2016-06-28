@@ -11,7 +11,7 @@
 > Transform a JSON in a SiddhiQL valid sentence.
 
 
-## What this project aims to solve or improve 
+## What this project aims to improve 
 
 This project is an attemp to deal with the difficult of business guys to elaborate queries and filters for use with events an them produce de desirable alerts in WSO2 CEP Complex Event Processor, at Produban Brazil.
 
