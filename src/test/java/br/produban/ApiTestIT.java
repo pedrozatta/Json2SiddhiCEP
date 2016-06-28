@@ -54,7 +54,7 @@ public class ApiTestIT {
 
     @Test
     public void checkWeCanAddAndDeleteARule() {
-        // Create a new bottle and retrieve the result (as a Whisky instance).
+        // Create a new rule and retrieve the result (as a Rule instance).
         Rule rule = given()
                 .body("{\"tool\":\"openbus_br_zabbix_v4\", \"created_by_user\":\"xb181753\"}").request().post("/api/rules").thenReturn().as(Rule.class);
         assertThat(rule.getTool()).isEqualToIgnoringCase("openbus_br_zabbix_v4");
