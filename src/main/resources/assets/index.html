@@ -45,8 +45,8 @@
         load();
         initModal();
     });
-    function create(tool, ruleid) {
-        $.post("/api/rules", JSON.stringify({tool: tool, ruleid: ruleid}), function () {
+    function create(tool, ruleId) {
+        $.post("/api/rules", JSON.stringify({tool: tool, ruleId: ruleId}), function () {
             load();
         }, "json");
     }
@@ -58,11 +58,11 @@
             load();
         });
     }
-    function update(id, tool, ruleid) {
+    function update(id, tool, ruleId) {
         $.ajax({
             method: "PUT",
             url: "/api/rules/" + id,
-            data: JSON.stringify({tool: tool, ruleid: ruleid})
+            data: JSON.stringify({tool: tool, ruleId: ruleId})
         }).done(function () {
             load();
         });
@@ -71,13 +71,13 @@
         $("#content").children().remove();
         $.getJSON("/api/rules", function (data) {
             $.each(data, function (key, val) {
-                $("<tr><td>" + val.id + "</td><td>" + val.tool + "</td><td>" + val.ruleid + "</td>" +
+                $("<tr><td>" + val.id + "</td><td>" + val.tool + "</td><td>" + val.ruleId + "</td>" +
                         "<td>" +
                         "<button data-action='edit' class='btn btn-primary btn-sm rule-edit' " +
                         "data-toggle='modal' " +
                         "data-target='#ruleModal' " +
                         "data-name='" + val.tool + "' " +
-                        "data-origin='" + val.ruleid + "' " +
+                        "data-origin='" + val.ruleId + "' " +
                         "data-id='" + val.id + "'>" +
                         "<span class='glyphicon glyphicon-pencil'></span>" +
                         "</button>" +
@@ -116,7 +116,7 @@
             } else {
                 modal.find('.modal-title').text("Edit a rule");
                 modal.find('#rule-name').val(button.data("tool"));
-                modal.find('#rule-origin').val(button.data("ruleid"));
+                modal.find('#rule-origin').val(button.data("ruleId"));
                 ruleAction.click(function () {
                     update(id, $("#rule-name").val(), $("#rule-origin").val());
                     $('#ruleModal').modal('toggle');
