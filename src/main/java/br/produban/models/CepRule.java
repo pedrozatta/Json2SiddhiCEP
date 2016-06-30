@@ -17,10 +17,9 @@ public class CepRule {
     @GeneratedValue
     private Long id;
 
-
     @NotNull
     @Size(min = 1, max = 90)
-    private String ruleid;
+    private String cepRuleId;
 
     @NotNull
     @Size(min = 1, max = 50)
@@ -39,29 +38,25 @@ public class CepRule {
     public CepRule() {
     }
 
-    public CepRule(Long id, String ruleid, String createdBy, String changedBy, String tool) {
-        this.id = id;
-        this.ruleid = ruleid;
+
+
+    public CepRule(String cepRuleId , String createdBy, String changedBy,
+                   String tool, String filters) {
+
+        this.cepRuleId = cepRuleId;
         this.createdBy = createdBy;
         this.changedBy = changedBy;
         this.tool = tool;
-    }
-
-    public CepRule(Long id, String filters, String tool, String changedBy, String createdBy, String ruleid) {
-        this.id = id;
         this.filters = filters;
-        this.tool = tool;
-        this.changedBy = changedBy;
-        this.createdBy = createdBy;
-        this.ruleid = ruleid;
+
     }
 
-    public String getRuleid() {
-        return ruleid;
+    public String getCepRuleId() {
+        return cepRuleId;
     }
 
-    public void setRuleid(String ruleid) {
-        this.ruleid = ruleid;
+    public void setCepRuleId(String cepRuleId) {
+        this.cepRuleId = cepRuleId;
     }
 
     public String getCreatedBy() {

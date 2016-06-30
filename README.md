@@ -66,7 +66,7 @@ insert into InputStreamName;
 
 ```json
 {
-  "ruleid": "xb1825091352016111717889",
+  "cepRuleId": "xb1825091352016111717889",
   "created_by_user": "b18er45",
   "edited_by_user": "b18er45: (13/5/2016)-(11:17:17)",
   "tool": "openbus_br_zabbix_v2",
