@@ -7,7 +7,6 @@
 [![codecov](https://codecov.io/gh/Bera/Json2SiddhiCEP/branch/master/graph/badge.svg)](https://codecov.io/gh/Bera/Json2SiddhiCEP)
 [![Dependency Status](https://www.versioneye.com/user/projects/576bcb64cd6d51003e9206e9/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/576bcb64cd6d51003e9206e9)
 
-[![Throughput Graph](https://graphs.waffle.io/Bera/Json2SiddhiCEP/throughput.svg)](https://waffle.io/Bera/Json2SiddhiCEP/metrics/throughput)
 
 
 > Transform a JSON in a SiddhiQL valid sentence.
