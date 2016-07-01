@@ -38,8 +38,6 @@ public class CepRule {
     public CepRule() {
     }
 
-
-
     public CepRule(String cepRuleId , String createdBy, String changedBy,
                    String tool, String filters) {
 

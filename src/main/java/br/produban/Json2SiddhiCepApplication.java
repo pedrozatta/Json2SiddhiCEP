@@ -6,7 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class Json2SiddhiCepApplication  extends SpringBootServletInitializer {
+public class Json2SiddhiCepApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 
