@@ -129,10 +129,16 @@ Grab the jar in some place that you want or build your self, first clone this re
 ```sh
 git clone git@github.com:Bera/Json2SiddhiCEP.git
 ```
-After access de directory Json2SiddhiCEP and perform the maven goals bellow
+After access de directory Json2SiddhiCEP and perform the gradle task bellow
 
 ```sh
 gradle build
+```
+
+For tests please execute
+
+```sh
+gradle test
 ```
 
 
