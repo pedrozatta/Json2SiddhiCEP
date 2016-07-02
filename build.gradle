@@ -32,6 +32,7 @@ group = 'br.produban'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+
 jar {
 	baseName = 'rule-service'
 	version = '0.0.1-SNAPSHOT'
@@ -45,7 +46,6 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
-	compile('org.springframework.data:spring-data-rest-hal-browser')
 	compile('org.springframework.boot:spring-boot-devtools')
 
 	runtime('com.h2database:h2')
@@ -65,10 +65,11 @@ test {
 asciidoctor {
 	attributes 'snippets': snippetsDir
 	sourceDir 'src/main/asciidoc'
-	outputDir "build/asciidoc"
+	outputDir 'src/main/resources'
 	inputs.dir snippetsDir
 	dependsOn test
 }
+
 
 
 task wrapper(type: Wrapper) {
