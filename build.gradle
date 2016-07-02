@@ -12,7 +12,6 @@ buildscript {
 	}
 }
 
-
 plugins {
 	id "org.asciidoctor.convert" version "1.5.2"
 }
@@ -21,8 +20,17 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot' 
 apply plugin: 'io.spring.dependency-management'
-apply plugin: "jacoco"
 
+repositories {
+	mavenLocal()
+	maven { url 'https://repo.spring.io/libs-snapshot' }
+	mavenCentral()
+}
+
+group = 'br.produban'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 jar {
 	baseName = 'rule-service'
@@ -33,29 +41,18 @@ jar {
 	}
 }
 
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-	mavenCentral()
-
-}
-
-
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.data:spring-data-rest-hal-browser')
 	compile('org.springframework.boot:spring-boot-devtools')
+
 	runtime('com.h2database:h2')
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile("org.springframework.restdocs:spring-restdocs-mockmvc:${springRestDocsVersion}")
 }
-
-
-
 
 ext {
 	snippetsDir = file('build/generated-snippets')
@@ -67,10 +64,10 @@ test {
 
 asciidoctor {
 	attributes 'snippets': snippetsDir
-	inputs.dir snippetsDir
-	outputDir "build/asciidoc"
-	dependsOn test
 	sourceDir 'src/main/asciidoc'
+	outputDir "build/asciidoc"
+	inputs.dir snippetsDir
+	dependsOn test
 }
 
 

@@ -9,15 +9,13 @@ Bruno Moura;
 
 [introduction]
 = Introduction
-
 Rule-service is a RESTful microservice for retrieve rules in json format and transform in Siddhi query 
-
 [[overview]]
 = Overview
 
 [[overview-http-verbs]]
 == HTTP verbs
-Person-service tries to adhere as closely as possible to standard HTTP and REST conventions in its
+rule-service tries to adhere as closely as possible to standard HTTP and REST conventions in its
 use of HTTP verbs.
 |===
 
@@ -88,4 +86,44 @@ include::{snippets}/list-rules/curl-request.adoc[]
 ==== Example response
 
 include::{snippets}/list-rules/http-response.adoc[]
+
+[[resource-rules-get]]
+=== Fetching rules
+A `GET` request fetches a specific rule.
+
+include::{snippets}/get-rule/response-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/get-rule/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/get-rule/http-response.adoc[]
+
+
+[[resource-rules-create]]
+=== Creating rules
+A `POST` request creates a new rule.
+
+==== Example request
+
+include::{snippets}/create-cep-rule/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/create-rule/http-response.adoc[]
+
+
+[[resource-rules-update]]
+=== Updating rules
+A `PUT` request updates an existing rule.
+
+==== Example request
+
+include::{snippets}/update-cep-rule/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/update-rule/http-response.adoc[]
 

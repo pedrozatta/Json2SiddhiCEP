@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class CepRule {
 
+
     @Id
     @GeneratedValue
     private Long id;
@@ -48,6 +49,8 @@ public class CepRule {
         this.filters = filters;
 
     }
+
+    public Long getId() { return id; }
 
     public String getCepRuleId() {
         return cepRuleId;

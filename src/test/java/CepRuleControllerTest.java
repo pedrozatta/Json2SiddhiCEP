@@ -32,6 +32,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -71,7 +72,7 @@ public class CepRuleControllerTest {
 
         this.document.snippets(
                 responseFields(
-
+                        fieldWithPath("[].id").description("The id of rule"),
                         fieldWithPath("[].cepRuleId").description("The id of rule"),
                         fieldWithPath("[].createdBy").description("The user that create a rule"),
                         fieldWithPath("[].changedBy").description("The user that update a rule"),
@@ -93,6 +94,7 @@ public class CepRuleControllerTest {
 
         this.document.snippets(
                 responseFields(
+                        fieldWithPath("id").description("The id of rule"),
                         fieldWithPath("cepRuleId").description("The id of rule"),
                         fieldWithPath("createdBy").description("The user that create a rule"),
                         fieldWithPath("changedBy").description("The user that update a rule"),
@@ -102,7 +104,7 @@ public class CepRuleControllerTest {
         );
 
         this.mockMvc.perform(
-                get("/ceprule/" + sampleRule.getCepRuleId()).accept(MediaType.APPLICATION_JSON)
+                get("/ceprule/" + sampleRule.getId()).accept(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
     }
 
@@ -113,7 +115,7 @@ public class CepRuleControllerTest {
         newCepRule.put("createdBy", "xb182754");
         newCepRule.put("changedBy", "xb182754");
         newCepRule.put("tool", "openbus_br_zabbix_v4");
-        newCepRule.put("filters", "openbus_br_zabbix_v4");
+        newCepRule.put("filters", "none");
 
         ConstrainedFields fields = new ConstrainedFields(CepRule.class);
 
@@ -148,6 +150,36 @@ public class CepRuleControllerTest {
                     .collectionToDelimitedString(this.constraintDescriptions
                             .descriptionsForProperty(path), ". ")));
         }
+    }
+
+    @Test
+    public void updateCepRule() throws Exception {
+        CepRule originalCepRule = createSampleCepRule("xb182509135201620",
+                "xb182754", "xb182754", "openbus_br_zabbix_v4", "anyone");
+        Map<String, String> updatedCepRule = new HashMap<>();
+        updatedCepRule.put("cepRuleId", "xb182509135201621");
+        updatedCepRule.put("createdBy", "xb182755");
+        updatedCepRule.put("changedBy", "xb182755");
+        updatedCepRule.put("tool", "openbus_br_zabbix_v5");
+        updatedCepRule.put("filters", "none");
+
+        ConstrainedFields fields = new ConstrainedFields(CepRule.class);
+
+        this.document.snippets(
+                requestFields(
+                        fields.withPath("cepRuleId").description("The id of rule"),
+                        fields.withPath("createdBy").description("The user that create a rule"),
+                        fields.withPath("changedBy").description("The user that update a rule"),
+                        fields.withPath("tool").description("The tool of rule"),
+                        fields.withPath("filters").description("The filters of rule")
+                )
+        );
+
+        this.mockMvc.perform(
+                put("/ceprule/" + originalCepRule.getId()).contentType(MediaType.APPLICATION_JSON).content(
+                        this.objectMapper.writeValueAsString(updatedCepRule)
+                )
+        ).andExpect(status().isNoContent());
     }
 
     private CepRule createSampleCepRule(String cepRuleId, String createdBy, String changedBy,

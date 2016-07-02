@@ -440,6 +440,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_example_response">Example response</a></li>
 </ul>
 </li>
+<li><a href="#resource-rules-get">Fetching rules</a>
+<ul class="sectlevel3">
+<li><a href="#_example_request_2">Example request</a></li>
+<li><a href="#_example_response_2">Example response</a></li>
+</ul>
+</li>
+<li><a href="#resource-rules-create">Creating rules</a>
+<ul class="sectlevel3">
+<li><a href="#_example_request_3">Example request</a></li>
+<li><a href="#_example_response_3">Example response</a></li>
+</ul>
+</li>
+<li><a href="#resource-rules-update">Updating rules</a>
+<ul class="sectlevel3">
+<li><a href="#_example_request_4">Example request</a></li>
+<li><a href="#_example_response_4">Example response</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -461,7 +479,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="overview-http-verbs"><a class="link" href="#overview-http-verbs">HTTP verbs</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Person-service tries to adhere as closely as possible to standard HTTP and REST conventions in its
+<p>rule-service tries to adhere as closely as possible to standard HTTP and REST conventions in its
 use of HTTP verbs.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
@@ -572,9 +590,14 @@ use of HTTP status codes.</p>
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[].id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The id of rule</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[].cepRuleId</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The rule id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The id of rule</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[].createdBy</p></td>
@@ -589,12 +612,12 @@ use of HTTP status codes.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[].tool</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The tool of the rule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The tool of rule</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[].filters</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The rule filter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The filter of rule</p></td>
 </tr>
 </tbody>
 </table>
@@ -612,15 +635,24 @@ use of HTTP status codes.</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 308
+Content-Length: 498
 
 [ {
+  "id" : 1,
+  "cepRuleId" : "xb182509135201620",
+  "createdBy" : "xb182754",
+  "changedBy" : "xb182754",
+  "tool" : "openbus_br_zabbix_v4",
+  "filters" : "none"
+}, {
+  "id" : 2,
   "cepRuleId" : "xb182509135201689",
   "createdBy" : "xb182509",
   "changedBy" : "xb182509",
   "tool" : "openbus_br_zabbix_v2",
   "filters" : "all"
 }, {
+  "id" : 3,
   "cepRuleId" : "xb182509135201619",
   "createdBy" : "xb182753",
   "changedBy" : "xb182753",
@@ -631,12 +663,143 @@ Content-Length: 308
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="resource-rules-get"><a class="link" href="#resource-rules-get">Fetching rules</a></h3>
+<div class="paragraph">
+<p>A <code>GET</code> request fetches a specific rule.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The id of rule</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cepRuleId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The id of rule</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">createdBy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user that create a rule</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">changedBy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The user that update a rule</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tool</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The tool of rule</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">filters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The filters of rule</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="_example_request_2"><a class="link" href="#_example_request_2">Example request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/ceprule/5' -i -H 'Accept: application/json'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_response_2"><a class="link" href="#_example_response_2">Example response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 166
+
+{
+  "id" : 5,
+  "cepRuleId" : "xb182509135201620",
+  "createdBy" : "xb182754",
+  "changedBy" : "xb182754",
+  "tool" : "openbus_br_zabbix_v4",
+  "filters" : "anyone"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resource-rules-create"><a class="link" href="#resource-rules-create">Creating rules</a></h3>
+<div class="paragraph">
+<p>A <code>POST</code> request creates a new rule.</p>
+</div>
+<div class="sect3">
+<h4 id="_example_request_3"><a class="link" href="#_example_request_3">Example request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/ceprule' -i -X POST -H 'Content-Type: application/json' -d '{
+  "createdBy" : "xb182754",
+  "changedBy" : "xb182754",
+  "filters" : "none",
+  "cepRuleId" : "xb182509135201620",
+  "tool" : "openbus_br_zabbix_v4"
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_response_3"><a class="link" href="#_example_response_3">Example response</a></h4>
+<div class="paragraph">
+<p>Unresolved directive in index.adoc - include::/home/bera/dev/produban/Json2SiddhiCEP/build/generated-snippets/create-rule/http-response.adoc[]</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resource-rules-update"><a class="link" href="#resource-rules-update">Updating rules</a></h3>
+<div class="paragraph">
+<p>A <code>PUT</code> request updates an existing rule.</p>
+</div>
+<div class="sect3">
+<h4 id="_example_request_4"><a class="link" href="#_example_request_4">Example request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/ceprule/4' -i -X PUT -H 'Content-Type: application/json' -d '{
+  "createdBy" : "xb182755",
+  "changedBy" : "xb182755",
+  "filters" : "none",
+  "cepRuleId" : "xb182509135201621",
+  "tool" : "openbus_br_zabbix_v5"
+}'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_response_4"><a class="link" href="#_example_response_4">Example response</a></h4>
+<div class="paragraph">
+<p>Unresolved directive in index.adoc - include::/home/bera/dev/produban/Json2SiddhiCEP/build/generated-snippets/update-rule/http-response.adoc[]</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-01 01:03:21 -03:00
+Last updated 2016-07-02 15:21:04 -03:00
 </div>
 </div>
 </body>
