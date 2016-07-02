@@ -125,5 +125,5 @@ include::{snippets}/update-cep-rule/curl-request.adoc[]
 
 ==== Example response
 
-include::{snippets}/update-rule/http-response.adoc[]
+include::{snippets}/update-cep-rule/http-response.adoc[]
 
