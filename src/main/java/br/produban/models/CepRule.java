@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by bera on 23/06/16.
@@ -34,13 +36,14 @@ public class CepRule {
     @Size(min = 1, max = 90)
     private String tool;
 
-    private String filters;
+
+    private List<Map<String, String>> filters;
 
     public CepRule() {
     }
 
     public CepRule(String cepRuleId , String createdBy, String changedBy,
-                   String tool, String filters) {
+                   String tool, List<Map<String, String>> filters) {
 
         this.cepRuleId = cepRuleId;
         this.createdBy = createdBy;
@@ -84,11 +87,11 @@ public class CepRule {
         this.tool = tool;
     }
 
-    public String getFilters() {
+    public List<Map<String, String>> getFilters() {
         return filters;
     }
 
-    public void setFilters(String filters) {
+    public void setFilters(List<Map<String, String>> filters) {
         this.filters = filters;
     }
 }

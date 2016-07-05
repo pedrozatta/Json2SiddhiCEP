@@ -20,8 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -66,8 +65,30 @@ public class CepRuleControllerTest {
 
     @Test
     public void listRules() throws Exception {
-        createSampleCepRule("xb182509135201689", "xb182509", "xb182509", "openbus_br_zabbix_v2", "all");
-        createSampleCepRule("xb182509135201619", "xb182753", "xb182753", "openbus_br_zabbix_v3", "one");
+
+        List<Map<String, String>> ruleFilters = new ArrayList<Map<String, String>>();
+
+        Map<String,String> filter1 = new HashMap<String,String>();
+        filter1.put("field", "platform");
+        filter1.put("operator", "==");
+        filter1.put("value", "Wintel");
+        filter1.put("condition", "And");
+
+        Collections.addAll(ruleFilters, filter1);
+
+        List<Map<String, String>> ruleFilters2 = new ArrayList<Map<String, String>>();
+
+        Map<String,String> filter2 = new HashMap<String,String>();
+        filter2.put("field", "metric");
+        filter2.put("operator", "!=");
+        filter2.put("value", "system.dsk.utilization");
+        filter2.put("condition", "FIM");
+
+        Collections.addAll(ruleFilters2, filter2);
+
+
+        createSampleCepRule("xb182509135201689", "xb182509", "xb182509", "openbus_br_zabbix_v2", ruleFilters);
+        createSampleCepRule("xb182509135201619", "xb182753", "xb182753", "openbus_br_zabbix_v3", ruleFilters2);
 
 
         this.document.snippets(
@@ -88,8 +109,19 @@ public class CepRuleControllerTest {
 
     @Test
     public void getRule() throws Exception {
+
+        List<Map<String, String>> ruleFilters = new ArrayList<Map<String, String>>();
+
+        Map<String,String> filter1 = new HashMap<String,String>();
+        filter1.put("field", "platform");
+        filter1.put("operator", "==");
+        filter1.put("value", "Wintel");
+        filter1.put("condition", "And");
+
+        Collections.addAll(ruleFilters, filter1);
+
         CepRule sampleRule =  createSampleCepRule("xb182509135201620",
-                "xb182754", "xb182754", "openbus_br_zabbix_v4", "anyone");
+                "xb182754", "xb182754", "openbus_br_zabbix_v4", ruleFilters);
 
 
         this.document.snippets(
@@ -110,12 +142,24 @@ public class CepRuleControllerTest {
 
     @Test
     public void createCepRule() throws Exception {
+
+
+        List<Map<String, String>> ruleFilters = new ArrayList<Map<String, String>>();
+
+        Map<String,String> filter1 = new HashMap<String,String>();
+        filter1.put("field", "platform");
+        filter1.put("operator", "==");
+        filter1.put("value", "Wintel");
+        filter1.put("condition", "And");
+
+        Collections.addAll(ruleFilters, filter1);
+
         Map<String, String> newCepRule = new HashMap<>();
         newCepRule.put("cepRuleId", "xb182509135201620");
         newCepRule.put("createdBy", "xb182754");
         newCepRule.put("changedBy", "xb182754");
         newCepRule.put("tool", "openbus_br_zabbix_v4");
-        newCepRule.put("filters", "none");
+        newCepRule.put("filters", ruleFilters.toString());
 
         ConstrainedFields fields = new ConstrainedFields(CepRule.class);
 
@@ -154,14 +198,37 @@ public class CepRuleControllerTest {
 
     @Test
     public void updateCepRule() throws Exception {
+
+
+        List<Map<String, String>> ruleFilters = new ArrayList<Map<String, String>>();
+
+        Map<String,String> filter1 = new HashMap<String,String>();
+        filter1.put("field", "platform");
+        filter1.put("operator", "==");
+        filter1.put("value", "Wintel");
+        filter1.put("condition", "And");
+
+        Collections.addAll(ruleFilters, filter1);
+
         CepRule originalCepRule = createSampleCepRule("xb182509135201620",
-                "xb182754", "xb182754", "openbus_br_zabbix_v4", "anyone");
+                "xb182754", "xb182754", "openbus_br_zabbix_v4", ruleFilters);
+
+        List<Map<String, String>> ruleFilters2 = new ArrayList<Map<String, String>>();
+
+        Map<String,String> filter2 = new HashMap<String,String>();
+        filter2.put("field", "metric");
+        filter2.put("operator", "!=");
+        filter2.put("value", "system.dsk.utilization");
+        filter2.put("condition", "FIM");
+
+        Collections.addAll(ruleFilters2, filter2);
+
         Map<String, String> updatedCepRule = new HashMap<>();
         updatedCepRule.put("cepRuleId", "xb182509135201621");
         updatedCepRule.put("createdBy", "xb182755");
         updatedCepRule.put("changedBy", "xb182755");
         updatedCepRule.put("tool", "openbus_br_zabbix_v5");
-        updatedCepRule.put("filters", "none");
+        updatedCepRule.put("filters", ruleFilters2.toString());
 
         ConstrainedFields fields = new ConstrainedFields(CepRule.class);
 
@@ -183,7 +250,7 @@ public class CepRuleControllerTest {
     }
 
     private CepRule createSampleCepRule(String cepRuleId, String createdBy, String changedBy,
-                                        String tool, String filters) {
+                                        String tool, List<Map<String, String>> filters) {
         return ruleRepository.save(new CepRule(cepRuleId, createdBy, changedBy,
                 tool, filters));
     }
