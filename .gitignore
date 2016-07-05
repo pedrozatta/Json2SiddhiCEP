@@ -18,6 +18,7 @@ target/
 #Gradle
 build/
 tmp/
+bin/
 
 #Java
 *.class

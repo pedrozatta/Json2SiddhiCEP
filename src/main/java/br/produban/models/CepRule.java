@@ -1,12 +1,14 @@
 package br.produban.models;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by bera on 23/06/16.
@@ -15,83 +17,77 @@ import java.util.Map;
 @Entity
 public class CepRule {
 
+	@Id
+	@NotNull
+	@Size(min = 1, max = 90)
+	private String cepRuleId;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+	@NotNull
+	@Size(min = 1, max = 50)
+	private String createdBy;
 
-    @NotNull
-    @Size(min = 1, max = 90)
-    private String cepRuleId;
+	@NotNull
+	@Size(min = 1, max = 50)
+	private String changedBy;
 
-    @NotNull
-    @Size(min = 1, max = 50)
-    private String createdBy;
+	@NotNull
+	@Size(min = 1, max = 90)
+	private String tool;
 
-    @NotNull
-    @Size(min = 1, max = 50)
-    private String changedBy;
+	@Transient
+	private List<Map<String, String>> filters;
 
-    @NotNull
-    @Size(min = 1, max = 90)
-    private String tool;
+	public CepRule() {
+	}
 
+	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool,
+			List<Map<String, String>> filters) {
 
-    private List<Map<String, String>> filters;
+		this.cepRuleId = cepRuleId;
+		this.createdBy = createdBy;
+		this.changedBy = changedBy;
+		this.tool = tool;
+		this.filters = filters;
 
-    public CepRule() {
-    }
+	}
 
-    public CepRule(String cepRuleId , String createdBy, String changedBy,
-                   String tool, List<Map<String, String>> filters) {
+	public String getCepRuleId() {
+		return cepRuleId;
+	}
 
-        this.cepRuleId = cepRuleId;
-        this.createdBy = createdBy;
-        this.changedBy = changedBy;
-        this.tool = tool;
-        this.filters = filters;
+	public void setCepRuleId(String cepRuleId) {
+		this.cepRuleId = cepRuleId;
+	}
 
-    }
+	public String getCreatedBy() {
+		return createdBy;
+	}
 
-    public Long getId() { return id; }
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
 
-    public String getCepRuleId() {
-        return cepRuleId;
-    }
+	public String getChangedBy() {
+		return changedBy;
+	}
 
-    public void setCepRuleId(String cepRuleId) {
-        this.cepRuleId = cepRuleId;
-    }
+	public void setChangedBy(String changedBy) {
+		this.changedBy = changedBy;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public String getTool() {
+		return tool;
+	}
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
+	public void setTool(String tool) {
+		this.tool = tool;
+	}
 
-    public String getChangedBy() {
-        return changedBy;
-    }
+	public List<Map<String, String>> getFilters() {
+		return filters;
+	}
 
-    public void setChangedBy(String changedBy) {
-        this.changedBy = changedBy;
-    }
-
-    public String getTool() {
-        return tool;
-    }
-
-    public void setTool(String tool) {
-        this.tool = tool;
-    }
-
-    public List<Map<String, String>> getFilters() {
-        return filters;
-    }
-
-    public void setFilters(List<Map<String, String>> filters) {
-        this.filters = filters;
-    }
+	public void setFilters(List<Map<String, String>> filters) {
+		this.filters = filters;
+	}
 }
