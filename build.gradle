@@ -53,6 +53,9 @@ dependencies {
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile("org.springframework.restdocs:spring-restdocs-mockmvc:${springRestDocsVersion}")
+	testCompile("org.mockito:mockito-core:1.+")
+	testCompile('io.github.benas:jpopulator:1.2.0') 
+	
 }
 
 ext {

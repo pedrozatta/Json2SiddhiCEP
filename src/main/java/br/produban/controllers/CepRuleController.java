@@ -54,10 +54,4 @@ public class CepRuleController {
 		cepRuleRepository.save(existingCepRule);
 	}
 
-	@RequestMapping(value = "/zatta", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public String greetingJson(@RequestBody String json) {
-		System.out.println("json = " + json);
-		return "{ \"msg\" : \"Hello World!\"}";
-	}
 }
