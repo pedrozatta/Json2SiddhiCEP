@@ -21,7 +21,7 @@ import br.produban.repositories.CepRuleMongoRepository;
 @RestController
 @RequestMapping("/ceprule")
 public class CepRuleController {
-	
+
 	@Autowired
 	private CepRuleMongoRepository cepRuleRepository;
 
@@ -31,21 +31,20 @@ public class CepRuleController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public CepRule getCepRule(@PathVariable("id") Long id) {
+	public CepRule getCepRule(@PathVariable("id") String id) {
 		return cepRuleRepository.findOne(id);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public CepRule createCepRule(@RequestBody CepRule cepRule) {
-		CepRule value = cepRuleRepository.save(new CepRule(cepRule.getCepRuleId(), cepRule.getCreatedBy(),
-				cepRule.getChangedBy(), cepRule.getTool(), null));
+		CepRule value = cepRuleRepository.save(cepRule);
 		return value;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void updateCepRule(@PathVariable("id") Long id, @RequestBody CepRule cepRule) {
+	public void updateCepRule(@PathVariable("id") String id, @RequestBody CepRule cepRule) {
 		CepRule existingCepRule = cepRuleRepository.findOne(id);
 		existingCepRule.setCepRuleId(cepRule.getCepRuleId());
 		existingCepRule.setCreatedBy(cepRule.getChangedBy());

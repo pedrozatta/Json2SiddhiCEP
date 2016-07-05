@@ -1,20 +1,17 @@
 package br.produban.models;
 
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * Created by bera on 23/06/16.
  */
 
-@Entity
 public class CepRule {
 
 	@Id
@@ -34,21 +31,10 @@ public class CepRule {
 	@Size(min = 1, max = 90)
 	private String tool;
 
-	@Transient
-	private List<Map<String, String>> filters;
+	@Field("filters")
+	private List<CepRuleFilter> filters;
 
 	public CepRule() {
-	}
-
-	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool,
-			List<Map<String, String>> filters) {
-
-		this.cepRuleId = cepRuleId;
-		this.createdBy = createdBy;
-		this.changedBy = changedBy;
-		this.tool = tool;
-		this.filters = filters;
-
 	}
 
 	public String getCepRuleId() {
@@ -83,11 +69,12 @@ public class CepRule {
 		this.tool = tool;
 	}
 
-	public List<Map<String, String>> getFilters() {
+	public List<CepRuleFilter> getFilters() {
 		return filters;
 	}
 
-	public void setFilters(List<Map<String, String>> filters) {
+	public void setFilters(List<CepRuleFilter> filters) {
 		this.filters = filters;
 	}
+
 }
