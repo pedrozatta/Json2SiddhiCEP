@@ -78,7 +78,18 @@ public class CepRuleController {
 		cepRule.setChangedBy(user);
 
 		cepRule = cepRuleRepository.save(cepRule);
+
+		String cepRuleString = buildCepRuleString(cepRule);
+		cepRule.setCepRuleString(cepRuleString);
+
 		return cepRule;
+	}
+
+	protected String buildCepRuleString(final CepRule value) {
+
+		// TODO GERA A CONSULTA PRO CEP
+		return "from EntradaZabbix [  platform == \"Linux\" and metric == \"system.dsk.utilization\" and fileSystem == \"/ArquitecturaE-business\" and tool == \"Zabbix\" and value >= 95 and lsFunction == \"Application Server\" and (scName == \"MODULO_1_ESTRUCTURAL_(NMW)\" or scName == \"MODULO_2_ESTRUCTURAL_(NMW)\" or scName == \"MODULO_3_ESTRUCTURAL_(NMW)\")]";
+
 	}
 
 	protected Date now() {
