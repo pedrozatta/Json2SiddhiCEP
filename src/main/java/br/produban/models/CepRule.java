@@ -1,5 +1,6 @@
 package br.produban.models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -23,9 +24,13 @@ public class CepRule {
 	@Size(min = 1, max = 50)
 	private String createdBy;
 
+	private Date createdDate;
+
 	@NotNull
 	@Size(min = 1, max = 50)
 	private String changedBy;
+
+	private Date changedDate;
 
 	@NotNull
 	@Size(min = 1, max = 90)
@@ -96,6 +101,22 @@ public class CepRule {
 
 	public void setChilds(List<CepRuleFilter> childs) {
 		this.childs = childs;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getChangedDate() {
+		return changedDate;
+	}
+
+	public void setChangedDate(Date changedDate) {
+		this.changedDate = changedDate;
 	}
 
 }

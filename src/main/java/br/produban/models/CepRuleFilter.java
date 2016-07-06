@@ -2,7 +2,6 @@ package br.produban.models;
 
 import java.util.List;
 
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
@@ -10,10 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
  */
 
 public class CepRuleFilter {
-
-	@Transient
-	private Long id;
-	private Long nivel;
 
 	private String field;
 
@@ -77,22 +72,6 @@ public class CepRuleFilter {
 
 	public void setChilds(List<CepRuleFilter> childs) {
 		this.childs = childs;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getNivel() {
-		return nivel;
-	}
-
-	public void setNivel(Long nivel) {
-		this.nivel = nivel;
 	}
 
 }
