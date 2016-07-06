@@ -1,0 +1,46 @@
+{
+  "cepRuleId":"Teste",
+  "createdBy":"xb182754",
+  "changedBy":"xb182754",
+  "tool":"zabbix",
+  "nivel":0,
+  "childs":[
+    {
+      "id":1,
+      "type":"condicao",
+      "nivel":0,
+      "field":"FDC",
+      "operator":"<",
+      "value":"TETE",
+      "condition":"E"
+    },
+    {
+      "id":3,
+      "type":"grupo",
+      "nivel":0,
+      "childs":[
+        {
+          "id":2,
+          "type":"condicao",
+          "nivel":1,
+          "childs":[
+
+          ],
+          "field":"tagOwner",
+          "operator":"<=",
+          "value":"DDD",
+          "condition":"E"
+        },
+        {
+          "id":4,
+          "type":"condicao",
+          "nivel":1,
+          "field":"assetId",
+          "operator":">",
+          "value":"DDDD",
+          "condition":"E"
+        }
+      ]
+    }
+  ]
+}

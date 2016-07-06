@@ -31,8 +31,21 @@ public class CepRule {
 	@Size(min = 1, max = 90)
 	private String tool;
 
+	@Deprecated
 	@Field("filters")
 	private List<CepRuleFilter> filters;
+
+	@Field("childs")
+	private List<CepRuleFilter> childs;
+
+	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleFilter> filters) {
+		super();
+		this.cepRuleId = cepRuleId;
+		this.createdBy = createdBy;
+		this.changedBy = changedBy;
+		this.tool = tool;
+		this.filters = filters;
+	}
 
 	public CepRule() {
 	}
@@ -75,6 +88,14 @@ public class CepRule {
 
 	public void setFilters(List<CepRuleFilter> filters) {
 		this.filters = filters;
+	}
+
+	public List<CepRuleFilter> getChilds() {
+		return childs;
+	}
+
+	public void setChilds(List<CepRuleFilter> childs) {
+		this.childs = childs;
 	}
 
 }
