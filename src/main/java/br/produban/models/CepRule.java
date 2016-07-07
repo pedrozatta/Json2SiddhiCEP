@@ -38,14 +38,14 @@ public class CepRule {
 
 	@Deprecated
 	@Field("filters")
-	private List<CepRuleFilter> filters;
+	private List<CepRuleItem> filters;
 
 	@Field("childs")
-	private List<CepRuleFilter> childs;
+	private List<CepRuleItem> childs;
 
 	private String cepRuleString;
 
-	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleFilter> filters) {
+	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleItem> filters) {
 		super();
 		this.cepRuleId = cepRuleId;
 		this.createdBy = createdBy;
@@ -89,19 +89,19 @@ public class CepRule {
 		this.tool = tool;
 	}
 
-	public List<CepRuleFilter> getFilters() {
+	public List<CepRuleItem> getFilters() {
 		return filters;
 	}
 
-	public void setFilters(List<CepRuleFilter> filters) {
+	public void setFilters(List<CepRuleItem> filters) {
 		this.filters = filters;
 	}
 
-	public List<CepRuleFilter> getChilds() {
+	public List<CepRuleItem> getChilds() {
 		return childs;
 	}
 
-	public void setChilds(List<CepRuleFilter> childs) {
+	public void setChilds(List<CepRuleItem> childs) {
 		this.childs = childs;
 	}
 

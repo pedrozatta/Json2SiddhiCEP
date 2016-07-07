@@ -17,7 +17,7 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.stubbing.Answer;
 
 import br.produban.models.CepRule;
-import br.produban.models.CepRuleFilter;
+import br.produban.models.CepRuleItem;
 import br.produban.repositories.CepRuleMongoRepository;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
@@ -77,7 +77,7 @@ public class CepRuleControllerTest {
 	@Test
 	public void testGetCepRule3() {
 		CepRule cepRule = populator.populateBean(CepRule.class);
-		cepRule.setFilters(populator.populateBeans(CepRuleFilter.class, 10));
+		cepRule.setFilters(populator.populateBeans(CepRuleItem.class, 10));
 		Mockito.when(cepRuleRepository.findOne("ID-2")).thenReturn(cepRule);
 
 		CepRule value = cepRuleController.getCepRule("ID-2");

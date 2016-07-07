@@ -1,6 +1,7 @@
 {
-  "rule_name":"Runtime",
-  "tool":"zabbix",
+  "rule_name":"Runtime-zatta",
+  "tool":"zatta",
+  "changedBy" : "zatta1",
   "nivel":0,
   "childs":[
     {
@@ -9,7 +10,7 @@
       "nivel":0,
       "field":"platform",
       "operator":"==",
-      "value_min":"Linux",
+      "valueMin":"Linux",
       "condition":"E"
     },
     {
@@ -18,7 +19,7 @@
       "nivel":0,
       "field":"metric",
       "operator":"==",
-      "metrica":"system.dsk.utilization",
+      "valueMin":"system.dsk.utilization",
       "condition":"E"
     },
     {
@@ -27,7 +28,7 @@
       "nivel":0,
       "field":"fileSystem",
       "operator":"==",
-      "value_min":"/ArquitecturaE-business",
+      "valueMin":"/ArquitecturaE-business",
       "condition":"E"
     },
     {
@@ -36,7 +37,7 @@
       "nivel":0,
       "field":"tool",
       "operator":"==",
-      "value_min":"Zabbix",
+      "valueMin":"Zabbix",
       "condition":"E"
     },
     {
@@ -45,7 +46,7 @@
       "nivel":0,
       "field":"value",
       "operator":">=",
-      "value_min":"95",
+      "valueMin":"95",
       "condition":"E"
     },
     {
@@ -54,7 +55,7 @@
       "nivel":0,
       "field":"lsFunction",
       "operator":"==",
-      "value_min":"Application Server",
+      "valueMin":"Application Server",
       "condition":"E"
     },
     {
@@ -71,7 +72,7 @@
           ],
           "field":"scName",
           "operator":"==",
-          "value_min":"MODULO_1_ESTRUCTURAL_(NMW)",
+          "valueMin":"MODULO_1_ESTRUCTURAL_(NMW)",
           "condition":"OU"
         },
         {
@@ -80,7 +81,7 @@
           "nivel":1,
           "field":"scName",
           "operator":"==",
-          "value_min":"MODULO_2_ESTRUCTURAL_(NMW)",
+          "valueMin":"MODULO_2_ESTRUCTURAL_(NMW)",
           "condition":"OU"
         },
         {
@@ -89,7 +90,7 @@
           "nivel":1,
           "field":"scName",
           "operator":"==",
-          "value_min":"MODULO_3_ESTRUCTURAL_(NMW)",
+          "valueMin":"MODULO_3_ESTRUCTURAL_(NMW)",
           "condition":"E"
         },
         {
@@ -106,7 +107,7 @@
               ],
               "field":"assetID",
               "operator":">",
-              "value_min":"TESTE",
+              "valueMin":"TESTE",
               "condition":"E"
             },
             {
@@ -115,7 +116,7 @@
               "nivel":1,
               "field":"assetID",
               "operator":">",
-              "value_min":"TESTE 2"
+              "valueMin":"TESTE 2"
             }
           ]
         }
@@ -135,7 +136,7 @@
           ],
           "field":"admveFqdn",
           "operator":"<=",
-          "value_min":"TESTE GRUPO 2",
+          "valueMin":"TESTE GRUPO 2",
           "condition":"E"
         },
         {
@@ -144,8 +145,8 @@
           "nivel":1,
           "field":"tagOwner",
           "operator":"between",
-          "value_min":"10",
-          "value_max":"20",
+          "valueMin":"10",
+          "valueMax":"20",
           "condition":"E"
         },
         {
@@ -154,7 +155,7 @@
           "nivel":1,
           "operator":"==",
           "field":"admveFqdn",
-          "value_min":"FF"
+          "valueMin":"FF"
         }
       ]
     }
