@@ -38,7 +38,7 @@ public class SiddhiService {
 
 		sb.append("\"sc_remedy_so_ux_disk_p_c_bigdata\" as situation");
 		sb.append(", csId as id");
-		sb.append("str:concat(\"O consumo de Disco ou FS está acima do threshold estipulado em " + value.getValueMin()
+		sb.append(", str:concat(\"O consumo de Disco ou FS está acima do threshold estipulado em " + value.getValueMin()
 				+ "%. Disco ou FS: \", fileSystem, \". Valor atual: \", value, \"%\" ) as message");
 		sb.append(", hostname as hostname");
 		sb.append(", fileSystem as item");
@@ -74,6 +74,15 @@ public class SiddhiService {
 
 		processGroup(sb, cepRule, group);
 
+
+		if (sb.lastIndexOf("AND ") == sb.length() - 4) {
+			sb.delete(sb.length() - 4, sb.length() );
+		} else if (sb.lastIndexOf("OR ") == sb.length() - 2) {
+			sb.insert(sb.lastIndexOf("OR "), " ) ");
+		}else{
+			sb.append(" ) ");
+		}
+		
 		sb.append("]\r\n");
 
 	}
@@ -94,10 +103,12 @@ public class SiddhiService {
 				break;
 			}
 		}
-		// TODO TRATAR OR
+
 		if (sb.lastIndexOf("AND ") == sb.length() - 4) {
 			sb.insert(sb.lastIndexOf("AND "), " ) ");
-		} else {
+		} else if (sb.lastIndexOf("OR ") == sb.length() - 2) {
+			sb.insert(sb.lastIndexOf("OR "), " ) ");
+		}else{
 			sb.append(" ) ");
 		}
 

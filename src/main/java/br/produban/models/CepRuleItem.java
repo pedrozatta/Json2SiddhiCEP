@@ -12,8 +12,8 @@ public class CepRuleItem {
 
 
 
-	public static final String CONDITION_AND = "E";
-	public static final String CONDITION_OR = "OU";
+	public static final String CONDITION_AND = "AND";
+	public static final String CONDITION_OR = "OR";
 
 	public static final String OPERATOR_BETWEEN = "between";
 

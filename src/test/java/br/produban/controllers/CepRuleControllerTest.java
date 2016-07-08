@@ -15,7 +15,7 @@ import org.mockito.junit.MockitoRule;
 
 import br.produban.models.CepRule;
 import br.produban.models.CepRuleItem;
-import br.produban.repositories.CepRuleMongoRepository;
+import br.produban.services.CepRuleService;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
 
@@ -27,7 +27,7 @@ public class CepRuleControllerTest {
 	private Populator populator;
 
 	@Mock
-	private CepRuleMongoRepository cepRuleRepository;
+	private CepRuleService cepRuleService;
 
 	@Spy
 	@InjectMocks
@@ -39,21 +39,15 @@ public class CepRuleControllerTest {
 	}
 
 	@Test
-	public void testListCepRules1() {
-		Iterable<CepRule> value = cepRuleController.listCepRules();
-		Assert.assertNotNull(value);
-	}
-
-	@Test
-	public void testListCepRules2() {
+	public void testListCepRules() {
 		List<CepRule> list = populator.populateBeans(CepRule.class, 5);
-		Mockito.when(cepRuleRepository.findAll()).thenReturn(list);
+		Mockito.when(cepRuleService.findAll()).thenReturn(list);
 
 		Iterable<CepRule> value = cepRuleController.listCepRules();
 		Assert.assertNotNull(value);
 		Assert.assertEquals(list, value);
 
-		Mockito.verify(cepRuleRepository, Mockito.only()).findAll();
+		Mockito.verify(cepRuleService, Mockito.only()).findAll();
 	}
 
 	@Test
@@ -65,7 +59,7 @@ public class CepRuleControllerTest {
 	@Test
 	public void testGetCepRule2() {
 		CepRule cepRule = populator.populateBean(CepRule.class);
-		Mockito.when(cepRuleRepository.findOne("ID-2")).thenReturn(cepRule);
+		Mockito.when(cepRuleService.findOne("ID-2")).thenReturn(cepRule);
 
 		CepRule value = cepRuleController.getCepRule("ID-1");
 		Assert.assertNull(value);
@@ -75,7 +69,7 @@ public class CepRuleControllerTest {
 	public void testGetCepRule3() {
 		CepRule cepRule = populator.populateBean(CepRule.class);
 		cepRule.setFilters(populator.populateBeans(CepRuleItem.class, 10));
-		Mockito.when(cepRuleRepository.findOne("ID-2")).thenReturn(cepRule);
+		Mockito.when(cepRuleService.findOne("ID-2")).thenReturn(cepRule);
 
 		CepRule value = cepRuleController.getCepRule("ID-2");
 		Assert.assertNotNull(value);
@@ -85,14 +79,14 @@ public class CepRuleControllerTest {
 	@Test
 	public void testCreateCepRule() {
 		CepRule cepRule = populator.populateBean(CepRule.class);
-		Mockito.when(cepRuleRepository.save(cepRule)).thenReturn(cepRule);
+		Mockito.when(cepRuleService.save(cepRule.getChangedBy(), cepRule)).thenReturn(cepRule);
 
 		CepRule value = cepRuleController.createCepRule(cepRule);
 		Assert.assertNotNull(value);
 		Assert.assertEquals(cepRule.getCepRuleId(), value.getCepRuleId());
 		Assert.assertEquals(cepRule, value);
 
-		Mockito.verify(cepRuleRepository, Mockito.only()).save(Mockito.any(CepRule.class));
+		Mockito.verify(cepRuleService, Mockito.only()).save(cepRule.getChangedBy(), cepRule);
 
 	}
 
@@ -100,12 +94,12 @@ public class CepRuleControllerTest {
 	public void testUpdateCepRule() {
 		CepRule cepRule = populator.populateBean(CepRule.class);
 
-		Mockito.when(cepRuleRepository.save(cepRule)).thenReturn(cepRule);
-		Mockito.when(cepRuleRepository.findOne(Mockito.anyString())).thenReturn(new CepRule());
+		Mockito.when(cepRuleService.save(cepRule.getChangedBy(), cepRule)).thenReturn(cepRule);
+		Mockito.when(cepRuleService.findOne(Mockito.anyString())).thenReturn(new CepRule());
 
 		cepRuleController.updateCepRule(cepRule.getCepRuleId(), cepRule);
 
-		Mockito.verify(cepRuleRepository).save(Mockito.any(CepRule.class));
+		Mockito.verify(cepRuleService).save(cepRule.getChangedBy(), cepRule);
 	}
 
 }

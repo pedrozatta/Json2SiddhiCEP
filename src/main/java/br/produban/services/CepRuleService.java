@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.produban.enumerations.Condition;
 import br.produban.enumerations.FieldType;
 import br.produban.enumerations.ItemType;
 import br.produban.models.CepRule;
@@ -56,6 +57,9 @@ public class CepRuleService {
 	public void normalizeCondition(final CepRule cepRule, CepRuleItem condition) {
 		if (StringUtils.isEmpty(condition.getFieldType())) {
 			condition.setFieldType(FieldType.STRING.external);
+		}
+		if (StringUtils.isEmpty(condition.getCondition())) {
+			condition.setCondition(Condition.AND.external);
 		}
 	}
 

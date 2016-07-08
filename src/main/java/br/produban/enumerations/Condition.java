@@ -2,22 +2,21 @@ package br.produban.enumerations;
 
 import org.apache.commons.lang3.StringUtils;
 
-public enum Operator {
+public enum Condition {
 
-	BETWEEN("between"), EQUAL("=="), NOT_EQUAL("!="), LESS_THAN("<"), GREATER_THAN(">"), LESS_THAN_EQUAL(
-			"<="), GREATER_THAN_EQUAL(">=");
+	AND("AND"), OR("OR");
 
 	public final String external;
 
-	private Operator(String external) {
+	private Condition(String external) {
 		this.external = external;
 	}
 
-	public static Operator fromExternal(String external) {
+	public static Condition fromExternal(String external) {
 		if (StringUtils.isEmpty(external)) {
 			throw new IllegalArgumentException();
 		}
-		for (Operator itemType : Operator.values()) {
+		for (Condition itemType : Condition.values()) {
 			if (itemType.external.equals(external)) {
 				return itemType;
 			}
