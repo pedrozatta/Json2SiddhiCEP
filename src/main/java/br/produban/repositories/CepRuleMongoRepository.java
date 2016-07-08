@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import br.produban.models.CepRule;
 
-@RepositoryRestResource(collectionResourceRel = "people", path = "people")
+@RepositoryRestResource(collectionResourceRel = "ceprule", path = "ceprule")
 public interface CepRuleMongoRepository extends MongoRepository<CepRule, String> {
 
 	List<CepRule> findByTool(@Param("tool") String tool);

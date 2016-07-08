@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import br.produban.enumerations.ItemType;
+
 /**
  * Created by bera on 23/06/16.
  */
@@ -127,6 +129,34 @@ public class CepRule {
 
 	public void setSiddhi(String siddhi) {
 		this.siddhi = siddhi;
+	}
+
+	public CepRuleItem getField(String field) {
+		return getField(field, this.getChilds());
+	}
+
+	protected CepRuleItem getField(String field, Iterable<CepRuleItem> items) {
+		for (CepRuleItem item : items) {
+			CepRuleItem result = getField(field, item);
+			if (result != null) {
+				return result;
+			}
+		}
+		return null;
+	}
+
+	protected CepRuleItem getField(String field, CepRuleItem cepRuleItem) {
+
+		if (ItemType.fromExternal(cepRuleItem.getType()) == ItemType.GROUP) {
+			CepRuleItem result = getField(field, cepRuleItem.getChilds());
+			if (result != null) {
+				return result;
+			}
+		}
+		if (field.equals(cepRuleItem.getField())) {
+			return cepRuleItem;
+		}
+		return null;
 	}
 
 }

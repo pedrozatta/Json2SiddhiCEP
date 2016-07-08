@@ -117,7 +117,8 @@
               "nivel":1,
               "field":"assetID",
               "operator":">",
-              "valueMin":"TESTE 2"
+              "valueMin":"TESTE 2",
+              "condition":"E"
             }
           ]
         }

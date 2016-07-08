@@ -17,4 +17,5 @@ public class Json2SiddhiCepApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(Json2SiddhiCepApplication.class);
 	}
+
 }

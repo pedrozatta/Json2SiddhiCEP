@@ -1,46 +1,34 @@
 {
-  "cepRuleId":"Teste",
-  "createdBy":"xb182754",
-  "changedBy":"xb182754",
-  "tool":"zabbix",
-  "nivel":0,
-  "childs":[
-    {
-      "id":1,
-      "type":"condicao",
-      "nivel":0,
-      "field":"FDC",
-      "operator":"<",
-      "value":"TETE",
-      "condition":"E"
-    },
-    {
-      "id":3,
-      "type":"grupo",
-      "nivel":0,
-      "childs":[
-        {
-          "id":2,
-          "type":"condicao",
-          "nivel":1,
-          "childs":[
-
-          ],
-          "field":"tagOwner",
-          "operator":"<=",
-          "value":"DDD",
-          "condition":"E"
-        },
-        {
-          "id":4,
-          "type":"condicao",
-          "nivel":1,
-          "field":"assetId",
-          "operator":">",
-          "value":"DDDD",
-          "condition":"E"
-        }
-      ]
-    }
-  ]
+	  "changedBy" : "zatta1",
+                "rule_name": "Test",
+                "tool": "hypervisor",
+                "nivel": 0,
+                "childs": [{
+                               "id": 3,
+                               "type": "condicao",
+                               "nivel": 0,
+                               "field": "FDC",
+                               "valueMin": "10100",
+                               "fieldType": "string",
+                               "operator": "==",
+                               "condition": "AND"
+                }, {
+                               "id": 4,
+                               "type": "condicao",
+                               "nivel": 0,
+                               "field": "metric",
+                                "valueMin": null,
+                               "fieldType": "string",
+                               "operator": "==",
+                               "condition": "AND"
+                }, {
+                               "id": 5,
+                               "type": "condicao",
+                               "nivel": 0,
+                               "field": "value",
+                               "valueMin": "5000",
+                               "fieldType": "double",
+                               "operator": "==",
+                               "condition": "AND"
+                }]
 }
