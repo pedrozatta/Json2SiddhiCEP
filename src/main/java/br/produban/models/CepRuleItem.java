@@ -10,8 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 public class CepRuleItem {
 
-	public static final String TYPE_CONDITION = "condicao";
-	public static final String TYPE_GROUP = "grupo";
+
 
 	public static final String CONDITION_AND = "E";
 	public static final String CONDITION_OR = "OU";
@@ -19,6 +18,8 @@ public class CepRuleItem {
 	public static final String OPERATOR_BETWEEN = "between";
 
 	private String field;
+
+	private String fieldType;
 
 	private String operator;
 
@@ -90,6 +91,14 @@ public class CepRuleItem {
 
 	public void setValueMax(String valueMax) {
 		this.valueMax = valueMax;
+	}
+
+	public String getFieldType() {
+		return fieldType;
+	}
+
+	public void setFieldType(String fieldType) {
+		this.fieldType = fieldType;
 	}
 
 }

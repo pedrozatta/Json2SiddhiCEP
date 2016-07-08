@@ -45,6 +45,7 @@
       "type":"condicao",
       "nivel":0,
       "field":"value",
+      "fieldType": "double",
       "operator":">=",
       "valueMin":"95",
       "condition":"E"
@@ -144,6 +145,7 @@
           "type":"condicao",
           "nivel":1,
           "field":"tagOwner",
+          "fieldType": "double",
           "operator":"between",
           "valueMin":"10",
           "valueMax":"20",

@@ -43,7 +43,7 @@ public class CepRule {
 	@Field("childs")
 	private List<CepRuleItem> childs;
 
-	private String cepRuleString;
+	private String siddhi;
 
 	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleItem> filters) {
 		super();
@@ -121,12 +121,12 @@ public class CepRule {
 		this.changedDate = changedDate;
 	}
 
-	public String getCepRuleString() {
-		return cepRuleString;
+	public String getSiddhi() {
+		return siddhi;
 	}
 
-	public void setCepRuleString(String cepRuleString) {
-		this.cepRuleString = cepRuleString;
+	public void setSiddhi(String siddhi) {
+		this.siddhi = siddhi;
 	}
 
 }

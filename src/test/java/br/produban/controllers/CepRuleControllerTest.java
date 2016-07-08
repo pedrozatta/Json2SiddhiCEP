@@ -1,6 +1,5 @@
 package br.produban.controllers;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
@@ -11,10 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import org.mockito.stubbing.Answer;
 
 import br.produban.models.CepRule;
 import br.produban.models.CepRuleItem;
@@ -107,100 +104,6 @@ public class CepRuleControllerTest {
 		Mockito.when(cepRuleRepository.findOne(Mockito.anyString())).thenReturn(new CepRule());
 
 		cepRuleController.updateCepRule(cepRule.getCepRuleId(), cepRule);
-
-		Mockito.verify(cepRuleRepository).save(Mockito.any(CepRule.class));
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testSave1() {
-
-		CepRule cepRule = populator.populateBean(CepRule.class, "cepRuleId");
-		cepRuleController.save(null, cepRule);
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testSave2() {
-
-		CepRule cepRule = populator.populateBean(CepRule.class, "cepRuleId");
-		cepRuleController.save("", cepRule);
-
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testSave3() {
-
-		cepRuleController.save("Zatta1", null);
-
-	}
-
-	@Test
-	public void testSave_insert() {
-		CepRule cepRule = populator.populateBean(CepRule.class, "cepRuleId", "changedDate", "createdDate");
-		String user = "ZATTA1";
-		String cepRuleId = "577d3e9544efa608dfb7c59e";
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.MINUTE, -5);
-
-		Mockito.when(cepRuleController.now()).thenReturn(calendar.getTime());
-
-		Mockito.when(cepRuleRepository.save(cepRule)).thenAnswer(new Answer<CepRule>() {
-			@Override
-			public CepRule answer(InvocationOnMock invocation) {
-				CepRule cepRule = (CepRule) invocation.getArguments()[0];
-				cepRule.setCepRuleId(cepRuleId);
-				return cepRule;
-			}
-		});
-
-		CepRule result = cepRuleController.save(user, cepRule);
-		Assert.assertNotNull(result);
-
-		Assert.assertNotNull(cepRule.getCepRuleId());
-		Assert.assertEquals(cepRuleId, result.getCepRuleId());
-
-		Assert.assertEquals(user, result.getCreatedBy());
-		Assert.assertNotNull(result.getCreatedDate());
-		Assert.assertEquals(calendar.getTime(), result.getCreatedDate());
-
-		Assert.assertEquals(user, result.getChangedBy());
-		Assert.assertNotNull(result.getChangedDate());
-		Assert.assertEquals(calendar.getTime(), result.getChangedDate());
-
-		Mockito.verify(cepRuleRepository).save(Mockito.any(CepRule.class));
-	}
-
-	@Test
-	public void testSave_update() {
-		String createdBy = "ZATTA0";
-		Calendar createdDate = Calendar.getInstance();
-		createdDate.add(Calendar.MINUTE, -10);
-
-		CepRule cepRule = populator.populateBean(CepRule.class, "createdBy", "createdDate");
-		cepRule.setCreatedBy(createdBy);
-		cepRule.setCreatedDate(createdDate.getTime());
-
-		String user = "ZATTA1";
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.MINUTE, -5);
-
-		Mockito.when(cepRuleController.now()).thenReturn(calendar.getTime());
-
-		Mockito.when(cepRuleRepository.save(cepRule)).thenAnswer(new Answer<CepRule>() {
-			@Override
-			public CepRule answer(InvocationOnMock invocation) {
-				return (CepRule) invocation.getArguments()[0];
-			}
-		});
-
-		CepRule result = cepRuleController.save(user, cepRule);
-		Assert.assertNotNull(result);
-
-		Assert.assertEquals(createdBy, result.getCreatedBy());
-		Assert.assertEquals(createdDate.getTime(), result.getCreatedDate());
-
-		Assert.assertEquals(user, result.getChangedBy());
-		Assert.assertEquals(calendar.getTime(), result.getChangedDate());
 
 		Mockito.verify(cepRuleRepository).save(Mockito.any(CepRule.class));
 	}
