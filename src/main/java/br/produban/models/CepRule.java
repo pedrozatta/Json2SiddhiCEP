@@ -47,6 +47,8 @@ public class CepRule {
 
 	private String siddhi;
 
+	private String situation;
+
 	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleItem> filters) {
 		super();
 		this.cepRuleId = cepRuleId;
@@ -157,6 +159,14 @@ public class CepRule {
 			return cepRuleItem;
 		}
 		return null;
+	}
+
+	public String getSituation() {
+		return situation;
+	}
+
+	public void setSituation(String situation) {
+		this.situation = situation;
 	}
 
 }

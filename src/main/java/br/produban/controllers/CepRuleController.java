@@ -53,4 +53,10 @@ public class CepRuleController {
 		return value;
 	}
 
+	@RequestMapping(value = "/situation/{situation}", method = RequestMethod.GET)
+	public Iterable<CepRule> findBySituation(@PathVariable("situation") String situation) {
+		logger.info("findBySituation(..) " + situation);
+		return cepRuleService.findBySituation(situation);
+	}
+
 }

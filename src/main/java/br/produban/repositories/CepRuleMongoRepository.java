@@ -11,6 +11,6 @@ import br.produban.models.CepRule;
 @RepositoryRestResource(collectionResourceRel = "ceprule", path = "ceprule")
 public interface CepRuleMongoRepository extends MongoRepository<CepRule, String> {
 
-	List<CepRule> findByTool(@Param("tool") String tool);
+	List<CepRule> findBySituationStartingWith(@Param("situation") String tool);
 
 }

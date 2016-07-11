@@ -1,12 +1,16 @@
 package br.produban.services;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import br.produban.enumerations.Condition;
 import br.produban.enumerations.FieldType;
@@ -82,12 +86,49 @@ public class CepRuleService {
 		cepRule.setChangedDate(now());
 		cepRule.setChangedBy(user);
 
+		this.populateSituation(cepRule);
+
 		cepRule = cepRuleRepository.save(cepRule);
 
 		String siddhi = siddhiService.generateSiddhi(cepRule);
 		cepRule.setSiddhi(siddhi);
 
 		return cepRule;
+	}
+
+	protected void populateSituation(CepRule cepRule) {
+		String situationPrefix = this.generateSituationPrefix(cepRule);
+		List<CepRule> list = this.findBySituation(situationPrefix);
+		if (CollectionUtils.isEmpty(list)) {
+			cepRule.setSituation(situationPrefix + "_1");
+			return;
+		}
+
+		Collections.sort(list, new Comparator<CepRule>() {
+			@Override
+			public int compare(CepRule x, CepRule y) {
+				return x.getSituation().compareTo(y.getSituation());
+			}
+		});
+
+		String situation = list.get(list.size() - 1).getSituation();
+		try {
+			int i = Integer.parseInt(situation.substring(situation.lastIndexOf("_") + 1, situation.length()));
+			i++;
+			cepRule.setSituation(situationPrefix + "_" + i);
+		} catch (java.lang.NumberFormatException e) {
+			cepRule.setSituation(situationPrefix + "_1");
+		}
+	}
+
+	protected String generateSituationPrefix(CepRule cepRule) {
+		String situation = cepRule.getTool();
+		CepRuleItem item = cepRule.getField("metric");
+		if (item != null) {
+			situation += "_metric_" + item.getValueMin();
+		}
+		situation = situation.replaceAll("[^a-zZ-Z1-9_]", "_");
+		return situation;
 	}
 
 	protected Date now() {
@@ -103,6 +144,12 @@ public class CepRuleService {
 		logger.info("getCepRule() " + id);
 		CepRule cepRule = cepRuleRepository.findOne(id);
 		return cepRule;
+	}
+
+	public List<CepRule> findBySituation(String situation) {
+		logger.info("findBySituation() " + situation);
+		List<CepRule> list = cepRuleRepository.findBySituationStartingWith(situation);
+		return list;
 	}
 
 }
