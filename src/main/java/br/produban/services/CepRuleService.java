@@ -78,15 +78,15 @@ public class CepRuleService {
 		if (StringUtils.isEmpty(cepRule.getCepRuleId())) {
 			cepRule.setCreatedDate(now());
 			cepRule.setCreatedBy(user);
+			this.populateSituation(cepRule);
 		} else {
 			CepRule cepRuleOld = cepRuleRepository.findOne(cepRule.getCepRuleId());
 			cepRule.setCreatedDate(cepRuleOld.getCreatedDate());
 			cepRule.setCreatedBy(cepRuleOld.getCreatedBy());
+			cepRule.setSituation(cepRuleOld.getSituation());
 		}
 		cepRule.setChangedDate(now());
 		cepRule.setChangedBy(user);
-
-		this.populateSituation(cepRule);
 
 		cepRule = cepRuleRepository.save(cepRule);
 
@@ -111,10 +111,25 @@ public class CepRuleService {
 			}
 		});
 
-		String situation = list.get(list.size() - 1).getSituation();
+		int x = 0;
+		for (CepRule item : list) {
+			String situation = item.getSituation();
+			try {
+				int y = Integer.parseInt(situation.substring(situation.lastIndexOf("_") + 1, situation.length()));
+				if (y > x) {
+					x = y;
+				}
+			} catch (java.lang.NumberFormatException e) {
+			}
+		}
+
+		// String situation = list.get(list.size() - 1).getSituation();
 		try {
-			int i = Integer.parseInt(situation.substring(situation.lastIndexOf("_") + 1, situation.length()));
-			i++;
+			// int i =
+			// Integer.parseInt(situation.substring(situation.lastIndexOf("_") +
+			// 1, situation.length()));
+			// i++;
+			int i = ++x;
 			cepRule.setSituation(situationPrefix + "_" + i);
 		} catch (java.lang.NumberFormatException e) {
 			cepRule.setSituation(situationPrefix + "_1");

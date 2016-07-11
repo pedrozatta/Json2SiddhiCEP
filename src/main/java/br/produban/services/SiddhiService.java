@@ -199,7 +199,6 @@ public class SiddhiService {
 
 	protected String freemarker(CepRule cepRule) {
 
-		// Freemarker configuration object
 		Configuration cfg = new Configuration();
 		try {
 			// Load template from source folder
