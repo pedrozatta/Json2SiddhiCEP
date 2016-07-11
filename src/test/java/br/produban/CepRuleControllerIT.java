@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,14 +41,15 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.produban.Json2SiddhiCepApplication;
 import br.produban.models.CepRule;
 import br.produban.repositories.CepRuleMongoRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Json2SiddhiCepApplication.class)
 @WebAppConfiguration
+@Ignore
 public class CepRuleControllerIT {
+
 	@Rule
 	public final RestDocumentation restDocumentation = new RestDocumentation("build/generated-snippets");
 

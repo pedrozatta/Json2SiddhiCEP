@@ -1,7 +1,5 @@
 package br.produban.services;
 
-import static org.junit.Assert.fail;
-
 import java.util.Calendar;
 
 import org.junit.Assert;
@@ -32,6 +30,9 @@ public class CepRuleServiceTest {
 	@Mock
 	private CepRuleMongoRepository cepRuleRepository;
 
+	@Mock
+	private SiddhiService siddhiService;
+
 	@Spy
 	@InjectMocks
 	private CepRuleService cepRuleService;
@@ -39,46 +40,6 @@ public class CepRuleServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		populator = new PopulatorBuilder().build();
-	}
-
-	@Test
-	public void testNormalize() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGenerateSiddhi() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testProcessGroup() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testProcessCondition() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSave() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testNow() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFindAll() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFindOne() {
-		fail("Not yet implemented");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -155,6 +116,8 @@ public class CepRuleServiceTest {
 		calendar.add(Calendar.MINUTE, -5);
 
 		Mockito.when(cepRuleService.now()).thenReturn(calendar.getTime());
+
+		Mockito.when(cepRuleRepository.findOne(Mockito.anyString())).thenReturn(cepRule);
 
 		Mockito.when(cepRuleRepository.save(cepRule)).thenAnswer(new Answer<CepRule>() {
 			@Override
