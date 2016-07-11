@@ -1,5 +1,11 @@
 package br.produban.services;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.log4j.Logger;
@@ -10,6 +16,9 @@ import br.produban.enumerations.ItemType;
 import br.produban.enumerations.Operator;
 import br.produban.models.CepRule;
 import br.produban.models.CepRuleItem;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 @Service
 public class SiddhiService {
@@ -19,14 +28,17 @@ public class SiddhiService {
 	public String generateSiddhi(final CepRule cepRule) {
 		StringBuilder sb = new StringBuilder();
 
-		generateRule(sb, cepRule);
-		generateQuery(sb, cepRule);
+		// generateRule(sb, cepRule);
+		// generateQuery(sb, cepRule);
+		// String result = sb.toString();
 
-		String result = sb.toString();
+		String result = freemarker(cepRule);
+
 		logger.info(result);
 		return result;
 	}
 
+	@Deprecated
 	public void generateQuery(final StringBuilder sb, final CepRule cepRule) {
 
 		CepRuleItem value = cepRule.getField("value");
@@ -62,6 +74,7 @@ public class SiddhiService {
 
 	}
 
+	@Deprecated
 	public void generateRule(final StringBuilder sb, final CepRule cepRule) {
 
 		sb.append("from Entrada");
@@ -74,16 +87,39 @@ public class SiddhiService {
 
 		processGroup(sb, cepRule, group);
 
-
 		if (sb.lastIndexOf("AND ") == sb.length() - 4) {
-			sb.delete(sb.length() - 4, sb.length() );
+			sb.delete(sb.length() - 4, sb.length());
 		} else if (sb.lastIndexOf("OR ") == sb.length() - 2) {
 			sb.insert(sb.lastIndexOf("OR "), " ) ");
-		}else{
+		} else {
 			sb.append(" ) ");
 		}
-		
+
 		sb.append("]\r\n");
+
+	}
+
+	public String generateFilter(final CepRule cepRule) {
+
+		StringBuilder sb = new StringBuilder();
+
+		CepRuleItem group = new CepRuleItem();
+		group.setChilds(cepRule.getChilds());
+
+		processGroup(sb, cepRule, group);
+
+		if (sb.lastIndexOf("AND ") == sb.length() - 4) {
+			sb.delete(sb.length() - 4, sb.length());
+		} else if (sb.lastIndexOf("OR ") == sb.length() - 2) {
+			sb.insert(sb.lastIndexOf("OR "), " ) ");
+		} else {
+			sb.append(" ) ");
+		}
+
+		sb.delete(0, 3);
+		sb.delete(sb.length() - 4, sb.length());
+
+		return sb.toString();
 
 	}
 
@@ -108,7 +144,7 @@ public class SiddhiService {
 			sb.insert(sb.lastIndexOf("AND "), " ) ");
 		} else if (sb.lastIndexOf("OR ") == sb.length() - 2) {
 			sb.insert(sb.lastIndexOf("OR "), " ) ");
-		}else{
+		} else {
 			sb.append(" ) ");
 		}
 
@@ -157,6 +193,38 @@ public class SiddhiService {
 				sb.append("OR ");
 				break;
 			}
+		}
+
+	}
+
+	protected String freemarker(CepRule cepRule) {
+
+		// Freemarker configuration object
+		Configuration cfg = new Configuration();
+		try {
+			// Load template from source folder
+			Template template = cfg.getTemplate("src/main/resources/siddhi.ftl");
+
+			// Build the data-model
+			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("CEP_RULE", cepRule);
+			data.put("value", cepRule.getField("value").getValueMin());
+			data.put("situation", "sc_bdm_so_lx_disk_p_c_bigdata");
+			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool()));
+			data.put("filtro", generateFilter(cepRule));
+
+			Writer out = new StringWriter();
+			template.process(data, out);
+
+			String siddhi = out.toString();
+			logger.info("freemarker: " + siddhi);
+
+			return siddhi;
+
+		} catch (IOException e) {
+			throw new RuntimeException("Freemarker Error", e);
+		} catch (TemplateException e) {
+			throw new RuntimeException("Freemarker Error", e);
 		}
 
 	}
