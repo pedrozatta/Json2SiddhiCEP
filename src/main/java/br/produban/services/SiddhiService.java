@@ -209,7 +209,7 @@ public class SiddhiService {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("CEP_RULE", cepRule);
 			data.put("value", cepRule.getField("value").getValueMin());
-			data.put("situation", "sc_bdm_so_lx_disk_p_c_bigdata");
+			data.put("situation", generateSituation(cepRule));
 			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool()));
 			data.put("filter", generateFilter(cepRule));
 
@@ -221,12 +221,19 @@ public class SiddhiService {
 
 			return siddhi;
 
-		} catch (IOException e) {
-			throw new RuntimeException("Freemarker Error", e);
-		} catch (TemplateException e) {
+		} catch (IOException | TemplateException e) {
 			throw new RuntimeException("Freemarker Error", e);
 		}
+	}
 
+	protected String generateSituation(CepRule cepRule) {
+		String situation = cepRule.getTool();
+		CepRuleItem item = cepRule.getField("metric");
+		if (item != null) {
+			situation += "_metric_" + item.getValueMin();
+		}
+		situation = situation.replaceAll("[^a-zZ-Z1-9_]", "_");
+		return situation;
 	}
 
 }
