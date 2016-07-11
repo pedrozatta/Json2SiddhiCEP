@@ -211,7 +211,7 @@ public class SiddhiService {
 			data.put("value", cepRule.getField("value").getValueMin());
 			data.put("situation", "sc_bdm_so_lx_disk_p_c_bigdata");
 			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool()));
-			data.put("filtro", generateFilter(cepRule));
+			data.put("filter", generateFilter(cepRule));
 
 			Writer out = new StringWriter();
 			template.process(data, out);
