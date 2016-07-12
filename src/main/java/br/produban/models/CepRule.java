@@ -90,20 +90,20 @@ public class CepRule {
 		this.tool = tool;
 	}
 
-	@Deprecated
-	public List<CepRuleItem> getFilters() {
-		return children;
-	}
+//	@Deprecated
+//	public List<CepRuleItem> getFilters() {
+//		return children;
+//	}
 
 	@Deprecated
 	public void setFilters(List<CepRuleItem> filters) {
 		this.children = filters;
 	}
 
-	@Deprecated
-	public List<CepRuleItem> getChilds() {
-		return children;
-	}
+//	@Deprecated
+//	public List<CepRuleItem> getChilds() {
+//		return children;
+//	}
 
 	@Deprecated
 	public void setChilds(List<CepRuleItem> children) {

@@ -197,8 +197,18 @@ public class SiddhiService {
 	protected String freemarker(CepRule cepRule) {
 
 		Configuration cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+		cfg.setClassForTemplateLoading(this.getClass(), "/templates");
+		
+//		try {
+//			FileTemplateLoader ftl1 = new FileTemplateLoader(new File("src/main/resources/"));
+//			MultiTemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] { ftl1 });
+//			cfg.setTemplateLoader(mtl);
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+
 		try {
-			Template template = cfg.getTemplate("src/main/resources/siddhi.ftl");
+			Template template = cfg.getTemplate("siddhi.ftl");
 
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("CEP_RULE", cepRule);
