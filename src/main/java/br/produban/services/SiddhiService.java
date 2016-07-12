@@ -11,6 +11,7 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import br.produban.enumerations.Condition;
 import br.produban.enumerations.FieldType;
 import br.produban.enumerations.ItemType;
 import br.produban.enumerations.Operator;
@@ -80,7 +81,7 @@ public class SiddhiService {
 		sb.append(" [");
 
 		CepRuleItem group = new CepRuleItem();
-		group.setChildren(cepRule.getChildren());
+		group.setChilds(cepRule.getChilds());
 
 		processGroup(sb, cepRule, group);
 
@@ -101,7 +102,7 @@ public class SiddhiService {
 		StringBuilder sb = new StringBuilder();
 
 		CepRuleItem group = new CepRuleItem();
-		group.setChildren(cepRule.getChildren());
+		group.setChilds(cepRule.getChilds());
 
 		processGroup(sb, cepRule, group);
 
@@ -123,7 +124,7 @@ public class SiddhiService {
 	protected void processGroup(StringBuilder sb, final CepRule cepRule, CepRuleItem group) {
 
 		sb.append(" ( ");
-		for (CepRuleItem item : group.getChildren()) {
+		for (CepRuleItem item : group.getChilds()) {
 			switch (ItemType.fromExternal(item.getType())) {
 			case GROUP:
 				processGroup(sb, cepRule, item);
@@ -182,11 +183,11 @@ public class SiddhiService {
 		}
 
 		if (!StringUtils.isEmpty(condition.getCondition())) {
-			switch (condition.getCondition()) {
-			case CepRuleItem.CONDITION_AND:
+			switch (Condition.fromExternal(condition.getCondition())) {
+			case AND:
 				sb.append("AND ");
 				break;
-			case CepRuleItem.CONDITION_OR:
+			case OR:
 				sb.append("OR ");
 				break;
 			}
@@ -198,21 +199,27 @@ public class SiddhiService {
 
 		Configuration cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
 		cfg.setClassForTemplateLoading(this.getClass(), "/templates");
-		
-//		try {
-//			FileTemplateLoader ftl1 = new FileTemplateLoader(new File("src/main/resources/"));
-//			MultiTemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] { ftl1 });
-//			cfg.setTemplateLoader(mtl);
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		}
+
+		// try {
+		// FileTemplateLoader ftl1 = new FileTemplateLoader(new
+		// File("src/main/resources/"));
+		// MultiTemplateLoader mtl = new MultiTemplateLoader(new
+		// TemplateLoader[] { ftl1 });
+		// cfg.setTemplateLoader(mtl);
+		// } catch (IOException e1) {
+		// e1.printStackTrace();
+		// }
 
 		try {
 			Template template = cfg.getTemplate("siddhi.ftl");
 
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("CEP_RULE", cepRule);
-			data.put("value", cepRule.getField("value").getValueMin());
+			try {
+				data.put("value", cepRule.getField("value").getValueMin());
+			} catch (NullPointerException e) {
+				data.put("value", "null");
+			}
 			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool()));
 			data.put("filter", generateFilter(cepRule));
 

@@ -37,7 +37,7 @@ public class CepRuleService {
 
 	public CepRule normalize(final CepRule cepRule) {
 
-		for (CepRuleItem item : cepRule.getChildren()) {
+		for (CepRuleItem item : cepRule.getChilds()) {
 			normalizeCepRuleItem(cepRule, item);
 		}
 
@@ -58,7 +58,7 @@ public class CepRuleService {
 	}
 
 	public void normalizeGroup(final CepRule cepRule, CepRuleItem group) {
-		for (CepRuleItem cepRuleItem : group.getChildren()) {
+		for (CepRuleItem cepRuleItem : group.getChilds()) {
 			normalizeCepRuleItem(cepRule, cepRuleItem);
 		}
 	}
@@ -74,10 +74,10 @@ public class CepRuleService {
 
 	public CepRule save(final String user, final CepRule value) {
 		Validate.notEmpty(user);
-		
-//		if (StringUtils.isEmpty(user)) {
-//			throw new IllegalArgumentException("User can not be null");
-//		}
+
+		// if (StringUtils.isEmpty(user)) {
+		// throw new IllegalArgumentException("User can not be null");
+		// }
 		if (value == null) {
 			throw new IllegalArgumentException("CepRule can not be null");
 		}

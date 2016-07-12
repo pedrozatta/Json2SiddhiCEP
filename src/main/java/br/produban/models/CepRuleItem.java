@@ -4,17 +4,11 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
-
 /**
  * Created by pedrozatta
  */
 
 public class CepRuleItem {
-
-	public static final String CONDITION_AND = "AND";
-	public static final String CONDITION_OR = "OR";
-
-	public static final String OPERATOR_BETWEEN = "between";
 
 	private String field;
 
@@ -30,8 +24,14 @@ public class CepRuleItem {
 
 	private String type;
 
+	private Long id;
+	
+	private Long nivel;
+	
+	private Boolean disabled;
+
 	@Field("childs")
-	private List<CepRuleItem> children;
+	private List<CepRuleItem> childs;
 
 	public CepRuleItem() {
 	}
@@ -68,22 +68,36 @@ public class CepRuleItem {
 		this.type = type;
 	}
 
-	public List<CepRuleItem> getChildren() {
-		return children;
+	public Long getId() {
+		return id;
 	}
 
-	public void setChildren(List<CepRuleItem> children) {
-		this.children = children;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	@Deprecated
+	public Long getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(Long nivel) {
+		this.nivel = nivel;
+	}
+
+	public Boolean getDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(Boolean disabled) {
+		this.disabled = disabled;
+	}
+
 	public List<CepRuleItem> getChilds() {
-		return children;
+		return childs;
 	}
 
-	@Deprecated
-	public void setChilds(List<CepRuleItem> children) {
-		this.children = children;
+	public void setChilds(List<CepRuleItem> childs) {
+		this.childs = childs;
 	}
 
 	public String getValueMin() {

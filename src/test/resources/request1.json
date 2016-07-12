@@ -3,7 +3,7 @@
                 "rule_name": "Test",
                 "tool": "hypervisor",
                 "nivel": 0,
-                "children": [{
+                "childs": [{
                                "id": 3,
                                "type": "condicao",
                                "nivel": 0,

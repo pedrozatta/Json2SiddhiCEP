@@ -22,6 +22,16 @@ public class CepRule {
 	@Size(min = 1, max = 90)
 	private String cepRuleId;
 
+	private String ruleName;
+
+	public String getRuleName() {
+		return ruleName;
+	}
+
+	public void setRuleName(String ruleName) {
+		this.ruleName = ruleName;
+	}
+
 	@NotNull
 	@Size(min = 1, max = 50)
 	private String createdBy;
@@ -40,19 +50,19 @@ public class CepRule {
 
 	@Field("childs")
 	// @JsonProperty("childs")
-	private List<CepRuleItem> children;
+	private List<CepRuleItem> childs;
 
 	private String siddhi;
 
 	private String situation;
 
-	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleItem> filters) {
+	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleItem> childs) {
 		super();
 		this.cepRuleId = cepRuleId;
 		this.createdBy = createdBy;
 		this.changedBy = changedBy;
 		this.tool = tool;
-		this.children = filters;
+		this.childs = childs;
 	}
 
 	public CepRule() {
@@ -90,32 +100,12 @@ public class CepRule {
 		this.tool = tool;
 	}
 
-//	@Deprecated
-//	public List<CepRuleItem> getFilters() {
-//		return children;
-//	}
-
-	@Deprecated
-	public void setFilters(List<CepRuleItem> filters) {
-		this.children = filters;
+	public List<CepRuleItem> getChilds() {
+		return childs;
 	}
 
-//	@Deprecated
-//	public List<CepRuleItem> getChilds() {
-//		return children;
-//	}
-
-	@Deprecated
-	public void setChilds(List<CepRuleItem> children) {
-		this.children = children;
-	}
-
-	public List<CepRuleItem> getChildren() {
-		return children;
-	}
-
-	public void setChildren(List<CepRuleItem> children) {
-		this.children = children;
+	public void setChilds(List<CepRuleItem> childs) {
+		this.childs = childs;
 	}
 
 	public Date getCreatedDate() {
@@ -143,7 +133,7 @@ public class CepRule {
 	}
 
 	public CepRuleItem getField(String field) {
-		CepRuleItem cepRuleItem = getField(field, this.getChildren());
+		CepRuleItem cepRuleItem = getField(field, this.getChilds());
 		return cepRuleItem;
 	}
 
@@ -160,7 +150,7 @@ public class CepRule {
 	protected CepRuleItem getField(String field, CepRuleItem cepRuleItem) {
 
 		if (ItemType.fromExternal(cepRuleItem.getType()) == ItemType.GROUP) {
-			CepRuleItem result = getField(field, cepRuleItem.getChildren());
+			CepRuleItem result = getField(field, cepRuleItem.getChilds());
 			if (result != null) {
 				return result;
 			}
