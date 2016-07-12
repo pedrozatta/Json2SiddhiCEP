@@ -43,7 +43,7 @@ public class CepRule {
 	private List<CepRuleItem> filters;
 
 	@Field("childs")
-	private List<CepRuleItem> childs;
+	private List<CepRuleItem> children;
 
 	private String siddhi;
 
@@ -101,12 +101,12 @@ public class CepRule {
 		this.filters = filters;
 	}
 
-	public List<CepRuleItem> getChilds() {
-		return childs;
+	public List<CepRuleItem> getChildren() {
+		return children;
 	}
 
-	public void setChilds(List<CepRuleItem> childs) {
-		this.childs = childs;
+	public void setChildren(List<CepRuleItem> children) {
+		this.children = children;
 	}
 
 	public Date getCreatedDate() {
@@ -134,7 +134,7 @@ public class CepRule {
 	}
 
 	public CepRuleItem getField(String field) {
-		return getField(field, this.getChilds());
+		return getField(field, this.getChildren());
 	}
 
 	protected CepRuleItem getField(String field, Iterable<CepRuleItem> items) {
@@ -150,7 +150,7 @@ public class CepRule {
 	protected CepRuleItem getField(String field, CepRuleItem cepRuleItem) {
 
 		if (ItemType.fromExternal(cepRuleItem.getType()) == ItemType.GROUP) {
-			CepRuleItem result = getField(field, cepRuleItem.getChilds());
+			CepRuleItem result = getField(field, cepRuleItem.getChildren());
 			if (result != null) {
 				return result;
 			}

@@ -1,9 +1,9 @@
 {
-  "rule_name":"Runtime-zatta",
+  "ruleName":"Runtime-zatta",
   "tool":"zatta",
   "changedBy" : "zatta1",
   "nivel":0,
-  "childs":[
+  "children":[
     {
       "id":1,
       "type":"condicao",
@@ -68,12 +68,12 @@
       "id":8,
       "type":"grupo",
       "nivel":0,
-      "childs":[
+      "children":[
         {
           "id":7,
           "type":"condicao",
           "nivel":1,
-          "childs":[
+          "children":[
 
           ],
           "field":"scName",
@@ -106,12 +106,12 @@
           "id":13,
           "type":"grupo",
           "nivel":1,
-          "childs":[
+          "children":[
             {
               "id":12,
               "type":"condicao",
               "nivel":2,
-              "childs":[
+              "children":[
 
               ],
               "field":"assetID",
@@ -138,12 +138,12 @@
       "id":17,
       "type":"grupo",
       "nivel":0,
-      "childs":[
+      "children":[
         {
           "id":16,
           "type":"condicao",
           "nivel":1,
-          "childs":[
+          "children":[
 
           ],
           "field":"admveFqdn",

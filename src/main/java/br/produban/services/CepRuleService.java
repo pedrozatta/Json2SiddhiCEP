@@ -32,7 +32,7 @@ public class CepRuleService {
 
 	public CepRule normalize(final CepRule cepRule) {
 
-		for (CepRuleItem item : cepRule.getChilds()) {
+		for (CepRuleItem item : cepRule.getChildren()) {
 			normalizeCepRuleItem(cepRule, item);
 		}
 
@@ -53,7 +53,7 @@ public class CepRuleService {
 	}
 
 	public void normalizeGroup(final CepRule cepRule, CepRuleItem group) {
-		for (CepRuleItem cepRuleItem : group.getChilds()) {
+		for (CepRuleItem cepRuleItem : group.getChildren()) {
 			normalizeCepRuleItem(cepRule, cepRuleItem);
 		}
 	}
@@ -88,11 +88,10 @@ public class CepRuleService {
 		cepRule.setChangedDate(now());
 		cepRule.setChangedBy(user);
 
-		cepRule = cepRuleRepository.save(cepRule);
-
 		String siddhi = siddhiService.generateSiddhi(cepRule);
 		cepRule.setSiddhi(siddhi);
 
+		cepRule = cepRuleRepository.save(cepRule);
 		return cepRule;
 	}
 

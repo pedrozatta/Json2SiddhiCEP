@@ -26,14 +26,7 @@ public class SiddhiService {
 	final static Logger logger = Logger.getLogger(SiddhiService.class);
 
 	public String generateSiddhi(final CepRule cepRule) {
-		StringBuilder sb = new StringBuilder();
-
-		// generateRule(sb, cepRule);
-		// generateQuery(sb, cepRule);
-		// String result = sb.toString();
-
 		String result = freemarker(cepRule);
-
 		logger.info(result);
 		return result;
 	}
@@ -83,7 +76,7 @@ public class SiddhiService {
 		sb.append(" [");
 
 		CepRuleItem group = new CepRuleItem();
-		group.setChilds(cepRule.getChilds());
+		group.setChildren(cepRule.getChildren());
 
 		processGroup(sb, cepRule, group);
 
@@ -104,7 +97,7 @@ public class SiddhiService {
 		StringBuilder sb = new StringBuilder();
 
 		CepRuleItem group = new CepRuleItem();
-		group.setChilds(cepRule.getChilds());
+		group.setChildren(cepRule.getChildren());
 
 		processGroup(sb, cepRule, group);
 
@@ -126,7 +119,7 @@ public class SiddhiService {
 	protected void processGroup(StringBuilder sb, final CepRule cepRule, CepRuleItem group) {
 
 		sb.append(" ( ");
-		for (CepRuleItem item : group.getChilds()) {
+		for (CepRuleItem item : group.getChildren()) {
 			switch (ItemType.fromExternal(item.getType())) {
 			case GROUP:
 				processGroup(sb, cepRule, item);
@@ -199,12 +192,10 @@ public class SiddhiService {
 
 	protected String freemarker(CepRule cepRule) {
 
-		Configuration cfg = new Configuration();
+		Configuration cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
 		try {
-			// Load template from source folder
 			Template template = cfg.getTemplate("src/main/resources/siddhi.ftl");
 
-			// Build the data-model
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("CEP_RULE", cepRule);
 			data.put("value", cepRule.getField("value").getValueMin());
@@ -223,6 +214,5 @@ public class SiddhiService {
 			throw new RuntimeException("Freemarker Error", e);
 		}
 	}
-
 
 }

@@ -38,6 +38,7 @@ public class SiddhiServiceTest {
 	}
 
 	@Test
+	@SuppressWarnings("deprecation")
 	public void testGenerateSiddhiRequest1() throws JsonParseException, JsonMappingException, IOException {
 
 		CepRule cepRule = mapper.readValue(new File("src/test/resources/request1.json"), CepRule.class);
@@ -55,6 +56,7 @@ public class SiddhiServiceTest {
 	}
 
 	@Test
+	@SuppressWarnings("deprecation")
 	public void testGenerateSiddhiRequest2() throws JsonParseException, JsonMappingException, IOException {
 
 		CepRule cepRule = mapper.readValue(new File("src/test/resources/request2.json"), CepRule.class);
@@ -72,6 +74,7 @@ public class SiddhiServiceTest {
 	}
 
 	@Test
+	@SuppressWarnings("deprecation")
 	public void testGenerateSiddhiRequest3() throws JsonParseException, JsonMappingException, IOException {
 
 		CepRule cepRule = mapper.readValue(new File("src/test/resources/request3.json"), CepRule.class);

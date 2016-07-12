@@ -10,8 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 public class CepRuleItem {
 
-
-
 	public static final String CONDITION_AND = "AND";
 	public static final String CONDITION_OR = "OR";
 
@@ -32,7 +30,7 @@ public class CepRuleItem {
 	private String type;
 
 	@Field("childs")
-	private List<CepRuleItem> childs;
+	private List<CepRuleItem> children;
 
 	public CepRuleItem() {
 	}
@@ -69,12 +67,12 @@ public class CepRuleItem {
 		this.type = type;
 	}
 
-	public List<CepRuleItem> getChilds() {
-		return childs;
+	public List<CepRuleItem> getChildren() {
+		return children;
 	}
 
-	public void setChilds(List<CepRuleItem> childs) {
-		this.childs = childs;
+	public void setChildren(List<CepRuleItem> children) {
+		this.children = children;
 	}
 
 	public String getValueMin() {

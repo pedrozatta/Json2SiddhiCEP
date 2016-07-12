@@ -1,8 +1,11 @@
 package br.produban.controllers;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,12 @@ public class CepRuleController {
 
 	@Autowired
 	private CepRuleService cepRuleService;
+
+	@ModelAttribute
+	public void setVaryResponseHeader(HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public Iterable<CepRule> listCepRules() {
