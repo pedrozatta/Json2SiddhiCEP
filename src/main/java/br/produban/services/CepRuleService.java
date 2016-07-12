@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,10 @@ import br.produban.enumerations.ItemType;
 import br.produban.models.CepRule;
 import br.produban.models.CepRuleItem;
 import br.produban.repositories.CepRuleMongoRepository;
+
+/**
+ * Created by pedrozatta
+ */
 
 @Service
 public class CepRuleService {
@@ -68,9 +73,11 @@ public class CepRuleService {
 	}
 
 	public CepRule save(final String user, final CepRule value) {
-		if (StringUtils.isEmpty(user)) {
-			throw new IllegalArgumentException("User can not be null");
-		}
+		Validate.notEmpty(user);
+		
+//		if (StringUtils.isEmpty(user)) {
+//			throw new IllegalArgumentException("User can not be null");
+//		}
 		if (value == null) {
 			throw new IllegalArgumentException("CepRule can not be null");
 		}

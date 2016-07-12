@@ -8,6 +8,10 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import br.produban.models.CepRule;
 
+/**
+ * Created by pedrozatta
+ */
+
 @RepositoryRestResource(collectionResourceRel = "ceprule", path = "ceprule")
 public interface CepRuleMongoRepository extends MongoRepository<CepRule, String> {
 

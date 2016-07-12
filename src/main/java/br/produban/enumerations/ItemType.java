@@ -2,6 +2,10 @@ package br.produban.enumerations;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Created by pedrozatta
+ */
+
 public enum ItemType {
 
 	CONDITION("condicao"), GROUP("grupo");

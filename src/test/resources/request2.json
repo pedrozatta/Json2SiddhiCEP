@@ -3,7 +3,7 @@
                 "changedBy" : "zatta2",
                 "tool": "zabbix",
                 "nivel": 0,
-                "childs": [{
+                "children": [{
                                "id": 6,
                                "type": "condicao",
                                "nivel": 0,
@@ -25,11 +25,11 @@
                                "id": 9,
                                "type": "grupo",
                                "nivel": 0,
-                               "childs": [{
+                               "children": [{
                                                "id": 8,
                                                "type": "condicao",
                                                "nivel": 1,
-                                               "childs": [],
+                                               "children": [],
                                                "field": "FDC",
                                                "valueMin": "TESTE",
                                                "fieldType": "string",
@@ -57,11 +57,11 @@
                                "id": 15,
                                "type": "grupo",
                                "nivel": 0,
-                               "childs": [{
+                               "children": [{
                                                "id": 14,
                                                "type": "condicao",
                                                "nivel": 1,
-                                               "childs": [],
+                                               "children": [],
                                                "field": "FDC",
                                                "valueMin": "3434",
                                                "fieldType": "string",
@@ -71,11 +71,11 @@
                                                "id": 17,
                                                "type": "grupo",
                                                "nivel": 1,
-                                               "childs": [{
+                                               "children": [{
                                                                "id": 16,
                                                                "type": "condicao",
                                                                "nivel": 2,
-                                                               "childs": [],
+                                                               "children": [],
                                                                "field": "FDC",
                                                                "valueMin": "10",
                                                                "fieldType": "string",
@@ -86,11 +86,11 @@
                                                                "id": 19,
                                                                "type": "grupo",
                                                                "nivel": 1,
-                                                               "childs": [{
+                                                               "children": [{
                                                                               "id": 18,
                                                                               "type": "condicao",
                                                                               "nivel": 2,
-                                                                              "childs": [],
+                                                                              "children": [],
                                                                               "field": "FDC",
                                                                               "valueMin": "100",
                                                                               "fieldType": "string",
@@ -121,11 +121,11 @@
                                "id": 23,
                                "type": "grupo",
                                "nivel": 0,
-                               "childs": [{
+                               "children": [{
                                                "id": 22,
                                                "type": "condicao",
                                                "nivel": 1,
-                                               "childs": [],
+                                               "children": [],
                                                "field": "FDC",
                                                "valueMin": "10110",
                                                "fieldType": "string",

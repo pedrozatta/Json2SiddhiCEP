@@ -20,6 +20,10 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
+/**
+ * Created by pedrozatta
+ */
+
 @Service
 public class SiddhiService {
 
@@ -43,7 +47,7 @@ public class SiddhiService {
 
 		sb.append("\"sc_remedy_so_ux_disk_p_c_bigdata\" as situation");
 		sb.append(", csId as id");
-		sb.append(", str:concat(\"O consumo de Disco ou FS está acima do threshold estipulado em " + value.getValueMin()
+		sb.append(", str:concat(\"O consumo de Disco ou FS esta acima do threshold estipulado em " + value.getValueMin()
 				+ "%. Disco ou FS: \", fileSystem, \". Valor atual: \", value, \"%\" ) as message");
 		sb.append(", hostname as hostname");
 		sb.append(", fileSystem as item");

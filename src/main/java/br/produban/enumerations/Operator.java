@@ -2,6 +2,10 @@ package br.produban.enumerations;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Created by pedrozatta
+ */
+
 public enum Operator {
 
 	BETWEEN("between"), EQUAL("=="), NOT_EQUAL("!="), LESS_THAN("<"), GREATER_THAN(">"), LESS_THAN_EQUAL(

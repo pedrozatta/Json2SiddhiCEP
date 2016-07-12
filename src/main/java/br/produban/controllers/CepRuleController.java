@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ import br.produban.services.CepRuleService;
 /**
  * Created by bera on 30/06/16.
  */
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/ceprule")
 public class CepRuleController {
@@ -55,6 +56,7 @@ public class CepRuleController {
 		return cepRuleService.save(cepRule.getChangedBy(), cepRule);
 	}
 
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public CepRule updateCepRule(@PathVariable("id") String id, @RequestBody CepRule cepRule) {
 		logger.info("updateCepRule(..)");

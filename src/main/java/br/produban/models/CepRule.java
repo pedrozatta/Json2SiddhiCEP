@@ -38,11 +38,8 @@ public class CepRule {
 	@Size(min = 1, max = 90)
 	private String tool;
 
-	@Deprecated
-	@Field("filters")
-	private List<CepRuleItem> filters;
-
 	@Field("childs")
+	// @JsonProperty("childs")
 	private List<CepRuleItem> children;
 
 	private String siddhi;
@@ -55,7 +52,7 @@ public class CepRule {
 		this.createdBy = createdBy;
 		this.changedBy = changedBy;
 		this.tool = tool;
-		this.filters = filters;
+		this.children = filters;
 	}
 
 	public CepRule() {
@@ -93,12 +90,24 @@ public class CepRule {
 		this.tool = tool;
 	}
 
+	@Deprecated
 	public List<CepRuleItem> getFilters() {
-		return filters;
+		return children;
 	}
 
+	@Deprecated
 	public void setFilters(List<CepRuleItem> filters) {
-		this.filters = filters;
+		this.children = filters;
+	}
+
+	@Deprecated
+	public List<CepRuleItem> getChilds() {
+		return children;
+	}
+
+	@Deprecated
+	public void setChilds(List<CepRuleItem> children) {
+		this.children = children;
 	}
 
 	public List<CepRuleItem> getChildren() {
@@ -134,7 +143,8 @@ public class CepRule {
 	}
 
 	public CepRuleItem getField(String field) {
-		return getField(field, this.getChildren());
+		CepRuleItem cepRuleItem = getField(field, this.getChildren());
+		return cepRuleItem;
 	}
 
 	protected CepRuleItem getField(String field, Iterable<CepRuleItem> items) {

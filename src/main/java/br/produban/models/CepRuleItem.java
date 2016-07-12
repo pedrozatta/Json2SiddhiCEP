@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
+
 /**
- * Created by bera on 23/06/16.
+ * Created by pedrozatta
  */
 
 public class CepRuleItem {
@@ -72,6 +73,16 @@ public class CepRuleItem {
 	}
 
 	public void setChildren(List<CepRuleItem> children) {
+		this.children = children;
+	}
+
+	@Deprecated
+	public List<CepRuleItem> getChilds() {
+		return children;
+	}
+
+	@Deprecated
+	public void setChilds(List<CepRuleItem> children) {
 		this.children = children;
 	}
 
