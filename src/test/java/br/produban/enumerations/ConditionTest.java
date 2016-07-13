@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class ConditionTest {
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = RuntimeException.class)
 	public void testFromExternalNull() {
 		Condition.fromExternal(null);
 	}

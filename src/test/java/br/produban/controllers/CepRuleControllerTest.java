@@ -81,15 +81,14 @@ public class CepRuleControllerTest {
 	public void testCreateCepRule()
 			throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
 		CepRule cepRule = populator.populateBean(CepRule.class);
-		Mockito.when(cepRuleService.save(cepRule.getChangedBy(), cepRule)).thenReturn(cepRule);
+		Mockito.when(cepRuleService.save(Mockito.anyString(), Mockito.any(CepRule.class))).thenReturn(cepRule);
 
 		CepRule value = cepRuleController.createCepRule(cepRule);
 		Assert.assertNotNull(value);
 		Assert.assertEquals(cepRule.getCepRuleId(), value.getCepRuleId());
 		Assert.assertEquals(cepRule, value);
 
-		Mockito.verify(cepRuleService, Mockito.only()).save(cepRule.getChangedBy(), cepRule);
-
+		Mockito.verify(cepRuleService, Mockito.only()).save(Mockito.anyString(), Mockito.any(CepRule.class));
 	}
 
 	@Test
