@@ -1,5 +1,6 @@
 package br.produban.models;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import br.produban.enumerations.ItemType;
  * Created by bera on 23/06/16.
  */
 
-public class CepRule {
+public class CepRule implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@NotNull
@@ -23,14 +26,6 @@ public class CepRule {
 	private String cepRuleId;
 
 	private String ruleName;
-
-	public String getRuleName() {
-		return ruleName;
-	}
-
-	public void setRuleName(String ruleName) {
-		this.ruleName = ruleName;
-	}
 
 	@NotNull
 	@Size(min = 1, max = 50)
@@ -55,6 +50,8 @@ public class CepRule {
 	private String siddhi;
 
 	private String situation;
+
+	private String message;
 
 	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleItem> childs) {
 		super();
@@ -169,4 +166,19 @@ public class CepRule {
 		this.situation = situation;
 	}
 
+	public String getRuleName() {
+		return ruleName;
+	}
+
+	public void setRuleName(String ruleName) {
+		this.ruleName = ruleName;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }

@@ -1,6 +1,6 @@
 package br.produban.enumerations;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 /**
  * Created by pedrozatta
@@ -17,9 +17,7 @@ public enum ItemType {
 	}
 
 	public static ItemType fromExternal(String external) {
-		if (StringUtils.isEmpty(external)) {
-			throw new IllegalArgumentException();
-		}
+		Validate.notEmpty(external);
 		for (ItemType itemType : ItemType.values()) {
 			if (itemType.external.equals(external)) {
 				return itemType;

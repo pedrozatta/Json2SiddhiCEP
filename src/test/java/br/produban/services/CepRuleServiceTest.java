@@ -16,7 +16,6 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.stubbing.Answer;
 
 import br.produban.models.CepRule;
-import br.produban.models.CepRuleItem;
 import br.produban.repositories.CepRuleMongoRepository;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
@@ -59,7 +58,7 @@ public class CepRuleServiceTest {
 
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = RuntimeException.class)
 	public void testSave3() {
 
 		cepRuleService.save("Zatta1", null);
@@ -69,9 +68,6 @@ public class CepRuleServiceTest {
 	@Test
 	public void testSave_insert() {
 		CepRule cepRule = populator.populateBean(CepRule.class, "cepRuleId", "changedDate", "createdDate");
-//		CepRuleItem cepRuleItem = populator.populateBean(CepRuleItem.class, "field");
-//		cepRuleItem.setField("value");
-//		cepRule.getChildren().add(cepRuleItem);
 		String user = "ZATTA1";
 		String cepRuleId = "577d3e9544efa608dfb7c59e";
 		Calendar calendar = Calendar.getInstance();

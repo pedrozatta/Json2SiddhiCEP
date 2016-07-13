@@ -91,4 +91,42 @@ public class SiddhiServiceTest {
 
 	}
 
+	@Test(expected = RuntimeException.class)
+	public void testGenerateMessageNull() {
+		siddhiService.generateMessage(null);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void testGenerateMessageEmpty() {
+		siddhiService.generateMessage("");
+	}
+
+	@Test
+	public void testGenerateMessageNoVariable() {
+		String message = "O consumo de Disco ou FS está acima do threshold estipulado em 80%.";
+		String result = siddhiService.generateMessage(message);
+		Assert.assertTrue(result.indexOf('\"') == 0);
+		Assert.assertTrue(result.lastIndexOf('\"') == result.length()-1);
+		Assert.assertTrue(result.contains(message));
+	}
+
+	@Test
+	public void testGenerateMessageOneVariable() {
+		String message = "O consumo de Disco ou FS está acima do threshold estipulado em 80%. Valor atual {value}.";
+		String result = siddhiService.generateMessage(message);
+		Assert.assertTrue(result.indexOf('\"') == 0);
+		Assert.assertTrue(result.lastIndexOf('\"') == result.length()-1);
+		Assert.assertTrue(result.contains("\", value, \""));
+	}
+
+	@Test
+	public void testGenerateMessageTwoVariable() {
+		String message = "O consumo de Disco ou FS está acima do threshold estipulado em 80%. Valor atual {value}  Disco ou FS {fileSystem}.";
+		String result = siddhiService.generateMessage(message);
+		Assert.assertTrue(result.indexOf('\"') == 0);
+		Assert.assertTrue(result.lastIndexOf('\"') == result.length()-1);
+		Assert.assertTrue(result.contains("\", value, \""));
+		Assert.assertTrue(result.contains("\", fileSystem, \""));
+	}
+
 }

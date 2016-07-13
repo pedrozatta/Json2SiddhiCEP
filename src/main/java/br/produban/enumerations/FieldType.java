@@ -1,6 +1,6 @@
 package br.produban.enumerations;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 /**
  * Created by pedrozatta
@@ -17,9 +17,7 @@ public enum FieldType {
 	}
 
 	public static FieldType fromExternal(String external) {
-		if (StringUtils.isEmpty(external)) {
-			throw new IllegalArgumentException("External " + external);
-		}
+		Validate.notEmpty(external);
 		for (FieldType itemType : FieldType.values()) {
 			if (itemType.external.equals(external)) {
 				return itemType;

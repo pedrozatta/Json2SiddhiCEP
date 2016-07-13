@@ -1,5 +1,6 @@
 package br.produban.controllers;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.junit.Assert;
@@ -77,7 +78,8 @@ public class CepRuleControllerTest {
 	}
 
 	@Test
-	public void testCreateCepRule() {
+	public void testCreateCepRule()
+			throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
 		CepRule cepRule = populator.populateBean(CepRule.class);
 		Mockito.when(cepRuleService.save(cepRule.getChangedBy(), cepRule)).thenReturn(cepRule);
 

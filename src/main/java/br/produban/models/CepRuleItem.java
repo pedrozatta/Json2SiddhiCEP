@@ -1,5 +1,6 @@
 package br.produban.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -8,7 +9,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
  * Created by pedrozatta
  */
 
-public class CepRuleItem {
+public class CepRuleItem implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String field;
 
@@ -25,10 +28,12 @@ public class CepRuleItem {
 	private String type;
 
 	private Long id;
-	
+
 	private Long nivel;
-	
+
 	private Boolean disabled;
+
+	private String conditionGroup;
 
 	@Field("childs")
 	private List<CepRuleItem> childs;
@@ -122,6 +127,14 @@ public class CepRuleItem {
 
 	public void setFieldType(String fieldType) {
 		this.fieldType = fieldType;
+	}
+
+	public String getConditionGroup() {
+		return conditionGroup;
+	}
+
+	public void setConditionGroup(String conditionGroup) {
+		this.conditionGroup = conditionGroup;
 	}
 
 }

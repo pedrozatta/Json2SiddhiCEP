@@ -1,6 +1,6 @@
 package br.produban.enumerations;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 
 /**
  * Created by pedrozatta
@@ -18,9 +18,7 @@ public enum Operator {
 	}
 
 	public static Operator fromExternal(String external) {
-		if (StringUtils.isEmpty(external)) {
-			throw new IllegalArgumentException();
-		}
+		Validate.notEmpty(external);
 		for (Operator itemType : Operator.values()) {
 			if (itemType.external.equals(external)) {
 				return itemType;

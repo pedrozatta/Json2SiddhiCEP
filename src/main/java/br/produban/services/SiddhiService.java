@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -108,7 +109,7 @@ public class SiddhiService {
 
 		if (sb.lastIndexOf("AND ") == sb.length() - 4) {
 			sb.delete(sb.length() - 4, sb.length());
-		} else if (sb.lastIndexOf("OR ") == sb.length() - 2) {
+		} else if (sb.lastIndexOf("OR ") == sb.length() - 3) {
 			sb.insert(sb.lastIndexOf("OR "), " ) ");
 		} else {
 			sb.append(" ) ");
@@ -140,7 +141,7 @@ public class SiddhiService {
 
 		if (sb.lastIndexOf("AND ") == sb.length() - 4) {
 			sb.insert(sb.lastIndexOf("AND "), " ) ");
-		} else if (sb.lastIndexOf("OR ") == sb.length() - 2) {
+		} else if (sb.lastIndexOf("OR ") == sb.length() - 3) {
 			sb.insert(sb.lastIndexOf("OR "), " ) ");
 		} else {
 			sb.append(" ) ");
@@ -222,6 +223,7 @@ public class SiddhiService {
 			}
 			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool()));
 			data.put("filter", generateFilter(cepRule));
+			data.put("message", generateMessage(cepRule.getMessage()));
 
 			Writer out = new StringWriter();
 			template.process(data, out);
@@ -234,6 +236,28 @@ public class SiddhiService {
 		} catch (IOException | TemplateException e) {
 			throw new RuntimeException("Freemarker Error", e);
 		}
+	}
+
+	protected String generateMessage(String message) {
+		Validate.notEmpty(message);
+
+		StringBuilder sb = new StringBuilder();
+		sb.append('\"');
+		sb.append(message);
+		sb.append('\"');
+
+		if (sb.indexOf("{") == -1) {
+			return sb.toString();
+		}
+
+		int index = sb.indexOf("{");
+		while (index != -1) {
+			sb.replace(index, index + 1, "\", ");
+			index = sb.indexOf("}", index);
+			sb.replace(index, index + 1, ", \"");
+			index = sb.indexOf("{");
+		}
+		return sb.toString();
 	}
 
 }

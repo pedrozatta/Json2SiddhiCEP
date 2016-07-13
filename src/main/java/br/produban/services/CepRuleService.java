@@ -40,7 +40,6 @@ public class CepRuleService {
 		for (CepRuleItem item : cepRule.getChilds()) {
 			normalizeCepRuleItem(cepRule, item);
 		}
-
 		return cepRule;
 
 	}
@@ -58,8 +57,13 @@ public class CepRuleService {
 	}
 
 	public void normalizeGroup(final CepRule cepRule, CepRuleItem group) {
+		CepRuleItem lastCepRuleItem = null;
 		for (CepRuleItem cepRuleItem : group.getChilds()) {
+			lastCepRuleItem = cepRuleItem;
 			normalizeCepRuleItem(cepRule, cepRuleItem);
+		}
+		if (lastCepRuleItem != null && StringUtils.isNotEmpty(group.getConditionGroup())) {
+			lastCepRuleItem.setCondition(group.getConditionGroup());
 		}
 	}
 
@@ -73,14 +77,10 @@ public class CepRuleService {
 	}
 
 	public CepRule save(final String user, final CepRule value) {
+		Validate.notNull(value, "CepRule can not be null");
 		Validate.notEmpty(user);
+		Validate.notEmpty(value.getMessage());
 
-		// if (StringUtils.isEmpty(user)) {
-		// throw new IllegalArgumentException("User can not be null");
-		// }
-		if (value == null) {
-			throw new IllegalArgumentException("CepRule can not be null");
-		}
 		CepRule cepRule = this.normalize(value);
 		if (StringUtils.isEmpty(cepRule.getCepRuleId())) {
 			cepRule.setCreatedDate(now());
@@ -99,6 +99,7 @@ public class CepRuleService {
 		cepRule.setSiddhi(siddhi);
 
 		cepRule = cepRuleRepository.save(cepRule);
+
 		return cepRule;
 	}
 

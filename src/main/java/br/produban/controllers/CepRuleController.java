@@ -1,7 +1,10 @@
 package br.produban.controllers;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,12 +54,21 @@ public class CepRuleController {
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public CepRule createCepRule(@RequestBody final CepRule cepRule) {
+	public CepRule createCepRule(@RequestBody final CepRule cepRule)
+			throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
 		logger.info("createCepRule(..)");
-		return cepRuleService.save(cepRule.getChangedBy(), cepRule);
+		CepRule clone = (CepRule) SerializationUtils.clone(cepRule);
+		cepRuleService.save(clone.getChangedBy(), clone);
+		cepRule.setCepRuleId(clone.getCepRuleId());
+		cepRule.setSituation(clone.getSituation());
+		cepRule.setSiddhi(clone.getSiddhi());
+		cepRule.setChangedBy(clone.getChangedBy());
+		cepRule.setChangedDate(clone.getChangedDate());
+		cepRule.setCreatedBy(clone.getCreatedBy());
+		cepRule.setCreatedDate(clone.getCreatedDate());
+		return cepRule;
 	}
 
-	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public CepRule updateCepRule(@PathVariable("id") String id, @RequestBody CepRule cepRule) {
 		logger.info("updateCepRule(..)");
