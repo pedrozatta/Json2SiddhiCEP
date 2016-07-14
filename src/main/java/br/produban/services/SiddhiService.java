@@ -3,6 +3,8 @@ package br.produban.services;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -217,9 +219,10 @@ public class SiddhiService {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("CEP_RULE", cepRule);
 			try {
-				data.put("value", cepRule.getField("value").getValueMin());
+				BigDecimal value = new BigDecimal(cepRule.getField("value").getValueMin());
+				data.put("value", value);
 			} catch (NullPointerException e) {
-				data.put("value", "null");
+				data.put("value", BigDecimal.ZERO);
 			}
 			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool()));
 			data.put("filter", generateFilter(cepRule));
