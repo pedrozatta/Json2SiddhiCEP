@@ -16,6 +16,7 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.stubbing.Answer;
 
 import br.produban.models.CepRule;
+import br.produban.models.MessageItem;
 import br.produban.repositories.CepRuleMongoRepository;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
@@ -68,6 +69,7 @@ public class CepRuleServiceTest {
 	@Test
 	public void testSave_insert() {
 		CepRule cepRule = populator.populateBean(CepRule.class, "cepRuleId", "changedDate", "createdDate");
+		cepRule.setMessage(populator.populateBeans(MessageItem.class, 1));
 		String user = "ZATTA1";
 		String cepRuleId = "577d3e9544efa608dfb7c59e";
 		Calendar calendar = Calendar.getInstance();
@@ -108,6 +110,7 @@ public class CepRuleServiceTest {
 		createdDate.add(Calendar.MINUTE, -10);
 
 		CepRule cepRule = populator.populateBean(CepRule.class, "createdBy", "createdDate");
+		cepRule.setMessage(populator.populateBeans(MessageItem.class, 1));
 		cepRule.setCreatedBy(createdBy);
 		cepRule.setCreatedDate(createdDate.getTime());
 
