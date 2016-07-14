@@ -223,7 +223,7 @@ public class SiddhiService {
 			}
 			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool()));
 			data.put("filter", generateFilter(cepRule));
-			data.put("message", generateMessage(cepRule.getMessage()));
+			data.put("message", cepRule.getMessage());
 
 			Writer out = new StringWriter();
 			template.process(data, out);

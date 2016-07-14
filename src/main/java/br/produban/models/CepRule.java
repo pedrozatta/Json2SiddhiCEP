@@ -51,7 +51,7 @@ public class CepRule implements Serializable {
 
 	private String situation;
 
-	private String message;
+	private List<MessageItem> message;
 
 	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleItem> childs) {
 		super();
@@ -174,11 +174,12 @@ public class CepRule implements Serializable {
 		this.ruleName = ruleName;
 	}
 
-	public String getMessage() {
+	public List<MessageItem> getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
+	public void setMessage(List<MessageItem> message) {
 		this.message = message;
 	}
+
 }
