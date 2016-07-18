@@ -35,6 +35,9 @@ public class CepRuleService {
 	@Autowired
 	private CepRuleMongoRepository cepRuleRepository;
 
+	@Autowired
+	private UserService userService;
+
 	public CepRule normalize(final CepRule cepRule) {
 
 		for (CepRuleItem item : cepRule.getChilds()) {
@@ -76,7 +79,13 @@ public class CepRuleService {
 		}
 	}
 
-	public CepRule save(final String user, final CepRule value) {
+	public CepRule save(final CepRule value) {
+		final String user = userService.getAuthenticatedUserName();
+		return save(user, value);
+
+	}
+
+	protected CepRule save(final String user, final CepRule value) {
 		Validate.notNull(value, "CepRule can not be null");
 		Validate.notEmpty(user);
 		Validate.notEmpty(value.getMessage());

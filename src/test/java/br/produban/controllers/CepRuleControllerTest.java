@@ -81,26 +81,26 @@ public class CepRuleControllerTest {
 	public void testCreateCepRule()
 			throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
 		CepRule cepRule = populator.populateBean(CepRule.class);
-		Mockito.when(cepRuleService.save(Mockito.anyString(), Mockito.any(CepRule.class))).thenReturn(cepRule);
+		Mockito.when(cepRuleService.save(Mockito.any(CepRule.class))).thenReturn(cepRule);
 
 		CepRule value = cepRuleController.createCepRule(cepRule, null);
 		Assert.assertNotNull(value);
 		Assert.assertEquals(cepRule.getCepRuleId(), value.getCepRuleId());
 		Assert.assertEquals(cepRule, value);
 
-		Mockito.verify(cepRuleService, Mockito.only()).save(Mockito.anyString(), Mockito.any(CepRule.class));
+		Mockito.verify(cepRuleService, Mockito.only()).save(Mockito.any(CepRule.class));
 	}
 
 	@Test
 	public void testUpdateCepRule() {
 		CepRule cepRule = populator.populateBean(CepRule.class);
 
-		Mockito.when(cepRuleService.save(cepRule.getChangedBy(), cepRule)).thenReturn(cepRule);
+		Mockito.when(cepRuleService.save(cepRule)).thenReturn(cepRule);
 		Mockito.when(cepRuleService.findOne(Mockito.anyString())).thenReturn(new CepRule());
 
 		cepRuleController.updateCepRule(cepRule.getCepRuleId(), cepRule);
 
-		Mockito.verify(cepRuleService).save(cepRule.getChangedBy(), cepRule);
+		Mockito.verify(cepRuleService).save(cepRule);
 	}
 
 }

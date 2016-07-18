@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,42 +36,6 @@ public class SiddhiService {
 		String result = freemarker(cepRule);
 		logger.info(result);
 		return result;
-	}
-
-	@Deprecated
-	public void generateQuery(final StringBuilder sb, final CepRule cepRule) {
-
-		CepRuleItem value = cepRule.getField("value");
-		if (value == null) {
-			throw new IllegalArgumentException("Field 'value' not found");
-		}
-
-		sb.append("select ");
-
-		sb.append("\"sc_remedy_so_ux_disk_p_c_bigdata\" as situation");
-		sb.append(", csId as id");
-		sb.append(", str:concat(\"O consumo de Disco ou FS esta acima do threshold estipulado em " + value.getValueMin()
-				+ "%. Disco ou FS: \", fileSystem, \". Valor atual: \", value, \"%\" ) as message");
-		sb.append(", hostname as hostname");
-		sb.append(", fileSystem as item");
-		sb.append(", value as value");
-		sb.append(", \"open\" as eventstatus");
-		sb.append(", \"critical\" as severity");
-		sb.append(", " + value.getValueMin() + " as threshold");
-		sb.append(", businessService as businessService");
-		sb.append(", technicalService as technicalService");
-		sb.append(", serviceComponent as serviceComponent");
-		sb.append(", environment as environment");
-		sb.append(", lsFunction as lsFunction");
-		sb.append(", hyperName as hyperName");
-		sb.append(", csSite as csSite");
-		sb.append(", platform as platform");
-		sb.append(", rule as rule");
-		sb.append(", status as status");
-		sb.append(", timestamp as timestamp");
-		sb.append(", tool as tool");
-		sb.append("\r\n insert into Saida;");
-
 	}
 
 	@Deprecated

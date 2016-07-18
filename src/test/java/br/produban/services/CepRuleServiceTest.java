@@ -1,6 +1,7 @@
 package br.produban.services;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,6 +35,9 @@ public class CepRuleServiceTest {
 	@Mock
 	private SiddhiService siddhiService;
 
+	@Mock
+	private UserService userService;
+
 	@Spy
 	@InjectMocks
 	private CepRuleService cepRuleService;
@@ -47,23 +51,19 @@ public class CepRuleServiceTest {
 	public void testSave1() {
 
 		CepRule cepRule = populator.populateBean(CepRule.class, "cepRuleId");
-		cepRuleService.save(null, cepRule);
+		cepRuleService.save(cepRule);
 
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testSave2() {
-
 		CepRule cepRule = populator.populateBean(CepRule.class, "cepRuleId");
-		cepRuleService.save("", cepRule);
-
+		cepRuleService.save(cepRule);
 	}
 
 	@Test(expected = RuntimeException.class)
 	public void testSave3() {
-
-		cepRuleService.save("Zatta1", null);
-
+		cepRuleService.save(null);
 	}
 
 	@Test
@@ -74,6 +74,8 @@ public class CepRuleServiceTest {
 		String cepRuleId = "577d3e9544efa608dfb7c59e";
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.MINUTE, -5);
+
+		Mockito.when(userService.getAuthenticatedUserName()).thenReturn(user);
 
 		Mockito.when(cepRuleService.now()).thenReturn(calendar.getTime());
 
@@ -86,7 +88,7 @@ public class CepRuleServiceTest {
 			}
 		});
 
-		CepRule result = cepRuleService.save(user, cepRule);
+		CepRule result = cepRuleService.save(cepRule);
 		Assert.assertNotNull(result);
 
 		Assert.assertNotNull(cepRule.getCepRuleId());
@@ -118,6 +120,8 @@ public class CepRuleServiceTest {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.MINUTE, -5);
 
+		Mockito.when(userService.getAuthenticatedUserName()).thenReturn(user);
+
 		Mockito.when(cepRuleService.now()).thenReturn(calendar.getTime());
 
 		Mockito.when(cepRuleRepository.findOne(Mockito.anyString())).thenReturn(cepRule);
@@ -129,7 +133,7 @@ public class CepRuleServiceTest {
 			}
 		});
 
-		CepRule result = cepRuleService.save(user, cepRule);
+		CepRule result = cepRuleService.save(cepRule);
 		Assert.assertNotNull(result);
 
 		Assert.assertEquals(createdBy, result.getCreatedBy());
@@ -141,4 +145,19 @@ public class CepRuleServiceTest {
 		Mockito.verify(cepRuleRepository).save(Mockito.any(CepRule.class));
 	}
 
+	@Test
+	public void testPopulateSituation() {
+		CepRule cepRule = populator.populateBean(CepRule.class, "createdBy", "createdDate", "situation", "tool");
+		cepRule.setTool("hypervisor");
+		List<CepRule> list = populator.populateBeans(CepRule.class, 5, "createdBy", "createdDate", "situation");
+		for (CepRule item : list) {
+			item.setSituation("hypervisor_5");
+		}
+		Mockito.doReturn(list).when(cepRuleService).findBySituation(Mockito.anyString());
+
+		cepRuleService.populateSituation(cepRule);
+		Assert.assertNotNull(cepRule.getSituation());
+		Assert.assertEquals("hypervisor_6", cepRule.getSituation());
+
+	}
 }

@@ -34,6 +34,18 @@ public class SiddhiServiceTest {
 	public void setUp() throws Exception {
 		mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	}
+
+	@Test
+	public void testGenerateSiddhi() throws JsonParseException, JsonMappingException, IOException {
+
+		CepRule cepRule = mapper.readValue(new File("src/test/resources/request4.json"), CepRule.class);
+		Assert.assertNotNull(cepRule);
+
+		String result = siddhiService.generateSiddhi(cepRule);
+
+		Assert.assertTrue(result.indexOf("EntradaHypervisor") > 0);
+		Assert.assertTrue(result.indexOf("\"hypervisor_5\" as situation") > 0);
 
 	}
 
@@ -46,7 +58,6 @@ public class SiddhiServiceTest {
 
 		StringBuilder sb = new StringBuilder();
 		siddhiService.generateRule(sb, cepRule);
-		System.out.println(sb);
 
 		Assert.assertTrue(sb.indexOf("FDC") > 0);
 		Assert.assertTrue(sb.indexOf("metric") > 0);
@@ -64,7 +75,6 @@ public class SiddhiServiceTest {
 
 		StringBuilder sb = new StringBuilder();
 		siddhiService.generateRule(sb, cepRule);
-		System.out.println(sb);
 
 		Assert.assertTrue(sb.indexOf("FDC") > 0);
 		Assert.assertTrue(sb.indexOf("metric") > 0);
@@ -82,7 +92,6 @@ public class SiddhiServiceTest {
 
 		StringBuilder sb = new StringBuilder();
 		siddhiService.generateRule(sb, cepRule);
-		System.out.println(sb);
 
 		Assert.assertTrue(sb.indexOf("'Linux'") > 0);
 		Assert.assertTrue(sb.indexOf("metric") > 0);
@@ -106,7 +115,7 @@ public class SiddhiServiceTest {
 		String message = "O consumo de Disco ou FS está acima do threshold estipulado em 80%.";
 		String result = siddhiService.generateMessage(message);
 		Assert.assertTrue(result.indexOf('\"') == 0);
-		Assert.assertTrue(result.lastIndexOf('\"') == result.length()-1);
+		Assert.assertTrue(result.lastIndexOf('\"') == result.length() - 1);
 		Assert.assertTrue(result.contains(message));
 	}
 
@@ -115,7 +124,7 @@ public class SiddhiServiceTest {
 		String message = "O consumo de Disco ou FS está acima do threshold estipulado em 80%. Valor atual {value}.";
 		String result = siddhiService.generateMessage(message);
 		Assert.assertTrue(result.indexOf('\"') == 0);
-		Assert.assertTrue(result.lastIndexOf('\"') == result.length()-1);
+		Assert.assertTrue(result.lastIndexOf('\"') == result.length() - 1);
 		Assert.assertTrue(result.contains("\", value, \""));
 	}
 
@@ -124,7 +133,7 @@ public class SiddhiServiceTest {
 		String message = "O consumo de Disco ou FS está acima do threshold estipulado em 80%. Valor atual {value}  Disco ou FS {fileSystem}.";
 		String result = siddhiService.generateMessage(message);
 		Assert.assertTrue(result.indexOf('\"') == 0);
-		Assert.assertTrue(result.lastIndexOf('\"') == result.length()-1);
+		Assert.assertTrue(result.lastIndexOf('\"') == result.length() - 1);
 		Assert.assertTrue(result.contains("\", value, \""));
 		Assert.assertTrue(result.contains("\", fileSystem, \""));
 	}
