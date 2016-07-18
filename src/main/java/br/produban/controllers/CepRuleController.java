@@ -1,6 +1,7 @@
 package br.produban.controllers;
 
 import java.lang.reflect.InvocationTargetException;
+import java.security.Principal;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,6 +9,8 @@ import org.apache.commons.lang3.SerializationUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,8 +57,15 @@ public class CepRuleController {
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public CepRule createCepRule(@RequestBody final CepRule cepRule)
+	public CepRule createCepRule(@RequestBody final CepRule cepRule, Principal principal)
 			throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+//		User user = (User) auth.getPrincipal();
+
+		String name = auth.getName();
+
 		logger.info("createCepRule(..)");
 		CepRule clone = (CepRule) SerializationUtils.clone(cepRule);
 		cepRuleService.save(clone.getChangedBy(), clone);

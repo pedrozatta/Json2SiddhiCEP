@@ -83,7 +83,7 @@ public class CepRuleControllerTest {
 		CepRule cepRule = populator.populateBean(CepRule.class);
 		Mockito.when(cepRuleService.save(Mockito.anyString(), Mockito.any(CepRule.class))).thenReturn(cepRule);
 
-		CepRule value = cepRuleController.createCepRule(cepRule);
+		CepRule value = cepRuleController.createCepRule(cepRule, null);
 		Assert.assertNotNull(value);
 		Assert.assertEquals(cepRule.getCepRuleId(), value.getCepRuleId());
 		Assert.assertEquals(cepRule, value);
