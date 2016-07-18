@@ -24,23 +24,4 @@ public class Json2SiddhiCepApplication extends SpringBootServletInitializer {
 		return application.sources(Json2SiddhiCepApplication.class);
 	}
 
-	// @Configuration
-	// protected static class SecurityConfiguration extends
-	// OAuth2SsoConfigurerAdapter {
-	//
-	// @Override
-	// public void match(RequestMatchers matchers) {
-	// matchers.anyRequest();
-	// }
-	//
-	// @Override
-	// public void configure(HttpSecurity http) throws Exception {
-	// http.authorizeRequests().antMatchers("/index.html", "/home.html", "/")
-	// .permitAll().anyRequest().authenticated().and().csrf()
-	// .csrfTokenRepository(csrfTokenRepository()).and()
-	// .addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
-	// }
-	//
-	// }
-
 }
