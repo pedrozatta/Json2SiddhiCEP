@@ -17,7 +17,7 @@ public class MasterDataService {
 
 	public String findMetricsByTool(final String tool) {
 
-		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("tools/" + tool + ".json");
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("tools/zabbix.json");
 
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(inputStream).useDelimiter("\\A");
