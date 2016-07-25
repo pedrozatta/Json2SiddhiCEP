@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 
 @SpringBootApplication
 @EnableResourceServer
+@EnableCaching
 public class Json2SiddhiCepApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) throws KeyManagementException, NoSuchAlgorithmException {

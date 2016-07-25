@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.cache.annotation.CacheResult;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
+import br.produban.models.Tool;
 import br.produban.ws.EventStreamAdminServiceClient;
 import cep.wsdl.EventStreamInfoDto;
 
@@ -17,6 +21,7 @@ import cep.wsdl.EventStreamInfoDto;
  */
 
 @Service
+@CacheConfig(cacheNames = "cacheTool")
 public class MasterDataService {
 
 	final static Logger logger = Logger.getLogger(MasterDataService.class);
@@ -53,16 +58,25 @@ public class MasterDataService {
 
 	}
 
-	public List<String> findTools() {
+	public String findTools() {
 
-		List<String> result = new ArrayList<String>();
 		List<EventStreamInfoDto> list = eventStreamAdminServiceClient.getAllEventStreamDefinitionDto();
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
 		for (EventStreamInfoDto item : list) {
-			result.add(item.getStreamDefinition().getValue());
+			sb.append(item.getStreamDefinition().getValue());
+			sb.append(",");
 		}
+		sb.deleteCharAt(sb.length() - 1);
+		sb.append("]");
+		return sb.toString();
 
-		return result;
+	}
 
+	@CacheResult(cacheName = "tool")
+	public Tool findById(String id) {
+
+		return new Tool(id);
 	}
 
 }
