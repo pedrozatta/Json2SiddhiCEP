@@ -9,4 +9,14 @@ security:
       userInfoUri: https://srvbigpvlbr07.bs.br.bsch:8243/userinfo?schema=openid
 
       
-      
+br:
+  produban:
+    wso2:
+      user: operador@produban.com.br
+      pass: operador
+      endpoint: 
+        EventStreamAdminServiceSoap: https://srvbigpvlbr12.bs.br.bsch:9443/services/EventStreamAdminService.EventStreamAdminServiceHttpsSoap11Endpoint
+        
+        
+
+

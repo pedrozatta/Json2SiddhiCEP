@@ -8,10 +8,20 @@ import org.springframework.ws.transport.http.HttpUrlConnectionMessageSender;
 
 public class WebServiceMessageSenderWithAuth extends HttpUrlConnectionMessageSender {
 
+	protected String user;
+
+	public String pass;
+
+	public WebServiceMessageSenderWithAuth(String user, String pass) {
+		this.user = user;
+		this.pass = pass;
+
+	}
+
 	@Override
 	protected void prepareConnection(HttpURLConnection connection) throws IOException {
+		String userpassword = this.user + ":" + this.pass;
 
-		String userpassword = "operador@produban.com.br:operador";
 		String encodedAuthorization = Base64Utils.encodeToString(userpassword.getBytes());
 		connection.setRequestProperty("Authorization", "Basic " + encodedAuthorization);
 

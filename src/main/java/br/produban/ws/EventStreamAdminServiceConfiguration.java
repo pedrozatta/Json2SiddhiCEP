@@ -1,5 +1,6 @@
 package br.produban.ws;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -9,6 +10,12 @@ import br.produban.WebServiceMessageSenderWithAuth;
 
 @Configuration
 public class EventStreamAdminServiceConfiguration {
+
+	@Value("${br.produban.wso2.user}")
+	public String user;
+
+	@Value("${br.produban.wso2.pass}")
+	public String pass;
 
 	@Bean
 	public Jaxb2Marshaller marshaller() {
@@ -23,11 +30,10 @@ public class EventStreamAdminServiceConfiguration {
 		client.setDefaultUri("http://admin.stream.event.carbon.wso2.org");
 		client.setMarshaller(marshaller);
 		client.setUnmarshaller(marshaller);
-		
+
 		WebServiceTemplate template = client.getWebServiceTemplate();
-		template.setMessageSender(new WebServiceMessageSenderWithAuth());
-		
-		
+		template.setMessageSender(new WebServiceMessageSenderWithAuth(this.user, this.pass));
+
 		return client;
 	}
 
