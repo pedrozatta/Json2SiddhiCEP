@@ -6,4 +6,7 @@ spring:
 security:
   oauth2:
     resource:
-      userInfoUri: http://180.239.144.188:9763/oauth2/userinfo?schema=openid
+      userInfoUri: https://srvbigpvlbr07.bs.br.bsch:8243/userinfo?schema=openid
+
+      
+      

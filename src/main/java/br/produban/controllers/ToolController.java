@@ -1,5 +1,7 @@
 package br.produban.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
@@ -19,10 +21,10 @@ import br.produban.services.MasterDataService;
  */
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/masterdata")
-public class MasterDataController {
+@RequestMapping("/tool")
+public class ToolController {
 
-	final static Logger logger = Logger.getLogger(MasterDataController.class);
+	final static Logger logger = Logger.getLogger(ToolController.class);
 
 	@Autowired
 	protected MasterDataService masterDataService;
@@ -33,11 +35,19 @@ public class MasterDataController {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 	}
 
-	@RequestMapping(value = "/{tool}/metrics", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String findMetricsByToll(@PathVariable("tool") String tool) {
-		return masterDataService.findMetricsByTool(tool);
+	@RequestMapping(value = "/{id}/metrics", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String findMetricsByToll(@PathVariable("id") String id) {
+		return masterDataService.findMetricsByTool(id);
 	}
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String findToolById(@PathVariable("id") String id) {
+		return masterDataService.findMetricsByTool(id);
+	}
 
-	
+	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<String> findToolById() {
+		return masterDataService.findTools();
+	}
+
 }
