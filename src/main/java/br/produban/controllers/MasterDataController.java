@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.produban.services.MasterDataService;
+import br.produban.services.ToolService;
 
 /**
  * Created by pedrozatta
@@ -27,7 +27,7 @@ public class MasterDataController {
 	final static Logger logger = Logger.getLogger(MasterDataController.class);
 
 	@Autowired
-	protected MasterDataService masterDataService;
+	protected ToolService masterDataService;
 
 	@ModelAttribute
 	public void setVaryResponseHeader(HttpServletResponse response) {

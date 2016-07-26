@@ -92,16 +92,17 @@ public class CepRuleService {
 
 		CepRule cepRule = this.normalize(value);
 		if (StringUtils.isEmpty(cepRule.getCepRuleId())) {
-			cepRule.setCreatedDate(now());
+			cepRule.setCreatedDate(this.now());
 			cepRule.setCreatedBy(user);
 			this.populateSituation(cepRule);
 		} else {
 			CepRule cepRuleOld = cepRuleRepository.findOne(cepRule.getCepRuleId());
+			checkPrivilegesToUpdate(user, cepRuleOld);
 			cepRule.setCreatedDate(cepRuleOld.getCreatedDate());
 			cepRule.setCreatedBy(cepRuleOld.getCreatedBy());
 			cepRule.setSituation(cepRuleOld.getSituation());
 		}
-		cepRule.setChangedDate(now());
+		cepRule.setChangedDate(this.now());
 		cepRule.setChangedBy(user);
 
 		String siddhi = siddhiService.generateSiddhi(cepRule);
@@ -110,6 +111,10 @@ public class CepRuleService {
 		cepRule = cepRuleRepository.save(cepRule);
 
 		return cepRule;
+	}
+
+	protected void checkPrivilegesToUpdate(final String user, CepRule cepRule) {
+		Validate.isTrue(user.equals(cepRule.getCreatedBy()));
 	}
 
 	protected void populateSituation(CepRule cepRule) {

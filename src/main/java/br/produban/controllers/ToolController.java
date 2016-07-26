@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.produban.models.Tool;
-import br.produban.services.MasterDataService;
+import br.produban.services.ToolService;
 
 /**
  * Created by pedrozatta
@@ -29,7 +29,7 @@ public class ToolController {
 	final static Logger logger = Logger.getLogger(ToolController.class);
 
 	@Autowired
-	protected MasterDataService masterDataService;
+	protected ToolService masterDataService;
 
 	@ModelAttribute
 	public void setVaryResponseHeader(HttpServletResponse response) {
