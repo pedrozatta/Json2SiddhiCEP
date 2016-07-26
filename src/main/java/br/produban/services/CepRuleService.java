@@ -40,7 +40,7 @@ public class CepRuleService {
 
 	public CepRule normalize(final CepRule cepRule) {
 
-		for (CepRuleItem item : cepRule.getChilds()) {
+		for (CepRuleItem item : cepRule.getChildren()) {
 			normalizeCepRuleItem(cepRule, item);
 		}
 		return cepRule;
@@ -61,7 +61,7 @@ public class CepRuleService {
 
 	public void normalizeGroup(final CepRule cepRule, CepRuleItem group) {
 		CepRuleItem lastCepRuleItem = null;
-		for (CepRuleItem cepRuleItem : group.getChilds()) {
+		for (CepRuleItem cepRuleItem : group.getChildren()) {
 			lastCepRuleItem = cepRuleItem;
 			normalizeCepRuleItem(cepRule, cepRuleItem);
 		}

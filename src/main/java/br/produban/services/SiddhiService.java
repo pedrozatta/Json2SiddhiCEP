@@ -47,7 +47,7 @@ public class SiddhiService {
 		sb.append(" [");
 
 		CepRuleItem group = new CepRuleItem();
-		group.setChilds(cepRule.getChilds());
+		group.setChildren(cepRule.getChildren());
 
 		processGroup(sb, cepRule, group);
 
@@ -68,7 +68,7 @@ public class SiddhiService {
 		StringBuilder sb = new StringBuilder();
 
 		CepRuleItem group = new CepRuleItem();
-		group.setChilds(cepRule.getChilds());
+		group.setChildren(cepRule.getChildren());
 
 		processGroup(sb, cepRule, group);
 
@@ -90,7 +90,7 @@ public class SiddhiService {
 	protected void processGroup(StringBuilder sb, final CepRule cepRule, CepRuleItem group) {
 
 		sb.append(" ( ");
-		for (CepRuleItem item : group.getChilds()) {
+		for (CepRuleItem item : group.getChildren()) {
 			switch (ItemType.fromExternal(item.getType())) {
 			case GROUP:
 				processGroup(sb, cepRule, item);

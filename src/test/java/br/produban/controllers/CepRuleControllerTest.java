@@ -69,7 +69,7 @@ public class CepRuleControllerTest {
 	@Test
 	public void testGetCepRule3() {
 		CepRule cepRule = populator.populateBean(CepRule.class);
-		cepRule.setChilds(populator.populateBeans(CepRuleItem.class, 10));
+		cepRule.setChildren(populator.populateBeans(CepRuleItem.class, 10));
 		Mockito.when(cepRuleService.findOne("ID-2")).thenReturn(cepRule);
 
 		CepRule value = cepRuleController.getCepRule("ID-2");

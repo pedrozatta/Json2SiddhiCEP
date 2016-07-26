@@ -35,8 +35,8 @@ public class CepRuleItem implements Serializable {
 
 	private String conditionGroup;
 
-	@Field("childs")
-	private List<CepRuleItem> childs;
+	@Field("children")
+	private List<CepRuleItem> children;
 
 	public CepRuleItem() {
 	}
@@ -97,14 +97,6 @@ public class CepRuleItem implements Serializable {
 		this.disabled = disabled;
 	}
 
-	public List<CepRuleItem> getChilds() {
-		return childs;
-	}
-
-	public void setChilds(List<CepRuleItem> childs) {
-		this.childs = childs;
-	}
-
 	public String getValueMin() {
 		return valueMin;
 	}
@@ -135,6 +127,14 @@ public class CepRuleItem implements Serializable {
 
 	public void setConditionGroup(String conditionGroup) {
 		this.conditionGroup = conditionGroup;
+	}
+
+	public List<CepRuleItem> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<CepRuleItem> children) {
+		this.children = children;
 	}
 
 }

@@ -6,7 +6,7 @@
    "changedBy": "Pedro Gamaliel Zatta (P)",
    "changedDate": 1468862320119,
    "tool": "hypervisor",
-   "childs": [   {
+   "children": [   {
       "field": "FDC",
       "fieldType": "string",
       "operator": ">",
@@ -18,7 +18,7 @@
       "nivel": 0,
       "disabled": false,
       "conditionGroup": null,
-      "childs": null
+      "children": null
    }],
    "siddhi": "from EntradaHypervisor [ FDC > '544' ]\r\nselect  \"hypervisor_5\" as situation, csId as id, str:concat(\"mensagem....\") as message, hostname as hostname, fileSystem as item, value as value, \"open\" as eventstatus, \"critical\" as severity, 0.000 as threshold, businessService as businessService, technicalService as technicalService, serviceComponent as serviceComponent, environment as environment, lsFunction as lsFunction, hyperName as hyperName, csSite as csSite, platform as platform, rule as rule, status as status, timestamp as timestamp, tool as tool\r\ninsert into Saida;",
    "situation": "hypervisor_5",

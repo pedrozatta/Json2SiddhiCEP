@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -21,31 +18,26 @@ public class CepRule implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@NotNull
-	@Size(min = 1, max = 90)
 	private String cepRuleId;
 
 	private String ruleName;
 
-	@NotNull
-	@Size(min = 1, max = 50)
 	private String createdBy;
 
 	private Date createdDate;
 
-	@NotNull
-	@Size(min = 1, max = 50)
 	private String changedBy;
 
 	private Date changedDate;
 
-	@NotNull
-	@Size(min = 1, max = 90)
+	private String removedBy;
+
+	private Date removedDate;
+
 	private String tool;
 
-	@Field("childs")
-	// @JsonProperty("childs")
-	private List<CepRuleItem> childs;
+	@Field("children")
+	private List<CepRuleItem> children;
 
 	private String siddhi;
 
@@ -53,13 +45,13 @@ public class CepRule implements Serializable {
 
 	private List<MessageItem> message;
 
-	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleItem> childs) {
+	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleItem> children) {
 		super();
 		this.cepRuleId = cepRuleId;
 		this.createdBy = createdBy;
 		this.changedBy = changedBy;
 		this.tool = tool;
-		this.childs = childs;
+		this.children = children;
 	}
 
 	public CepRule() {
@@ -97,14 +89,6 @@ public class CepRule implements Serializable {
 		this.tool = tool;
 	}
 
-	public List<CepRuleItem> getChilds() {
-		return childs;
-	}
-
-	public void setChilds(List<CepRuleItem> childs) {
-		this.childs = childs;
-	}
-
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -130,7 +114,7 @@ public class CepRule implements Serializable {
 	}
 
 	public CepRuleItem getField(String field) {
-		CepRuleItem cepRuleItem = getField(field, this.getChilds());
+		CepRuleItem cepRuleItem = getField(field, this.getChildren());
 		return cepRuleItem;
 	}
 
@@ -147,7 +131,7 @@ public class CepRule implements Serializable {
 	protected CepRuleItem getField(String field, CepRuleItem cepRuleItem) {
 
 		if (ItemType.fromExternal(cepRuleItem.getType()) == ItemType.GROUP) {
-			CepRuleItem result = getField(field, cepRuleItem.getChilds());
+			CepRuleItem result = getField(field, cepRuleItem.getChildren());
 			if (result != null) {
 				return result;
 			}
@@ -180,6 +164,30 @@ public class CepRule implements Serializable {
 
 	public void setMessage(List<MessageItem> message) {
 		this.message = message;
+	}
+
+	public String getRemovedBy() {
+		return removedBy;
+	}
+
+	public void setRemovedBy(String removedBy) {
+		this.removedBy = removedBy;
+	}
+
+	public Date getRemovedDate() {
+		return removedDate;
+	}
+
+	public void setRemovedDate(Date removedDate) {
+		this.removedDate = removedDate;
+	}
+
+	public List<CepRuleItem> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<CepRuleItem> children) {
+		this.children = children;
 	}
 
 }
