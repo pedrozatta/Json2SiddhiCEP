@@ -1,9 +1,13 @@
 package br.produban.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Tool implements Serializable {
 
@@ -14,6 +18,12 @@ public class Tool implements Serializable {
 	private String version;
 	private String nickName;
 	private String description;
+
+	@JsonProperty("payloadData")
+	private List<ToolField> fields;
+
+	@JsonIgnore
+	private String json;
 
 	public Tool() {
 	}
@@ -80,4 +90,21 @@ public class Tool implements Serializable {
 
 		return new EqualsBuilder().append(this.id, otherObject.id).isEquals();
 	}
+
+	public String getJson() {
+		return json;
+	}
+
+	public void setJson(String json) {
+		this.json = json;
+	}
+
+	public List<ToolField> getFields() {
+		return fields;
+	}
+
+	public void setFields(List<ToolField> fields) {
+		this.fields = fields;
+	}
+
 }

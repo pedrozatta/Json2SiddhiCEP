@@ -13,6 +13,9 @@ security:
 
 br:
   produban:
+    camel:
+      endpoint:
+        metricsByTool: http://srvbigpvlbr07.bs.br.bsch:3030/api/tools/{tool}/metrics
     wso2:
       user: operador@produban.com.br
       pass: operador

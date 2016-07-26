@@ -35,7 +35,7 @@ ant.includeantruntime = false
 task genJaxb {
     ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
     ext.classesDir = "${buildDir}/classes/jaxb"
-    ext.schema = "http://localhost:50003/mockEventStreamAdminServiceSoap12Binding?WSDL"
+    ext.schema = "src/main/resources/wsdl/mockEventStreamAdminServiceSoap12Binding.wsdl"
 
     outputs.dir classesDir
 
@@ -78,7 +78,7 @@ targetCompatibility = 1.8
 
 jar {
 	baseName = 'rule-service'
-	version = '0.0.3-SNAPSHOT'
+	version = '0.0.4-SNAPSHOT'
 	
     from genJaxb.classesDir
 }

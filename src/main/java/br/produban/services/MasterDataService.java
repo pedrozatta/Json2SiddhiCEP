@@ -1,7 +1,9 @@
 package br.produban.services;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,29 +11,56 @@ import javax.cache.annotation.CacheResult;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.produban.models.Tool;
+import br.produban.models.ToolField;
 import br.produban.ws.EventStreamAdminServiceClient;
-import cep.wsdl.EventStreamInfoDto;
 
 /**
  * Created by pedrozatta
  */
 
 @Service
-@CacheConfig(cacheNames = "cacheTool")
 public class MasterDataService {
 
 	final static Logger logger = Logger.getLogger(MasterDataService.class);
 
+	@Value("${br.produban.camel.endpoint.metricsByTool}")
+	public String endpoint;
+
 	@Autowired
 	public EventStreamAdminServiceClient eventStreamAdminServiceClient;
 
-	public String findMetricsByTool(final String tool) {
+	public List<String> findMetricsByTool(final String toolId) {
+		Tool tool = this.findById(toolId);
+		return findMetricsByTool(tool);
+	}
 
-		teste();
+	public List<String> findMetricsByTool(final Tool tool) {
+		String toolEndpoint = endpoint.replace("{tool}", tool.getNickName());
+		logger.info(toolEndpoint);
+
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("tools/zabbix.json");
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+		try {
+			String[] list = mapper.readValue(inputStream, String[].class);
+			return Arrays.asList(list);
+		} catch (IOException e) {
+		}
+
+		return null;
+
+	}
+
+	public String findMetricsByToolOld(final String tool) {
 
 		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("tools/zabbix.json");
 
@@ -44,39 +73,45 @@ public class MasterDataService {
 
 	}
 
-	public List<String> teste() {
+	public List<Tool> findTools() {
 
-		List<String> result = new ArrayList<String>();
+		List<Tool> result = new ArrayList<Tool>();
 		List<String> list = eventStreamAdminServiceClient.getStreamNames();
 		for (String item : list) {
 			if (item.startsWith("IN")) {
-				result.add(item);
+				result.add(findById(item));
 			}
 		}
-
 		return result;
 
 	}
 
-	public String findTools() {
-
-		List<EventStreamInfoDto> list = eventStreamAdminServiceClient.getAllEventStreamDefinitionDto();
-		StringBuilder sb = new StringBuilder();
-		sb.append("[");
-		for (EventStreamInfoDto item : list) {
-			sb.append(item.getStreamDefinition().getValue());
-			sb.append(",");
-		}
-		sb.deleteCharAt(sb.length() - 1);
-		sb.append("]");
-		return sb.toString();
-
+	@CacheResult(cacheName = "cache-tool")
+	public Tool findById(String id) {
+		String jsonTool = eventStreamAdminServiceClient.getStreamDetailsForStreamId(id);
+		return createTool(id, jsonTool);
 	}
 
-	@CacheResult(cacheName = "tool")
-	public Tool findById(String id) {
+	protected Tool createTool(String id, String jsonTool) {
 
-		return new Tool(id);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		Tool tool = null;
+		try {
+			tool = mapper.readValue(jsonTool, Tool.class);
+			List<String> metrics = findMetricsByTool(tool);
+			for (ToolField field : tool.getFields()) {
+				if ("metric".equals(field.getName())) {
+					field.setValues(metrics);
+				}
+			}
+		} catch (IOException e) {
+			tool = new Tool();
+		}
+		tool.setId(id);
+		tool.setJson(jsonTool);
+
+		return tool;
 	}
 
 }

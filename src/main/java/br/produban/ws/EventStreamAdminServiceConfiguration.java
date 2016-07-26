@@ -17,6 +17,9 @@ public class EventStreamAdminServiceConfiguration {
 	@Value("${br.produban.wso2.pass}")
 	public String pass;
 
+	@Value("${br.produban.wso2.endpoint.EventStreamAdminServiceSoap}")
+	public String endpoint;
+
 	@Bean
 	public Jaxb2Marshaller marshaller() {
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
@@ -26,7 +29,7 @@ public class EventStreamAdminServiceConfiguration {
 
 	@Bean
 	public EventStreamAdminServiceClient eventStreamAdminServiceClient(Jaxb2Marshaller marshaller) {
-		EventStreamAdminServiceClient client = new EventStreamAdminServiceClient();
+		EventStreamAdminServiceClient client = new EventStreamAdminServiceClient(endpoint);
 		client.setDefaultUri("http://admin.stream.event.carbon.wso2.org");
 		client.setMarshaller(marshaller);
 		client.setUnmarshaller(marshaller);

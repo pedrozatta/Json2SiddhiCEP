@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class CachingSetup implements JCacheManagerCustomizer {
 	@Override
 	public void customize(CacheManager cacheManager) {
-		cacheManager.createCache("tool",
+		cacheManager.createCache("cache-tool",
 				new MutableConfiguration<>()
 						.setExpiryPolicyFactory(TouchedExpiryPolicy.factoryOf(new Duration(TimeUnit.HOURS, 1)))
 						.setStoreByValue(false).setStatisticsEnabled(true));
