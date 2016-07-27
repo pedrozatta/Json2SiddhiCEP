@@ -191,14 +191,17 @@ public class SiddhiService {
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("CEP_RULE", cepRule);
 			try {
-				BigDecimal value = new BigDecimal(cepRule.getField("value").getValueMin());
-				data.put("value", value);
+				BigDecimal value = new BigDecimal(cepRule.getField(CepRule.FIELD_VALUE).getValueMin());
+				data.put(CepRule.FIELD_VALUE, value);
 			} catch (NullPointerException e) {
-				data.put("value", BigDecimal.ZERO);
+				data.put(CepRule.FIELD_VALUE, BigDecimal.ZERO);
 			}
 			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool().getNickName()));
 			data.put("filter", generateFilter(cepRule));
 			data.put("message", cepRule.getMessage());
+			data.put("groupBy", cepRule.getGroupBy());
+
+			data.put("WINDOW_LENGTH", cepRule.getToolBox(CepRule.WINDOW_LENGTH));
 
 			Writer out = new StringWriter();
 			template.process(data, out);

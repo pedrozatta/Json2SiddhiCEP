@@ -19,6 +19,9 @@ public class CepRule implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final String WINDOW_LENGTH = "window.length";
+	public static final String FIELD_VALUE = "value";
+
 	@Id
 	private String cepRuleId;
 
@@ -101,6 +104,18 @@ public class CepRule implements Serializable {
 
 	public void setSiddhi(String siddhi) {
 		this.siddhi = siddhi;
+	}
+
+	public ToolBox getToolBox(String name) {
+		if (CollectionUtils.isEmpty(this.getToolBox())) {
+			return null;
+		}
+		for (ToolBox item : this.getToolBox()) {
+			if (name.equals(item.getName())) {
+				return item;
+			}
+		}
+		return null;
 	}
 
 	public CepRuleItem getField(String field) {
