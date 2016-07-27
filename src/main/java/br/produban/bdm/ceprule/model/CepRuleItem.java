@@ -3,8 +3,6 @@ package br.produban.bdm.ceprule.model;
 import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.data.mongodb.core.mapping.Field;
-
 /**
  * Created by pedrozatta
  */
@@ -35,7 +33,6 @@ public class CepRuleItem implements Serializable {
 
 	private String conditionGroup;
 
-	@Field("children")
 	private List<CepRuleItem> children;
 
 	public CepRuleItem() {
