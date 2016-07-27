@@ -13,6 +13,9 @@ security:
 
 br:
   produban:
+    gemfire:
+      endpoint:
+        CepRule: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/CepRule
     camel:
       endpoint:
         metricsByTool: http://srvbigpvlbr07.bs.br.bsch:3030/api/tools/{tool}/metrics
