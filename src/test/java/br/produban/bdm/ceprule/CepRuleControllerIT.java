@@ -232,7 +232,13 @@ public class CepRuleControllerIT {
 
 	private CepRule createSampleCepRule(String cepRuleId, String createdBy, String changedBy, String tool,
 			List<Map<String, String>> filters) {
-		return ruleRepository.save(new CepRule(cepRuleId, createdBy, changedBy, tool, null));
+		CepRule cepRule = new CepRule();
+		cepRule.setCepRuleId(cepRuleId);
+		cepRule.setCreatedBy(createdBy);
+		cepRule.setChangedBy(changedBy);
+		// cepRule.setTool(tool);
+		// cepRule.setChildren(filters);
+		return ruleRepository.save(cepRule);
 	}
 
 }

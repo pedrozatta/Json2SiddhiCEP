@@ -5,7 +5,7 @@
    "createdDate": 1468862320071,
    "changedBy": "Pedro Gamaliel Zatta (P)",
    "changedDate": 1468862320119,
-   "tool": "hypervisor",
+   "tool": {"nickName" : "hypervisor"},
    "children": [   {
       "field": "FDC",
       "fieldType": "string",

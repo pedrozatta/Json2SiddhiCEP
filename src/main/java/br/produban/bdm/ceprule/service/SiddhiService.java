@@ -12,6 +12,7 @@ import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import br.produban.bdm.ceprule.enumeration.Condition;
 import br.produban.bdm.ceprule.enumeration.FieldType;
@@ -43,7 +44,7 @@ public class SiddhiService {
 
 		sb.append("from Entrada");
 
-		sb.append(WordUtils.capitalize(cepRule.getTool()));
+		sb.append(WordUtils.capitalize(cepRule.getTool().getNickName()));
 		sb.append(" [");
 
 		CepRuleItem group = new CepRuleItem();
@@ -64,6 +65,10 @@ public class SiddhiService {
 	}
 
 	public String generateFilter(final CepRule cepRule) {
+
+		if (CollectionUtils.isEmpty(cepRule.getChildren())) {
+			return "";
+		}
 
 		StringBuilder sb = new StringBuilder();
 
@@ -88,6 +93,10 @@ public class SiddhiService {
 	}
 
 	protected void processGroup(StringBuilder sb, final CepRule cepRule, CepRuleItem group) {
+
+		if (CollectionUtils.isEmpty(group.getChildren())) {
+			return;
+		}
 
 		sb.append(" ( ");
 		for (CepRuleItem item : group.getChildren()) {
@@ -187,7 +196,7 @@ public class SiddhiService {
 			} catch (NullPointerException e) {
 				data.put("value", BigDecimal.ZERO);
 			}
-			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool()));
+			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool().getNickName()));
 			data.put("filter", generateFilter(cepRule));
 			data.put("message", cepRule.getMessage());
 

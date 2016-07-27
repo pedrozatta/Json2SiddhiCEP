@@ -19,10 +19,8 @@ import org.mockito.stubbing.Answer;
 
 import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.model.MessageItem;
+import br.produban.bdm.ceprule.model.Tool;
 import br.produban.bdm.ceprule.repository.CepRuleRepository;
-import br.produban.bdm.ceprule.service.CepRuleService;
-import br.produban.bdm.ceprule.service.SiddhiService;
-import br.produban.bdm.ceprule.service.UserService;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
 
@@ -41,6 +39,9 @@ public class CepRuleServiceTest {
 
 	@Mock
 	private UserService userService;
+	
+	@Mock
+	private ToolService toolService;
 
 	@Spy
 	@InjectMocks
@@ -154,7 +155,9 @@ public class CepRuleServiceTest {
 	@Test
 	public void testPopulateSituation() {
 		CepRule cepRule = populator.populateBean(CepRule.class, "createdBy", "createdDate", "situation", "tool");
-		cepRule.setTool("hypervisor");
+		Tool tool = populator.populateBean(Tool.class, "nickName");
+		tool.setNickName("hypervisor");
+		cepRule.setTool(tool);
 		List<CepRule> list = populator.populateBeans(CepRule.class, 5, "createdBy", "createdDate", "situation");
 		for (CepRule item : list) {
 			item.setSituation("hypervisor_5");

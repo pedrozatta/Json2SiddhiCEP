@@ -31,6 +31,8 @@ public class CepRuleItem implements Serializable {
 
 	private Boolean disabled;
 
+	private Boolean disabledRowGroup;
+
 	private String conditionGroup;
 
 	private List<CepRuleItem> children;
@@ -132,6 +134,14 @@ public class CepRuleItem implements Serializable {
 
 	public void setChildren(List<CepRuleItem> children) {
 		this.children = children;
+	}
+
+	public Boolean getDisabledRowGroup() {
+		return disabledRowGroup;
+	}
+
+	public void setDisabledRowGroup(Boolean disabledRowGroup) {
+		this.disabledRowGroup = disabledRowGroup;
 	}
 
 }

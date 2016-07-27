@@ -4,7 +4,9 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -18,6 +20,8 @@ import br.produban.bdm.ceprule.enumeration.FieldType;
 import br.produban.bdm.ceprule.enumeration.ItemType;
 import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.model.CepRuleItem;
+import br.produban.bdm.ceprule.model.Tool;
+import br.produban.bdm.ceprule.model.ToolField;
 import br.produban.bdm.ceprule.repository.CepRuleRepository;
 
 /**
@@ -38,16 +42,34 @@ public class CepRuleService {
 	@Autowired
 	private UserService userService;
 
-	public CepRule normalize(final CepRule cepRule) {
+	@Autowired
+	private ToolService toolService;
 
-		for (CepRuleItem item : cepRule.getChildren()) {
-			normalizeCepRuleItem(cepRule, item);
+	protected Map<String, ToolField> cache;
+
+	public CepRule normalize(final CepRule cepRule) {
+		cacheFields(cepRule.getTool().getId());
+
+		if (!CollectionUtils.isEmpty(cepRule.getChildren())) {
+			for (CepRuleItem item : cepRule.getChildren()) {
+				normalizeCepRuleItem(cepRule, item);
+			}
 		}
 		return cepRule;
 
 	}
 
-	public CepRule normalizeCepRuleItem(final CepRule cepRule, CepRuleItem item) {
+	protected void cacheFields(String toolId) {
+		cache = new HashMap<String, ToolField>();
+		Tool tool = toolService.findById(toolId);
+		if (tool != null && CollectionUtils.isEmpty(tool.getFields())) {
+			for (ToolField field : tool.getFields()) {
+				cache.put(field.getName(), field);
+			}
+		}
+	}
+
+	protected CepRule normalizeCepRuleItem(final CepRule cepRule, CepRuleItem item) {
 		switch (ItemType.fromExternal(item.getType())) {
 		case GROUP:
 			normalizeGroup(cepRule, item);
@@ -59,7 +81,7 @@ public class CepRuleService {
 		return cepRule;
 	}
 
-	public void normalizeGroup(final CepRule cepRule, CepRuleItem group) {
+	protected void normalizeGroup(final CepRule cepRule, CepRuleItem group) {
 		CepRuleItem lastCepRuleItem = null;
 		for (CepRuleItem cepRuleItem : group.getChildren()) {
 			lastCepRuleItem = cepRuleItem;
@@ -70,9 +92,12 @@ public class CepRuleService {
 		}
 	}
 
-	public void normalizeCondition(final CepRule cepRule, CepRuleItem condition) {
-		if (StringUtils.isEmpty(condition.getFieldType())) {
+	protected void normalizeCondition(final CepRule cepRule, CepRuleItem condition) {
+		ToolField field = cache.get(condition.getField());
+		if (field == null) {
 			condition.setFieldType(FieldType.STRING.external);
+		} else {
+			condition.setFieldType(field.getType().external);
 		}
 		if (StringUtils.isEmpty(condition.getCondition())) {
 			condition.setCondition(Condition.AND.external);
@@ -87,6 +112,7 @@ public class CepRuleService {
 
 	protected CepRule save(final String user, final CepRule value) {
 		Validate.notNull(value, "CepRule can not be null");
+		Validate.notNull(value.getTool());
 		Validate.notEmpty(user);
 		Validate.notEmpty(value.getMessage());
 
@@ -159,7 +185,7 @@ public class CepRuleService {
 	}
 
 	protected String generateSituationPrefix(CepRule cepRule) {
-		String situation = cepRule.getTool();
+		String situation = cepRule.getTool().getNickName();
 		CepRuleItem item = cepRule.getField("metric");
 		if (item != null) {
 			situation += "_metric_" + item.getValueMin();

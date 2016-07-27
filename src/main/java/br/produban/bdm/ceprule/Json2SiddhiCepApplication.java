@@ -62,7 +62,7 @@ public class Json2SiddhiCepApplication extends SpringBootServletInitializer {
 		region.setCache(cache);
 		region.setClose(false);
 		region.setName("CepRule");
-		region.setPersistent(true);
+		region.setPersistent(false);
 		return region;
 	}
 

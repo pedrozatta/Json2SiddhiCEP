@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.gemfire.mapping.Region;
+import org.springframework.util.CollectionUtils;
 
 import br.produban.bdm.ceprule.enumeration.ItemType;
 
@@ -35,24 +36,21 @@ public class CepRule implements Serializable {
 
 	private Date removedDate;
 
-	private String tool;
-
-	private List<CepRuleItem> children;
+	private Tool tool;
 
 	private String siddhi;
 
 	private String situation;
 
+	private Long nivel;
+
+	private List<CepRuleItem> children;
+
 	private List<MessageItem> message;
 
-	public CepRule(String cepRuleId, String createdBy, String changedBy, String tool, List<CepRuleItem> children) {
-		super();
-		this.cepRuleId = cepRuleId;
-		this.createdBy = createdBy;
-		this.changedBy = changedBy;
-		this.tool = tool;
-		this.children = children;
-	}
+	private List<ToolBox> toolBox;
+
+	private List<ToolField> groupBy;
 
 	public CepRule() {
 	}
@@ -79,14 +77,6 @@ public class CepRule implements Serializable {
 
 	public void setChangedBy(String changedBy) {
 		this.changedBy = changedBy;
-	}
-
-	public String getTool() {
-		return tool;
-	}
-
-	public void setTool(String tool) {
-		this.tool = tool;
 	}
 
 	public Date getCreatedDate() {
@@ -118,7 +108,10 @@ public class CepRule implements Serializable {
 		return cepRuleItem;
 	}
 
-	protected CepRuleItem getField(String field, Iterable<CepRuleItem> items) {
+	protected CepRuleItem getField(String field, List<CepRuleItem> items) {
+		if (CollectionUtils.isEmpty(items)) {
+			return null;
+		}
 		for (CepRuleItem item : items) {
 			CepRuleItem result = getField(field, item);
 			if (result != null) {
@@ -188,6 +181,38 @@ public class CepRule implements Serializable {
 
 	public void setChildren(List<CepRuleItem> children) {
 		this.children = children;
+	}
+
+	public List<ToolBox> getToolBox() {
+		return toolBox;
+	}
+
+	public void setToolBox(List<ToolBox> toolBox) {
+		this.toolBox = toolBox;
+	}
+
+	public Long getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(Long nivel) {
+		this.nivel = nivel;
+	}
+
+	public List<ToolField> getGroupBy() {
+		return groupBy;
+	}
+
+	public void setGroupBy(List<ToolField> groupBy) {
+		this.groupBy = groupBy;
+	}
+
+	public Tool getTool() {
+		return tool;
+	}
+
+	public void setTool(Tool tool) {
+		this.tool = tool;
 	}
 
 }

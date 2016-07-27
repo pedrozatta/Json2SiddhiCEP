@@ -6,6 +6,8 @@ public class MessageItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
+
 	private String name;
 
 	private String type;
@@ -24,6 +26,14 @@ public class MessageItem implements Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
