@@ -26,6 +26,8 @@ public class CepRule implements Serializable {
 	private String cepRuleId;
 
 	private String ruleName;
+	
+	private String description;
 
 	private String createdBy;
 
@@ -238,6 +240,14 @@ public class CepRule implements Serializable {
 
 	public void setRemoved(Boolean removed) {
 		this.removed = removed;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }
