@@ -15,4 +15,6 @@ public interface CepRuleRepository extends CrudRepository<CepRule, String> {
 
 	public List<CepRule> findBySituationStartingWith(@Param("situation") String situation);
 
+	public List<CepRule> findByRemoved(@Param("removed") Boolean removed);
+
 }

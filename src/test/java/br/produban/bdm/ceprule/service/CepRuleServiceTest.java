@@ -39,7 +39,7 @@ public class CepRuleServiceTest {
 
 	@Mock
 	private UserService userService;
-	
+
 	@Mock
 	private ToolService toolService;
 
@@ -53,17 +53,17 @@ public class CepRuleServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void testSave1() {
+	public void testProcessUpdate() {
 
 		CepRule cepRule = populator.populateBean(CepRule.class, "cepRuleId");
-		cepRuleService.save(cepRule);
+		cepRuleService.processUpdate(cepRule);
 
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void testSave2() {
-		CepRule cepRule = populator.populateBean(CepRule.class, "cepRuleId");
-		cepRuleService.save(cepRule);
+	@Test(expected = IllegalArgumentException.class)
+	public void testProcessCreate() {
+		CepRule cepRule = populator.populateBean(CepRule.class);
+		cepRuleService.processCreate(cepRule);
 	}
 
 	@Test(expected = RuntimeException.class)
@@ -103,9 +103,8 @@ public class CepRuleServiceTest {
 		Assert.assertNotNull(result.getCreatedDate());
 		Assert.assertEquals(calendar.getTime(), result.getCreatedDate());
 
-		Assert.assertEquals(user, result.getChangedBy());
-		Assert.assertNotNull(result.getChangedDate());
-		Assert.assertEquals(calendar.getTime(), result.getChangedDate());
+		Assert.assertNull(result.getChangedBy());
+		Assert.assertNull(result.getChangedDate());
 
 		Mockito.verify(cepRuleRepository).save(Mockito.any(CepRule.class));
 	}

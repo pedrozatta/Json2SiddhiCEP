@@ -41,14 +41,20 @@ public class CepRuleController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public Iterable<CepRule> listCepRules() {
+	public Iterable<CepRule> findAtivos() {
 		logger.info("listCepRules()");
+		return cepRuleService.findAtivos();
+	}
+
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	public Iterable<CepRule> findAll() {
+		logger.info("findAll()");
 		return cepRuleService.findAll();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public CepRule getCepRule(@PathVariable("id") String id) {
-		logger.info("getCepRule() " + id);
+	public CepRule findById(@PathVariable("id") String id) {
+		logger.info("findById() " + id);
 		CepRule cepRule = cepRuleService.findOne(id);
 		return cepRule;
 	}
@@ -81,6 +87,18 @@ public class CepRuleController {
 	public Iterable<CepRule> findBySituation(@PathVariable("situation") String situation) {
 		logger.info("findBySituation(..) " + situation);
 		return cepRuleService.findBySituation(situation);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public CepRule remove(@PathVariable("id") String id) {
+		logger.info("remove(..) " + id);
+		return cepRuleService.remove(id);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	public CepRule remove(@RequestBody CepRule cepRule) {
+		logger.info("remove(..)");
+		return cepRuleService.remove(cepRule);
 	}
 
 }

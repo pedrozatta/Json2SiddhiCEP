@@ -47,7 +47,7 @@ public class CepRuleService {
 
 	protected Map<String, ToolField> cache;
 
-	public CepRule normalize(final CepRule cepRule) {
+	public void normalize(final CepRule cepRule) {
 		cacheFields(cepRule.getTool().getId());
 
 		if (!CollectionUtils.isEmpty(cepRule.getChildren())) {
@@ -55,7 +55,6 @@ public class CepRuleService {
 				normalizeCepRuleItem(cepRule, item);
 			}
 		}
-		return cepRule;
 
 	}
 
@@ -105,42 +104,87 @@ public class CepRuleService {
 	}
 
 	public CepRule save(final CepRule value) {
-		final String user = userService.getAuthenticatedUserName();
-		return save(user, value);
-
-	}
-
-	protected CepRule save(final String user, final CepRule value) {
 		Validate.notNull(value, "CepRule can not be null");
 		Validate.notNull(value.getTool());
-		Validate.notEmpty(user);
 		Validate.notEmpty(value.getMessage());
 
-		CepRule cepRule = this.normalize(value);
-		if (StringUtils.isEmpty(cepRule.getCepRuleId())) {
-			cepRule.setCepRuleId(String.valueOf(cepRuleRepository.count() + 1));
-			cepRule.setCreatedDate(this.now());
-			cepRule.setCreatedBy(user);
-			this.populateSituation(cepRule);
+		this.normalize(value);
+		if (StringUtils.isEmpty(value.getCepRuleId())) {
+			this.processCreate(value);
 		} else {
-			CepRule cepRuleOld = cepRuleRepository.findOne(cepRule.getCepRuleId());
-			checkPrivilegesToUpdate(user, cepRuleOld);
-			cepRule.setCreatedDate(cepRuleOld.getCreatedDate());
-			cepRule.setCreatedBy(cepRuleOld.getCreatedBy());
-			cepRule.setSituation(cepRuleOld.getSituation());
+			this.processUpdate(value);
 		}
-		cepRule.setChangedDate(this.now());
-		cepRule.setChangedBy(user);
+		value.setRemovedDate(null);
+		value.setRemovedBy(null);
+		value.setRemoved(Boolean.FALSE);
+		value.setSiddhi(siddhiService.generateSiddhi(value));
 
-		String siddhi = siddhiService.generateSiddhi(cepRule);
-		cepRule.setSiddhi(siddhi);
-
-		cepRule = cepRuleRepository.save(cepRule);
-
+		CepRule cepRule = cepRuleRepository.save(value);
 		return cepRule;
 	}
 
+	protected void processCreate(final CepRule cepRule) {
+		Validate.isTrue(StringUtils.isEmpty(cepRule.getCepRuleId()));
+
+		final String user = userService.getAuthenticatedUserName();
+		cepRule.setCepRuleId(String.valueOf(cepRuleRepository.count() + 1));
+		cepRule.setCreatedDate(this.now());
+		cepRule.setCreatedBy(user);
+
+		cepRule.setChangedDate(null);
+		cepRule.setChangedBy(null);
+
+		this.populateSituation(cepRule);
+
+	}
+
+	protected void processUpdate(final CepRule cepRule) {
+		Validate.notEmpty(cepRule.getCepRuleId());
+
+		final String user = userService.getAuthenticatedUserName();
+
+		CepRule cepRuleOld = cepRuleRepository.findOne(cepRule.getCepRuleId());
+		checkPrivilegesToUpdate(user, cepRuleOld);
+
+		cepRule.setCreatedDate(cepRuleOld.getCreatedDate());
+		cepRule.setCreatedBy(cepRuleOld.getCreatedBy());
+		cepRule.setSituation(cepRuleOld.getSituation());
+
+		cepRule.setChangedDate(this.now());
+		cepRule.setChangedBy(user);
+
+	}
+
+	public CepRule remove(final String id) {
+		CepRule cepRule = this.findOne(id);
+		return this.remove(cepRule);
+	}
+
+	public CepRule remove(final CepRule cepRule) {
+		Validate.notNull(cepRule);
+		Validate.notEmpty(cepRule.getCepRuleId());
+
+		final String user = userService.getAuthenticatedUserName();
+
+		CepRule cepRuleOld = cepRuleRepository.findOne(cepRule.getCepRuleId());
+
+		checkPrivilegesToRemove(user, cepRuleOld);
+
+		cepRule.setRemovedDate(this.now());
+		cepRule.setRemovedBy(user);
+		cepRule.setRemoved(Boolean.TRUE);
+
+		cepRuleOld = cepRuleRepository.save(cepRuleOld);
+
+		return cepRuleOld;
+
+	}
+
 	protected void checkPrivilegesToUpdate(final String user, CepRule cepRule) {
+		Validate.isTrue(user.equals(cepRule.getCreatedBy()));
+	}
+
+	protected void checkPrivilegesToRemove(final String user, CepRule cepRule) {
 		Validate.isTrue(user.equals(cepRule.getCreatedBy()));
 	}
 
@@ -199,12 +243,17 @@ public class CepRuleService {
 	}
 
 	public Iterable<CepRule> findAll() {
-		logger.info("listCepRules()");
+		logger.info("findAll()");
 		return cepRuleRepository.findAll();
 	}
 
+	public Iterable<CepRule> findAtivos() {
+		logger.info("findAtivos()");
+		return cepRuleRepository.findByRemoved(Boolean.FALSE);
+	}
+
 	public CepRule findOne(String id) {
-		logger.info("getCepRule() " + id);
+		logger.info("findOne() " + id);
 		CepRule cepRule = cepRuleRepository.findOne(id);
 		return cepRule;
 	}

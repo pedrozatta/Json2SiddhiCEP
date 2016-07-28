@@ -55,6 +55,8 @@ public class CepRule implements Serializable {
 
 	private List<ToolField> groupBy;
 
+	private Boolean removed;
+
 	public CepRule() {
 	}
 
@@ -228,6 +230,14 @@ public class CepRule implements Serializable {
 
 	public void setTool(Tool tool) {
 		this.tool = tool;
+	}
+
+	public Boolean getRemoved() {
+		return removed;
+	}
+
+	public void setRemoved(Boolean removed) {
+		this.removed = removed;
 	}
 
 }

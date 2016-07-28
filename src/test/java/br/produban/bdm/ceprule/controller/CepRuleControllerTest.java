@@ -45,7 +45,7 @@ public class CepRuleControllerTest {
 		List<CepRule> list = populator.populateBeans(CepRule.class, 5);
 		Mockito.when(cepRuleService.findAll()).thenReturn(list);
 
-		Iterable<CepRule> value = cepRuleController.listCepRules();
+		Iterable<CepRule> value = cepRuleController.findAll();
 		Assert.assertNotNull(value);
 		Assert.assertEquals(list, value);
 
@@ -53,27 +53,27 @@ public class CepRuleControllerTest {
 	}
 
 	@Test
-	public void testGetCepRule1() {
-		CepRule cepRule = cepRuleController.getCepRule("ID-1");
+	public void testFindById1() {
+		CepRule cepRule = cepRuleController.findById("ID-1");
 		Assert.assertNull(cepRule);
 	}
 
 	@Test
-	public void testGetCepRule2() {
+	public void testFindById2() {
 		CepRule cepRule = populator.populateBean(CepRule.class);
 		Mockito.when(cepRuleService.findOne("ID-2")).thenReturn(cepRule);
 
-		CepRule value = cepRuleController.getCepRule("ID-1");
+		CepRule value = cepRuleController.findById("ID-1");
 		Assert.assertNull(value);
 	}
 
 	@Test
-	public void testGetCepRule3() {
+	public void testFindById3() {
 		CepRule cepRule = populator.populateBean(CepRule.class);
 		cepRule.setChildren(populator.populateBeans(CepRuleItem.class, 10));
 		Mockito.when(cepRuleService.findOne("ID-2")).thenReturn(cepRule);
 
-		CepRule value = cepRuleController.getCepRule("ID-2");
+		CepRule value = cepRuleController.findById("ID-2");
 		Assert.assertNotNull(value);
 		Assert.assertEquals(cepRule, value);
 	}
