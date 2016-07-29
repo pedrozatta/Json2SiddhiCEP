@@ -6,14 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
 
-import cep.wsdl.EventStreamInfoDto;
-import cep.wsdl.GetAllEventStreamDefinitionDto;
-import cep.wsdl.GetAllEventStreamDefinitionDtoResponse;
-import cep.wsdl.GetStreamDetailsForStreamId;
-import cep.wsdl.GetStreamDetailsForStreamIdResponse;
-import cep.wsdl.GetStreamNames;
-import cep.wsdl.GetStreamNamesResponse;
-import cep.wsdl.ObjectFactory;
+import br.produban.bdm.wso2.eventstreamadmin.EventStreamInfoDto;
+import br.produban.bdm.wso2.eventstreamadmin.GetAllEventStreamDefinitionDto;
+import br.produban.bdm.wso2.eventstreamadmin.GetAllEventStreamDefinitionDtoResponse;
+import br.produban.bdm.wso2.eventstreamadmin.GetStreamDetailsForStreamId;
+import br.produban.bdm.wso2.eventstreamadmin.GetStreamDetailsForStreamIdResponse;
+import br.produban.bdm.wso2.eventstreamadmin.GetStreamNames;
+import br.produban.bdm.wso2.eventstreamadmin.GetStreamNamesResponse;
+import br.produban.bdm.wso2.eventstreamadmin.ObjectFactory;
 
 @Service
 public class EventStreamAdminServiceClient extends WebServiceGatewaySupport {

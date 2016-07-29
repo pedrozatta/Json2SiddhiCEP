@@ -23,7 +23,7 @@ public class EventStreamAdminServiceConfiguration {
 	@Bean
 	public Jaxb2Marshaller marshaller() {
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		marshaller.setContextPath("cep.wsdl");
+		marshaller.setContextPath("br.produban.bdm.wso2.eventstreamadmin");
 		return marshaller;
 	}
 
