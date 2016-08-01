@@ -188,16 +188,6 @@ public class SiddhiService {
 		Configuration cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
 		cfg.setClassForTemplateLoading(this.getClass(), "/templates");
 
-		// try {
-		// FileTemplateLoader ftl1 = new FileTemplateLoader(new
-		// File("src/main/resources/"));
-		// MultiTemplateLoader mtl = new MultiTemplateLoader(new
-		// TemplateLoader[] { ftl1 });
-		// cfg.setTemplateLoader(mtl);
-		// } catch (IOException e1) {
-		// e1.printStackTrace();
-		// }
-
 		try {
 			Template template = cfg.getTemplate("siddhi.ftl");
 

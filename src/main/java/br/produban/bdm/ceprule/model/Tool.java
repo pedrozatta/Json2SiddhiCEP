@@ -71,7 +71,11 @@ public class Tool implements Serializable {
 	}
 
 	public String getAlias() {
-		return "Entrada" + WordUtils.capitalize(this.getNickName());
+		if (this.id.startsWith("IN")) {
+			return "Entrada" + WordUtils.capitalize(this.getNickName());
+		} else {
+			return "Saida";
+		}
 	}
 
 	public void setDescription(String description) {

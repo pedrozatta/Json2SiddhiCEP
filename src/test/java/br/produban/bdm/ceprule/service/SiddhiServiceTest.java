@@ -23,15 +23,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.model.ExecutionPlan;
+import br.produban.bdm.ceprule.model.Tool;
 import br.produban.bdm.ceprule.ws.soap.EventProcessorAdminServiceClient;
+import io.github.benas.jpopulator.api.Populator;
+import io.github.benas.jpopulator.impl.PopulatorBuilder;
 
 public class SiddhiServiceTest {
 
 	@Rule
 	public MockitoRule rule = MockitoJUnit.rule();
 
+	private Populator populator;
+
 	@Mock
 	private EventProcessorAdminServiceClient eventProcessorAdminServiceClient;
+
+	@Mock
+	private ToolService toolService;
 
 	private ObjectMapper mapper;
 
@@ -41,12 +49,22 @@ public class SiddhiServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		populator = new PopulatorBuilder().build();
 		mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	}
 
 	@Test
 	public void testGenerateExecutionPlan() throws JsonParseException, JsonMappingException, IOException {
+
+		Mockito.when(toolService.findById(Mockito.anyString())).thenAnswer(new Answer<Tool>() {
+			@Override
+			public Tool answer(InvocationOnMock invocation) {
+				Tool value = populator.populateBean(Tool.class);
+				value.setNickName("hypervisor");
+				return value;
+			}
+		});
 
 		Mockito.when(eventProcessorAdminServiceClient.validateExecutionPlan(Mockito.anyString()))
 				.thenAnswer(new Answer<ExecutionPlan>() {
@@ -63,7 +81,6 @@ public class SiddhiServiceTest {
 
 		ExecutionPlan result = siddhiService.generateExecutionPlan(cepRule);
 
-		Assert.assertTrue(result.getPlan().indexOf("EntradaHypervisor") > 0);
 		Assert.assertTrue(result.getPlan().indexOf("\"hypervisor_5\" as situation") > 0);
 
 	}
