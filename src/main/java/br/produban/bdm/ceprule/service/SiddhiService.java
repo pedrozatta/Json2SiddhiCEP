@@ -11,6 +11,7 @@ import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -36,7 +37,13 @@ public class SiddhiService {
 	final static Logger logger = Logger.getLogger(SiddhiService.class);
 
 	@Autowired
+	private ToolService toolService;
+
+	@Autowired
 	private EventProcessorAdminServiceClient eventProcessorAdminServiceClient;
+
+	@Value("${br.produban.wso2.cep.outputStreamId}")
+	protected String outputStreamId;
 
 	public ExecutionPlan generateExecutionPlan(final CepRule cepRule) {
 		String plan = freemarker(cepRule);
@@ -195,9 +202,12 @@ public class SiddhiService {
 			Template template = cfg.getTemplate("siddhi.ftl");
 
 			Map<String, Object> data = new HashMap<String, Object>();
+			data.put("IN_STREAM", toolService.findById(cepRule.getTool().getId()));
+			data.put("OUT_STREAM", toolService.findById(outputStreamId));
+
 			data.put("CEP_RULE", cepRule);
 			data.put(CepRule.FIELD_VALUE, cepRule.getField(CepRule.FIELD_VALUE));
-			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool().getNickName()));
+			data.put("CEP_RULE_NAME", cepRule.getRuleName().replaceAll("[^a-zA-Z1-9_]", "_"));
 			data.put("filter", generateFilter(cepRule));
 			data.put("message", cepRule.getMessage());
 			data.put("groupBy", cepRule.getGroupBy());

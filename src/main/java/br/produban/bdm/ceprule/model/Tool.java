@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.text.WordUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -67,6 +68,10 @@ public class Tool implements Serializable {
 
 	public String getDescription() {
 		return description;
+	}
+
+	public String getAlias() {
+		return "Entrada" + WordUtils.capitalize(this.getNickName());
 	}
 
 	public void setDescription(String description) {

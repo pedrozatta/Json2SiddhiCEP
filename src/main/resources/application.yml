@@ -21,6 +21,8 @@ br:
       endpoint:
         metricsByTool: http://srvbigpvlbr07.bs.br.bsch:3030/api/tools/{tool}/metrics
     wso2:
+      cep: 
+        outputStreamId: OUT_SiddhiToAlerts:1.0.0
       user: operador@produban.com.br
       pass: operador
       endpoint: 

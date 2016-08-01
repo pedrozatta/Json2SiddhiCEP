@@ -26,4 +26,8 @@ public enum FieldType {
 		throw new IllegalArgumentException();
 	}
 
+	public String getExternal() {
+		return external;
+	}
+
 }

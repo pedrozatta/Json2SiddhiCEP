@@ -220,12 +220,7 @@ public class CepRuleService {
 			}
 		}
 
-		// String situation = list.get(list.size() - 1).getSituation();
 		try {
-			// int i =
-			// Integer.parseInt(situation.substring(situation.lastIndexOf("_") +
-			// 1, situation.length()));
-			// i++;
 			int i = ++x;
 			cepRule.setSituation(situationPrefix + "_" + i);
 		} catch (java.lang.NumberFormatException e) {
@@ -239,7 +234,7 @@ public class CepRuleService {
 		if (item != null) {
 			situation += "_metric_" + item.getValueMin();
 		}
-		situation = situation.replaceAll("[^a-zZ-Z1-9_]", "_");
+		situation = situation.replaceAll("[^a-zA-Z1-9_]", "_");
 		return situation;
 	}
 
