@@ -14,6 +14,7 @@ security:
 br:
   produban:
     gemfire:
+      persistent: false
       endpoint:
         CepRule: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/CepRule
     camel:
@@ -24,6 +25,7 @@ br:
       pass: operador
       endpoint: 
         EventStreamAdminServiceSoap: https://srvbigpvlbr12.bs.br.bsch:9443/services/EventStreamAdminService.EventStreamAdminServiceHttpsSoap11Endpoint
+        EventProcessorAdminServiceSoap: https://srvbigpvlbr12.bs.br.bsch:9443/services/EventProcessorAdminService.EventProcessorAdminServiceHttpsSoap11Endpoint
         
         
 

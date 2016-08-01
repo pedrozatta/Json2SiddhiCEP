@@ -26,7 +26,7 @@ public class CepRule implements Serializable {
 	private String cepRuleId;
 
 	private String ruleName;
-	
+
 	private String description;
 
 	private String createdBy;
@@ -43,8 +43,6 @@ public class CepRule implements Serializable {
 
 	private Tool tool;
 
-	private String siddhi;
-
 	private String situation;
 
 	private Long nivel;
@@ -58,6 +56,8 @@ public class CepRule implements Serializable {
 	private List<ToolField> groupBy;
 
 	private Boolean removed;
+
+	private ExecutionPlan plan;
 
 	public CepRule() {
 	}
@@ -100,14 +100,6 @@ public class CepRule implements Serializable {
 
 	public void setChangedDate(Date changedDate) {
 		this.changedDate = changedDate;
-	}
-
-	public String getSiddhi() {
-		return siddhi;
-	}
-
-	public void setSiddhi(String siddhi) {
-		this.siddhi = siddhi;
 	}
 
 	public ToolBox getToolBox(String name) {
@@ -248,6 +240,14 @@ public class CepRule implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public ExecutionPlan getPlan() {
+		return plan;
+	}
+
+	public void setPlan(ExecutionPlan plan) {
+		this.plan = plan;
 	}
 
 }

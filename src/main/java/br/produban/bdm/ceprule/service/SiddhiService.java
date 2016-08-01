@@ -3,7 +3,6 @@ package br.produban.bdm.ceprule.service;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -20,6 +20,8 @@ import br.produban.bdm.ceprule.enumeration.ItemType;
 import br.produban.bdm.ceprule.enumeration.Operator;
 import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.model.CepRuleItem;
+import br.produban.bdm.ceprule.model.ExecutionPlan;
+import br.produban.bdm.ceprule.ws.soap.EventProcessorAdminServiceClient;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -33,10 +35,14 @@ public class SiddhiService {
 
 	final static Logger logger = Logger.getLogger(SiddhiService.class);
 
-	public String generateSiddhi(final CepRule cepRule) {
-		String result = freemarker(cepRule);
-		logger.info(result);
-		return result;
+	@Autowired
+	private EventProcessorAdminServiceClient eventProcessorAdminServiceClient;
+
+	public ExecutionPlan generateExecutionPlan(final CepRule cepRule) {
+		String plan = freemarker(cepRule);
+		logger.info(plan);
+		ExecutionPlan executionPlan = eventProcessorAdminServiceClient.validateExecutionPlan(plan);
+		return executionPlan;
 	}
 
 	@Deprecated
@@ -190,12 +196,7 @@ public class SiddhiService {
 
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("CEP_RULE", cepRule);
-			try {
-				BigDecimal value = new BigDecimal(cepRule.getField(CepRule.FIELD_VALUE).getValueMin());
-				data.put(CepRule.FIELD_VALUE, value);
-			} catch (NullPointerException e) {
-				data.put(CepRule.FIELD_VALUE, BigDecimal.ZERO);
-			}
+			data.put(CepRule.FIELD_VALUE, cepRule.getField(CepRule.FIELD_VALUE));
 			data.put("alias", "Entrada" + WordUtils.capitalize(cepRule.getTool().getNickName()));
 			data.put("filter", generateFilter(cepRule));
 			data.put("message", cepRule.getMessage());

@@ -8,9 +8,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.mockito.stubbing.Answer;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -18,12 +22,16 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.produban.bdm.ceprule.model.CepRule;
-import br.produban.bdm.ceprule.service.SiddhiService;
+import br.produban.bdm.ceprule.model.ExecutionPlan;
+import br.produban.bdm.ceprule.ws.soap.EventProcessorAdminServiceClient;
 
 public class SiddhiServiceTest {
 
 	@Rule
 	public MockitoRule rule = MockitoJUnit.rule();
+
+	@Mock
+	private EventProcessorAdminServiceClient eventProcessorAdminServiceClient;
 
 	private ObjectMapper mapper;
 
@@ -38,21 +46,31 @@ public class SiddhiServiceTest {
 	}
 
 	@Test
-	public void testGenerateSiddhi() throws JsonParseException, JsonMappingException, IOException {
+	public void testGenerateExecutionPlan() throws JsonParseException, JsonMappingException, IOException {
+
+		Mockito.when(eventProcessorAdminServiceClient.validateExecutionPlan(Mockito.anyString()))
+				.thenAnswer(new Answer<ExecutionPlan>() {
+					@Override
+					public ExecutionPlan answer(InvocationOnMock invocation) {
+						ExecutionPlan executionPlan = new ExecutionPlan();
+						executionPlan.setPlan((String) invocation.getArguments()[0]);
+						return executionPlan;
+					}
+				});
 
 		CepRule cepRule = mapper.readValue(new File("src/test/resources/request4.json"), CepRule.class);
 		Assert.assertNotNull(cepRule);
 
-		String result = siddhiService.generateSiddhi(cepRule);
+		ExecutionPlan result = siddhiService.generateExecutionPlan(cepRule);
 
-		Assert.assertTrue(result.indexOf("EntradaHypervisor") > 0);
-		Assert.assertTrue(result.indexOf("\"hypervisor_5\" as situation") > 0);
+		Assert.assertTrue(result.getPlan().indexOf("EntradaHypervisor") > 0);
+		Assert.assertTrue(result.getPlan().indexOf("\"hypervisor_5\" as situation") > 0);
 
 	}
 
 	@Test
 	@SuppressWarnings("deprecation")
-	public void testGenerateSiddhiRequest1() throws JsonParseException, JsonMappingException, IOException {
+	public void testGenerateExecutionPlanRequest1() throws JsonParseException, JsonMappingException, IOException {
 
 		CepRule cepRule = mapper.readValue(new File("src/test/resources/request1.json"), CepRule.class);
 		Assert.assertNotNull(cepRule);
@@ -69,7 +87,7 @@ public class SiddhiServiceTest {
 
 	@Test
 	@SuppressWarnings("deprecation")
-	public void testGenerateSiddhiRequest2() throws JsonParseException, JsonMappingException, IOException {
+	public void testGenerateExecutionPlanRequest2() throws JsonParseException, JsonMappingException, IOException {
 
 		CepRule cepRule = mapper.readValue(new File("src/test/resources/request2.json"), CepRule.class);
 		Assert.assertNotNull(cepRule);
@@ -86,7 +104,7 @@ public class SiddhiServiceTest {
 
 	@Test
 	@SuppressWarnings("deprecation")
-	public void testGenerateSiddhiRequest3() throws JsonParseException, JsonMappingException, IOException {
+	public void testGenerateExecutionPlanRequest3() throws JsonParseException, JsonMappingException, IOException {
 
 		CepRule cepRule = mapper.readValue(new File("src/test/resources/request3.json"), CepRule.class);
 		Assert.assertNotNull(cepRule);

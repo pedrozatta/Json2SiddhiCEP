@@ -68,7 +68,7 @@ public class CepRuleController {
 		cepRuleService.save(clone);
 		cepRule.setCepRuleId(clone.getCepRuleId());
 		cepRule.setSituation(clone.getSituation());
-		cepRule.setSiddhi(clone.getSiddhi());
+		cepRule.setPlan(clone.getPlan());
 		cepRule.setChangedBy(clone.getChangedBy());
 		cepRule.setChangedDate(clone.getChangedDate());
 		cepRule.setCreatedBy(clone.getCreatedBy());

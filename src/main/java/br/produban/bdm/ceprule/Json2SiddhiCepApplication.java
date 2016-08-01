@@ -4,6 +4,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -57,12 +58,13 @@ public class Json2SiddhiCepApplication extends SpringBootServletInitializer {
 	}
 
 	@Bean
-	LocalRegionFactoryBean<String, CepRule> helloRegion(final GemFireCache cache) {
+	LocalRegionFactoryBean<String, CepRule> helloRegion(@Value("${br.produban.gemfire.persistent}") Boolean persistent,
+			final GemFireCache cache) {
 		LocalRegionFactoryBean<String, CepRule> region = new LocalRegionFactoryBean<>();
 		region.setCache(cache);
 		region.setClose(false);
 		region.setName("CepRule");
-		region.setPersistent(true);
+		region.setPersistent(persistent);
 		return region;
 	}
 

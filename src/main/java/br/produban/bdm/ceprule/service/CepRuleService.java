@@ -61,7 +61,7 @@ public class CepRuleService {
 	protected void cacheFields(String toolId) {
 		cache = new HashMap<String, ToolField>();
 		Tool tool = toolService.findById(toolId);
-		if (tool != null && CollectionUtils.isEmpty(tool.getFields())) {
+		if (tool != null && !CollectionUtils.isEmpty(tool.getFields())) {
 			for (ToolField field : tool.getFields()) {
 				cache.put(field.getName(), field);
 			}
@@ -97,6 +97,11 @@ public class CepRuleService {
 			condition.setFieldType(FieldType.STRING.external);
 		} else {
 			condition.setFieldType(field.getType().external);
+			if (FieldType.DOUBLE == field.getType()) {
+				if (condition.getValueMin().indexOf('.') == -1) {
+					condition.setValueMin(condition.getValueMin() + ".0");
+				}
+			}
 		}
 		if (StringUtils.isEmpty(condition.getCondition())) {
 			condition.setCondition(Condition.AND.external);
@@ -117,7 +122,7 @@ public class CepRuleService {
 		value.setRemovedDate(null);
 		value.setRemovedBy(null);
 		value.setRemoved(Boolean.FALSE);
-		value.setSiddhi(siddhiService.generateSiddhi(value));
+		value.setPlan(siddhiService.generateExecutionPlan(value));
 
 		CepRule cepRule = cepRuleRepository.save(value);
 		return cepRule;

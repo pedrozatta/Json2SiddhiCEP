@@ -24,10 +24,6 @@ public class EventStreamAdminServiceClient extends WebServiceGatewaySupport {
 		this.endpoint = endpoint;
 	}
 
-	// String endpoint = "http://localhost:50004";
-	// String endpoint =
-	// "https://srvbigpvlbr12.bs.br.bsch:9443/services/EventStreamAdminService.EventStreamAdminServiceHttpsSoap11Endpoint";
-
 	public List<String> getStreamNames() {
 		GetStreamNames request = new GetStreamNames();
 
