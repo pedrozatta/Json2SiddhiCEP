@@ -31,11 +31,9 @@ repositories {
 
 ant.includeantruntime = false
 
-String jaxbDir = "${buildDir}/classes/jaxb"
-
 task genJaxb {
     ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
-    ext.classesDir = jaxbDir
+    ext.classesDir = "${buildDir}/classes/jaxb"
     ext.schema = "${projectDir}/src/main/resources/wsdl/EventStreamAdminService.wsdl"
 
     outputs.dir classesDir
@@ -120,6 +118,7 @@ jar {
 	version = '0.0.6-SNAPSHOT'
 	
     from genJaxb.classesDir
+    from genJaxb2.classesDir
 }
 
 dependencies {
