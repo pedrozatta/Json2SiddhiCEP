@@ -14,12 +14,12 @@ security:
 br:
   produban:
     gemfire:
-      persistent: false
+      persistent: true
       endpoint:
         CepRule: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/CepRule
     camel:
       endpoint:
-        metricsByTool: http://srvbigpvlbr07.bs.br.bsch:3030/api/tools/{tool}/metrics
+        metricsByTool: http://srvbigpvlbr10.bs.br.bsch:8083/camel/get/elasticsearch/tools/{tool}/metrics 
     wso2:
       cep: 
         outputStreamId: OUT_SiddhiToAlerts:1.0.0

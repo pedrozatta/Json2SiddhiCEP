@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -45,10 +46,11 @@ public class MetricsServiceClient {
 
 		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("tools/zabbix.json");
 
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(inputStream).useDelimiter("\\A");
-
-		String json = scanner.hasNext() ? scanner.next() : "";
+		String json = "";
+		try {
+			json = IOUtils.toString(inputStream);
+		} catch (IOException e1) {
+		}
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -56,6 +58,7 @@ public class MetricsServiceClient {
 		try {
 			list = mapper.readValue(json, String[].class);
 		} catch (IOException e) {
+			return null;
 		}
 		return Arrays.asList(list);
 
