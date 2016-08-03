@@ -19,7 +19,6 @@ public class CepRule implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String WINDOW_LENGTH = "window.length";
 	public static final String FIELD_VALUE = "value";
 
 	@Id
@@ -51,7 +50,7 @@ public class CepRule implements Serializable {
 
 	private List<MessageItem> message;
 
-	private List<ToolBox> toolBox;
+	private ToolBox window;
 
 	private List<ToolField> groupBy;
 
@@ -100,18 +99,6 @@ public class CepRule implements Serializable {
 
 	public void setChangedDate(Date changedDate) {
 		this.changedDate = changedDate;
-	}
-
-	public ToolBox getToolBox(String name) {
-		if (CollectionUtils.isEmpty(this.getToolBox())) {
-			return null;
-		}
-		for (ToolBox item : this.getToolBox()) {
-			if (name.equals(item.getName())) {
-				return item;
-			}
-		}
-		return null;
 	}
 
 	public CepRuleItem getField(String field) {
@@ -194,14 +181,6 @@ public class CepRule implements Serializable {
 		this.children = children;
 	}
 
-	public List<ToolBox> getToolBox() {
-		return toolBox;
-	}
-
-	public void setToolBox(List<ToolBox> toolBox) {
-		this.toolBox = toolBox;
-	}
-
 	public Long getNivel() {
 		return nivel;
 	}
@@ -248,6 +227,14 @@ public class CepRule implements Serializable {
 
 	public void setPlan(ExecutionPlan plan) {
 		this.plan = plan;
+	}
+
+	public ToolBox getWindow() {
+		return window;
+	}
+
+	public void setWindow(ToolBox window) {
+		this.window = window;
 	}
 
 }

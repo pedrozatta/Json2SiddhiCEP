@@ -73,6 +73,7 @@ public class CepRuleController {
 		cepRule.setChangedDate(clone.getChangedDate());
 		cepRule.setCreatedBy(clone.getCreatedBy());
 		cepRule.setCreatedDate(clone.getCreatedDate());
+		cepRule.setRemoved(clone.getRemoved());
 		return cepRule;
 	}
 

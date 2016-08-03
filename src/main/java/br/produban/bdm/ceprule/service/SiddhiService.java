@@ -190,6 +190,7 @@ public class SiddhiService {
 
 		try {
 			Template template = cfg.getTemplate("siddhi.ftl");
+			logger.info("Tempalte " + template.getName());
 
 			Map<String, Object> data = new HashMap<String, Object>();
 			data.put("IN_STREAM", toolService.findById(cepRule.getTool().getId()));
@@ -202,14 +203,11 @@ public class SiddhiService {
 			data.put("message", cepRule.getMessage());
 			data.put("groupBy", cepRule.getGroupBy());
 
-			data.put("WINDOW_LENGTH", cepRule.getToolBox(CepRule.WINDOW_LENGTH));
-
 			Writer out = new StringWriter();
 			template.process(data, out);
 
 			String siddhi = out.toString();
-			logger.info("freemarker: " + siddhi);
-
+			logger.info(siddhi);
 			return siddhi;
 
 		} catch (IOException | TemplateException e) {

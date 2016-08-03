@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class MetricsServiceClient {
+
 	@Value("${br.produban.camel.endpoint.metricsByTool}")
 	protected String endpoint;
 
