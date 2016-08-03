@@ -54,6 +54,7 @@ public class Json2SiddhiCepApplication extends SpringBootServletInitializer {
 		CacheFactoryBean gemfireCache = new CacheFactoryBean();
 		gemfireCache.setClose(true);
 		gemfireCache.setProperties(gemfireProperties());
+		
 		return gemfireCache;
 	}
 

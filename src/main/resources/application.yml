@@ -14,7 +14,7 @@ security:
 br:
   produban:
     gemfire:
-      persistent: true
+      persistent: false
       endpoint:
         CepRule: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/CepRule
     camel:
