@@ -20,7 +20,7 @@ import org.mockito.stubbing.Answer;
 import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.model.MessageItem;
 import br.produban.bdm.ceprule.model.Tool;
-import br.produban.bdm.ceprule.repository.CepRuleRepository;
+import br.produban.bdm.ceprule.ws.rest.GemfireServiceClient;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
 
@@ -32,7 +32,7 @@ public class CepRuleServiceTest {
 	private Populator populator;
 
 	@Mock
-	private CepRuleRepository cepRuleRepository;
+	private GemfireServiceClient cepRuleRepository;
 
 	@Mock
 	private SiddhiService siddhiService;

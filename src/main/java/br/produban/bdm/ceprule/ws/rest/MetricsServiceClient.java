@@ -36,7 +36,6 @@ public class MetricsServiceClient {
 			return Arrays.asList(list);
 
 		} catch (HttpClientErrorException | IOException e) {
-			// TODO: return cached data
 			return findMetricsByToolOld(toolNickName);
 		}
 	}

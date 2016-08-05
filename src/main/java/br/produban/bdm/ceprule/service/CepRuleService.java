@@ -22,7 +22,7 @@ import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.model.CepRuleItem;
 import br.produban.bdm.ceprule.model.Tool;
 import br.produban.bdm.ceprule.model.ToolField;
-import br.produban.bdm.ceprule.repository.CepRuleRepository;
+import br.produban.bdm.ceprule.ws.rest.GemfireServiceClient;
 
 /**
  * Created by pedrozatta
@@ -37,7 +37,7 @@ public class CepRuleService {
 	private SiddhiService siddhiService;
 
 	@Autowired
-	private CepRuleRepository cepRuleRepository;
+	private GemfireServiceClient cepRuleRepository;
 
 	@Autowired
 	private UserService userService;
