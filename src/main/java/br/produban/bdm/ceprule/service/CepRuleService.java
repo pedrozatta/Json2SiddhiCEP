@@ -22,7 +22,7 @@ import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.model.CepRuleItem;
 import br.produban.bdm.ceprule.model.Tool;
 import br.produban.bdm.ceprule.model.ToolField;
-import br.produban.bdm.ceprule.ws.rest.GemfireServiceClient;
+import br.produban.bdm.ceprule.ws.rest.CepRuleGemfireServiceClient;
 
 /**
  * Created by pedrozatta
@@ -37,7 +37,7 @@ public class CepRuleService {
 	private SiddhiService siddhiService;
 
 	@Autowired
-	private GemfireServiceClient cepRuleRepository;
+	private CepRuleGemfireServiceClient cepRuleRepository;
 
 	@Autowired
 	private UserService userService;
@@ -132,7 +132,7 @@ public class CepRuleService {
 		Validate.isTrue(StringUtils.isEmpty(cepRule.getCepRuleId()));
 
 		final String user = userService.getAuthenticatedUserName();
-		cepRule.setCepRuleId(String.valueOf(cepRuleRepository.count() + 1));
+		// cepRule.setCepRuleId(String.valueOf(cepRuleRepository.count() + 1));
 		cepRule.setCreatedDate(this.now());
 		cepRule.setCreatedBy(user);
 

@@ -43,7 +43,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.produban.bdm.ceprule.Json2SiddhiCepApplication;
 import br.produban.bdm.ceprule.model.CepRule;
-import br.produban.bdm.ceprule.ws.rest.GemfireServiceClient;
+import br.produban.bdm.ceprule.ws.rest.CepRuleGemfireServiceClient;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Json2SiddhiCepApplication.class)
@@ -58,7 +58,7 @@ public class CepRuleControllerIT {
 	private WebApplicationContext context;
 
 	@Autowired
-	private GemfireServiceClient ruleRepository;
+	private CepRuleGemfireServiceClient ruleRepository;
 
 	@Autowired
 	private ObjectMapper objectMapper;
