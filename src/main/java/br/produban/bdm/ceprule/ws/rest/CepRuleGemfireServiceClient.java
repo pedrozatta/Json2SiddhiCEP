@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +34,8 @@ public class CepRuleGemfireServiceClient {
 
 	final static Logger logger = Logger.getLogger(CepRuleGemfireServiceClient.class);
 
-	protected String endpointRegion = "http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/{region}";
-	protected String endpointRegionKey = "http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/{region}/{key}";
-	protected String endpointForUpdate = "http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/{region}/{key}?op=PUT";
+	@Value("${br.produban.gemfire.endpoint.CepRule}")
+	protected String endpoint;
 
 	protected String region = "CepRule";
 
@@ -49,14 +49,6 @@ public class CepRuleGemfireServiceClient {
 		mapper.registerModule(module);
 	}
 
-	public List<CepRule> findBySituationStartingWith(@Param("situation") String situation) {
-		return null;
-	}
-
-	public List<CepRule> findByRemoved(@Param("removed") Boolean removed) {
-		return null;
-	}
-
 	public List<CepRule> findAll() {
 		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("region", region);
@@ -66,7 +58,7 @@ public class CepRuleGemfireServiceClient {
 
 			JavaType javaType = TypeFactory.defaultInstance().constructType(Region.class, CepRule.class);
 
-			String result = restTemplate.getForObject(endpointRegion, String.class, vars);
+			String result = restTemplate.getForObject(endpoint, String.class, vars);
 			Region<CepRule> regionCepRule = mapper.readValue(result, javaType);
 
 			return regionCepRule.getList();
@@ -83,7 +75,7 @@ public class CepRuleGemfireServiceClient {
 
 		RestTemplate restTemplate = new RestTemplate();
 		try {
-			ResponseEntity<CepRule> result = restTemplate.getForEntity(endpointRegionKey, CepRule.class, vars);
+			ResponseEntity<CepRule> result = restTemplate.getForEntity(endpoint + "/{key}", CepRule.class, vars);
 			return result.getBody();
 		} catch (HttpClientErrorException e) {
 			throw new RuntimeException(e);
@@ -105,7 +97,7 @@ public class CepRuleGemfireServiceClient {
 
 		RestTemplate restTemplate = new RestTemplate();
 		try {
-			ResponseEntity<Void> result = restTemplate.postForEntity(endpointRegion, cepRule, Void.class, vars);
+			ResponseEntity<Void> result = restTemplate.postForEntity(endpoint, cepRule, Void.class, vars);
 			URI uri = result.getHeaders().getLocation();
 			String id = uri.getPath().substring(uri.getPath().lastIndexOf('/') + 1);
 			cepRule.setCepRuleId(id);
@@ -122,7 +114,7 @@ public class CepRuleGemfireServiceClient {
 
 		RestTemplate restTemplate = new RestTemplate();
 		try {
-			restTemplate.put(endpointForUpdate, cepRule, vars);
+			restTemplate.put(endpoint + "/{key}?op=PUT", cepRule, vars);
 			return cepRule;
 		} catch (HttpClientErrorException e) {
 			throw new RuntimeException(e);
@@ -134,16 +126,23 @@ public class CepRuleGemfireServiceClient {
 		vars.put("region", region);
 		RestTemplate restTemplate = new RestTemplate();
 		try {
-			HttpHeaders result = restTemplate.headForHeaders(endpointRegion, vars);
+			HttpHeaders result = restTemplate.headForHeaders(endpoint, vars);
 			return Long.valueOf(result.get("Resource-Count").get(0));
 
 		} catch (HttpClientErrorException e) {
 			throw new RuntimeException(e);
 		}
 	}
+	
 
-	// public CepRule save(CepRule cepRule) {
-	// return null;
-	// }
+	public List<CepRule> findBySituationStartingWith(@Param("situation") String situation) {
+		return null;
+	}
+
+	public List<CepRule> findByRemoved(@Param("removed") Boolean removed) {
+		
+		
+		return null;
+	}
 
 }

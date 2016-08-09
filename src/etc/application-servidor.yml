@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: rule-service
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+
+server:
+  port: 8090
+  
+security:
+  oauth2:
+    resource:
+      userInfoUri: https://srvbigpvlbr07.bs.br.bsch:8243/userinfo?schema=openid
+
+br:
+  produban:
+    gemfire:
+      persistent: false
+      endpoint:
+        CepRule: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/CepRule
+    camel:
+      endpoint:
+        metricsByTool: http://srvbigpvlbr10.bs.br.bsch:8083/camel/get/elasticsearch/tools/{tool}/metrics
+        
+
+    wso2:
+      cep:
+        outputStreamId: OUT_SiddhiToAlerts:1.0.0
+      user: prbbr@produban.com.br
+      pass: prbbr1
+      endpoint:
+        EventStreamAdminServiceSoap: https://srvbdmpvlbr67.dcbr01.corp:9443/services/EventStreamAdminService.EventStreamAdminServiceHttpsSoap11Endpoint
+        EventProcessorAdminServiceSoap: https://srvbdmpvlbr67.dcbr01.corp:9443/services/EventProcessorAdminService.EventProcessorAdminServiceHttpsSoap11Endpoint
+
+
+        
+        
+
+

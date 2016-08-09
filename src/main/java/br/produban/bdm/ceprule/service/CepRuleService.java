@@ -175,9 +175,9 @@ public class CepRuleService {
 
 		checkPrivilegesToRemove(user, cepRuleOld);
 
-		cepRule.setRemovedDate(this.now());
-		cepRule.setRemovedBy(user);
-		cepRule.setRemoved(Boolean.TRUE);
+		cepRuleOld.setRemovedDate(this.now());
+		cepRuleOld.setRemovedBy(user);
+		cepRuleOld.setRemoved(Boolean.TRUE);
 
 		cepRuleOld = cepRuleRepository.save(cepRuleOld);
 
