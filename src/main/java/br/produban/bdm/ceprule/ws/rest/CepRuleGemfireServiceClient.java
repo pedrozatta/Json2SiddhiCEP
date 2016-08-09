@@ -20,9 +20,11 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import br.produban.bdm.ceprule.model.CepRule;
+import br.produban.bdm.commons.gemfire.ExtendableBean;
 import br.produban.bdm.commons.gemfire.Region;
 
 /**
@@ -37,11 +39,19 @@ public class CepRuleGemfireServiceClient {
 	@Value("${br.produban.gemfire.endpoint.CepRule}")
 	protected String endpoint;
 
-	protected String region = "CepRule";
+	@Value("${br.produban.gemfire.endpoint.CepRuleBySituationStartingWith}")
+	protected String endpointCepRuleBySituationStartingWith;
+
+	@Value("${br.produban.gemfire.endpoint.queries}")
+	protected String endpointQueries;
 
 	protected final ObjectMapper mapper;
 
+	protected final CollectionType collectionType;
+
 	public CepRuleGemfireServiceClient() {
+		collectionType = TypeFactory.defaultInstance().constructCollectionType(List.class, CepRule.class);
+
 		mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		SimpleModule module = new SimpleModule();
@@ -51,7 +61,6 @@ public class CepRuleGemfireServiceClient {
 
 	public List<CepRule> findAll() {
 		Map<String, Object> vars = new HashMap<String, Object>();
-		vars.put("region", region);
 
 		RestTemplate restTemplate = new RestTemplate();
 		try {
@@ -70,7 +79,6 @@ public class CepRuleGemfireServiceClient {
 
 	public CepRule findOne(String key) {
 		Map<String, Object> vars = new HashMap<String, Object>();
-		vars.put("region", region);
 		vars.put("key", key);
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -93,7 +101,6 @@ public class CepRuleGemfireServiceClient {
 
 	protected CepRule create(CepRule cepRule) {
 		Map<String, Object> vars = new HashMap<String, Object>();
-		vars.put("region", region);
 
 		RestTemplate restTemplate = new RestTemplate();
 		try {
@@ -109,7 +116,6 @@ public class CepRuleGemfireServiceClient {
 
 	protected CepRule update(CepRule cepRule) {
 		Map<String, Object> vars = new HashMap<String, Object>();
-		vars.put("region", region);
 		vars.put("key", cepRule.getCepRuleId());
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -123,7 +129,6 @@ public class CepRuleGemfireServiceClient {
 
 	public long count() {
 		Map<String, String> vars = new HashMap<String, String>();
-		vars.put("region", region);
 		RestTemplate restTemplate = new RestTemplate();
 		try {
 			HttpHeaders result = restTemplate.headForHeaders(endpoint, vars);
@@ -133,16 +138,41 @@ public class CepRuleGemfireServiceClient {
 			throw new RuntimeException(e);
 		}
 	}
-	
 
 	public List<CepRule> findBySituationStartingWith(@Param("situation") String situation) {
-		return null;
+
+		RestTemplate restTemplate = new RestTemplate();
+		try {
+
+			ExtendableBean bean = new ExtendableBean();
+			bean.add("@type", "string");
+			bean.add("@value", situation + "%");
+
+			String result = restTemplate.postForObject(endpointCepRuleBySituationStartingWith, bean, String.class);
+
+			List<CepRule> list = mapper.readValue(result, collectionType);
+			return list;
+
+		} catch (HttpClientErrorException | IOException e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	public List<CepRule> findByRemoved(@Param("removed") Boolean removed) {
-		
-		
-		return null;
+		Map<String, String> vars = new HashMap<String, String>();
+		vars.put("q", "SELECT c FROM /CepRule c WHERE c.removed = " + removed);
+
+		RestTemplate restTemplate = new RestTemplate();
+		try {
+
+			String result = restTemplate.getForObject(endpointQueries + "/adhoc?q={q}", String.class, vars);
+			List<CepRule> list = mapper.readValue(result, collectionType);
+
+			return list;
+		} catch (HttpClientErrorException | IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
