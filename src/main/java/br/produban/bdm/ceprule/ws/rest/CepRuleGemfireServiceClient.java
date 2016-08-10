@@ -100,18 +100,17 @@ public class CepRuleGemfireServiceClient {
 	}
 
 	protected CepRule create(CepRule cepRule) {
-		Map<String, Object> vars = new HashMap<String, Object>();
 
 		RestTemplate restTemplate = new RestTemplate();
 		try {
-			ResponseEntity<Void> result = restTemplate.postForEntity(endpoint, cepRule, Void.class, vars);
-			URI uri = result.getHeaders().getLocation();
+			URI uri = restTemplate.postForLocation(endpoint, new ExtendableBean());
 			String id = uri.getPath().substring(uri.getPath().lastIndexOf('/') + 1);
 			cepRule.setCepRuleId(id);
-			return cepRule;
+			return this.update(cepRule);
 		} catch (HttpClientErrorException e) {
 			throw new RuntimeException(e);
 		}
+
 	}
 
 	protected CepRule update(CepRule cepRule) {
