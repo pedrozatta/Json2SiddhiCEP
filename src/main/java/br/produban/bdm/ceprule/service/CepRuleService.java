@@ -94,9 +94,9 @@ public class CepRuleService {
 	protected void normalizeCondition(final CepRule cepRule, CepRuleItem condition) {
 		ToolField field = cache.get(condition.getField());
 		if (field == null) {
-			condition.setFieldType(FieldType.STRING.external);
+			// condition.setFieldType(FieldType.STRING.external);
 		} else {
-			condition.setFieldType(field.getType().external);
+			// condition.setFieldType(field.getType().external);
 			if (FieldType.DOUBLE == field.getType()) {
 				if (condition.getValueMin().indexOf('.') == -1) {
 					condition.setValueMin(condition.getValueMin() + ".0");

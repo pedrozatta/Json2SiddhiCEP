@@ -11,9 +11,7 @@ public class CepRuleItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String field;
-
-	private String fieldType;
+	private ToolField field;
 
 	private String operator;
 
@@ -40,11 +38,11 @@ public class CepRuleItem implements Serializable {
 	public CepRuleItem() {
 	}
 
-	public String getField() {
+	public ToolField getField() {
 		return field;
 	}
 
-	public void setField(String field) {
+	public void setField(ToolField field) {
 		this.field = field;
 	}
 
@@ -110,14 +108,6 @@ public class CepRuleItem implements Serializable {
 
 	public void setValueMax(String valueMax) {
 		this.valueMax = valueMax;
-	}
-
-	public String getFieldType() {
-		return fieldType;
-	}
-
-	public void setFieldType(String fieldType) {
-		this.fieldType = fieldType;
 	}
 
 	public String getConditionGroup() {

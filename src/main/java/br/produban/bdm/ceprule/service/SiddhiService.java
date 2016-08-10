@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import br.produban.bdm.ceprule.enumeration.Condition;
-import br.produban.bdm.ceprule.enumeration.FieldType;
 import br.produban.bdm.ceprule.enumeration.ItemType;
 import br.produban.bdm.ceprule.enumeration.Operator;
 import br.produban.bdm.ceprule.model.CepRule;
@@ -140,19 +139,19 @@ public class SiddhiService {
 
 		if (Operator.fromExternal(condition.getOperator()) == Operator.BETWEEN) {
 			sb.append("( ");
-			sb.append(condition.getField());
+			sb.append(condition.getField().getName());
 			sb.append(" >= ");
 			sb.append(condition.getValueMin());
 			sb.append(" AND ");
-			sb.append(condition.getField());
+			sb.append(condition.getField().getName());
 			sb.append(" <= ");
 			sb.append(condition.getValueMax());
 			sb.append(" ) ");
 		} else {
 
-			switch (FieldType.fromExternal(condition.getFieldType())) {
+			switch (condition.getField().getType()) {
 			case DOUBLE:
-				sb.append(condition.getField());
+				sb.append(condition.getField().getName());
 				sb.append(" ");
 				sb.append(condition.getOperator());
 				sb.append(" ");
@@ -160,7 +159,7 @@ public class SiddhiService {
 				sb.append(" ");
 				break;
 			default:
-				sb.append(condition.getField());
+				sb.append(condition.getField().getName());
 				sb.append(" ");
 				sb.append(condition.getOperator());
 				sb.append(" '");

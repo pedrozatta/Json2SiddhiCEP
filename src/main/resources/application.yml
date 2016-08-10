@@ -14,7 +14,6 @@ security:
 br:
   produban:
     gemfire:
-      persistent: false
       endpoint:
         queries: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/queries
         CepRule: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/CepRule

@@ -1,0 +1,28 @@
+{
+  "queries": [
+    {
+      "id": "CepRuleBySituationStartingWith",
+      "oql": "SELECT c FROM /CepRule c WHERE c.situation like $1"
+    },
+    {
+      "id": "CepRule",
+      "oql": "SELECT c FROM /CepRule c"
+    },
+    {
+      "id": "CepRuleByRemoved",
+      "oql": "SELECT c FROM /CepRule c WHERE c.removed = $1"
+    },
+    {
+      "id": "CepRule29",
+      "oql": "SELECT c FROM /CepRule c WHERE c.cepRuleId = 29"
+    },
+    {
+      "id": "CepRuleRemovidos",
+      "oql": "SELECT c FROM /CepRule c WHERE c.removed = true"
+    },
+    {
+      "id": "CepRuleAtivos",
+      "oql": "SELECT c FROM /CepRule c WHERE c.removed = 'false'"
+    }
+  ]
+}

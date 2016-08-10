@@ -127,7 +127,7 @@ public class CepRule implements Serializable {
 				return result;
 			}
 		}
-		if (field.equals(cepRuleItem.getField())) {
+		if (field.equals(cepRuleItem.getField().getName())) {
 			return cepRuleItem;
 		}
 		return null;
