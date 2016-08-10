@@ -1,34 +1,44 @@
 {
-	  "changedBy" : "zatta1",
-                "rule_name": "Test",
-                "tool": "hypervisor",
-                "nivel": 0,
-                "children": [{
-                               "id": 3,
-                               "type": "condicao",
-                               "nivel": 0,
-                               "field": "FDC",
-                               "valueMin": "10100",
-                               "fieldType": "string",
-                               "operator": "==",
-                               "condition": "AND"
-                }, {
-                               "id": 4,
-                               "type": "condicao",
-                               "nivel": 0,
-                               "field": "metric",
-                                "valueMin": null,
-                               "fieldType": "string",
-                               "operator": "==",
-                               "condition": "AND"
-                }, {
-                               "id": 5,
-                               "type": "condicao",
-                               "nivel": 0,
-                               "field": "value",
-                               "valueMin": "5000",
-                               "fieldType": "double",
-                               "operator": "==",
-                               "condition": "AND"
-                }]
+   "changedBy":"zatta1",
+   "rule_name":"Test",
+   "tool":"hypervisor",
+   "nivel":0,
+   "children":[
+      {
+         "id":3,
+         "type":"condicao",
+         "nivel":0,
+         "field":{
+            "name":"FDC",
+            "type":"STRING"
+         },
+         "valueMin":"10100",
+         "operator":"==",
+         "condition":"AND"
+      },
+      {
+         "id":4,
+         "type":"condicao",
+         "nivel":0,
+         "field":{
+            "name":"metric",
+            "type":"STRING"
+         },
+         "valueMin":null,
+         "operator":"==",
+         "condition":"AND"
+      },
+      {
+         "id":5,
+         "type":"condicao",
+         "nivel":0,
+         "field":{
+            "name":"value",
+            "type":"DOUBLE"
+         },
+         "valueMin":"5000",
+         "operator":"==",
+         "condition":"AND"
+      }
+   ]
 }

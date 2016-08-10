@@ -7,8 +7,10 @@
    "changedDate": 1468862320119,
    "tool": {"nickName" : "hypervisor"},
    "children": [   {
-      "field": "FDC",
-      "fieldType": "string",
+      "field": {
+                  "name":"bsEnv",
+                  "type":"STRING"
+               },
       "operator": ">",
       "valueMin": "544",
       "valueMax": null,

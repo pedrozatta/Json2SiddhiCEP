@@ -1,145 +1,202 @@
 {
-                "rule_name": "teste",
-                "changedBy" : "zatta2",
-                "tool": "zabbix",
-                "nivel": 0,
-                "children": [{
-                               "id": 6,
-                               "type": "condicao",
-                               "nivel": 0,
-                               "field": "metric",
-                               "valueMin": "system.dsk.utilization",
-                               "fieldType": "string",
-                               "operator": "==",
-                               "condition": "AND"
-                }, {
-                               "id": 7,
-                               "type": "condicao",
-                               "nivel": 0,
-                               "field": "FDC",
-                               "valueMin": "500",
-                               "fieldType": "string",
-                               "operator": "==",
-                               "condition": "AND"
-                }, {
-                               "id": 9,
-                               "type": "grupo",
-                               "nivel": 0,
-                               "children": [{
-                                               "id": 8,
-                                               "type": "condicao",
-                                               "nivel": 1,
-                                               "children": [],
-                                               "field": "FDC",
-                                               "valueMin": "TESTE",
-                                               "fieldType": "string",
-                                               "operator": "==",
-                                               "condition": "AND"
-                               }, {
-                                               "id": 10,
-                                               "type": "condicao",
-                                               "nivel": 1,
-                                               "field": "value",
-                                               "valueMin": "500",
-                                               "fieldType": "double",
-                                               "operator": "==",
-                                               "condition": "AND"
-                               }]
-                }, {
-                               "id": 13,
-                               "type": "condicao",
-                               "nivel": 0,
-                               "field": "admveFqdn",
-                               "valueMin": "100",
-                               "fieldType": "string",
-                               "operator": "=="
-                }, {
-                               "id": 15,
-                               "type": "grupo",
-                               "nivel": 0,
-                               "children": [{
-                                               "id": 14,
-                                               "type": "condicao",
-                                               "nivel": 1,
-                                               "children": [],
-                                               "field": "FDC",
-                                               "valueMin": "3434",
-                                               "fieldType": "string",
-                                               "operator": "<",
-                                               "condition": "AND"
-                               }, {
-                                               "id": 17,
-                                               "type": "grupo",
-                                               "nivel": 1,
-                                               "children": [{
-                                                               "id": 16,
-                                                               "type": "condicao",
-                                                               "nivel": 2,
-                                                               "children": [],
-                                                               "field": "FDC",
-                                                               "valueMin": "10",
-                                                               "fieldType": "string",
-                                                               "operator": "between",
-                                                               "valueMax": "50",
-                                                               "condition": "AND"
-                                               }, {
-                                                               "id": 19,
-                                                               "type": "grupo",
-                                                               "nivel": 1,
-                                                               "children": [{
-                                                                              "id": 18,
-                                                                              "type": "condicao",
-                                                                              "nivel": 2,
-                                                                              "children": [],
-                                                                              "field": "FDC",
-                                                                              "valueMin": "100",
-                                                                              "fieldType": "string",
-                                                                              "operator": "<",
-                                                                              "condition": "AND"
-                                                               }]
-                                               }]
-                               }, {
-                                               "id": 20,
-                                               "type": "condicao",
-                                               "nivel": 1,
-                                               "field": "admveFqdn",
-                                               "valueMin": "10010",
-                                               "fieldType": "string",
-                                               "operator": ">",
-                                               "condition": "AND"
-                               }]
-                }, {
-                               "id": 21,
-                               "type": "condicao",
-                               "nivel": 0,
-                               "field": "FDC",
-                               "valueMin": "100",
-                               "fieldType": "string",
-                               "operator": "<",
-                               "condition": "AND"
-                }, {
-                               "id": 23,
-                               "type": "grupo",
-                               "nivel": 0,
-                               "children": [{
-                                               "id": 22,
-                                               "type": "condicao",
-                                               "nivel": 1,
-                                               "children": [],
-                                               "field": "FDC",
-                                               "valueMin": "10110",
-                                               "fieldType": "string",
-                                               "operator": "==",
-                                               "condition": "AND"
-                               }, {
-                                               "id": 24,
-                                               "type": "condicao",
-                                               "nivel": 1,
-                                               "field": "FDC",
-                                               "valueMin": "1010",
-                                               "fieldType": "string",
-                                               "operator": "==",
-                                               "condition": "AND"
-                               }]
-                }]
+   "rule_name":"teste",
+   "changedBy":"zatta2",
+   "tool":"zabbix",
+   "nivel":0,
+   "children":[
+      {
+         "id":6,
+         "type":"condicao",
+         "nivel":0,
+         "field":{
+            "name":"metric",
+            "type":"STRING"
+         },
+         "valueMin":"system.dsk.utilization",
+         "operator":"==",
+         "condition":"AND"
+      },
+      {
+         "id":7,
+         "type":"condicao",
+         "nivel":0,
+         "field":{
+            "name":"FDC",
+            "type":"STRING"
+         },
+         "valueMin":"500",
+         "operator":"==",
+         "condition":"AND"
+      },
+      {
+         "id":9,
+         "type":"grupo",
+         "nivel":0,
+         "children":[
+            {
+               "id":8,
+               "type":"condicao",
+               "nivel":1,
+               "children":[
+
+               ],
+               "field":{
+                  "name":"FDC",
+                  "type":"STRING"
+               },
+               "valueMin":"TESTE",
+               "operator":"==",
+               "condition":"AND"
+            },
+            {
+               "id":10,
+               "type":"condicao",
+               "nivel":1,
+               "field":{
+                  "name":"value",
+                  "type":"DOUBLE"
+               },
+               "valueMin":"500",
+               "operator":"==",
+               "condition":"AND"
+            }
+         ]
+      },
+      {
+         "id":13,
+         "type":"condicao",
+         "nivel":0,
+         "field":{
+            "name":"admveFqdn",
+            "type":"STRING"
+         },
+         "valueMin":"100",
+         "operator":"=="
+      },
+      {
+         "id":15,
+         "type":"grupo",
+         "nivel":0,
+         "children":[
+            {
+               "id":14,
+               "type":"condicao",
+               "nivel":1,
+               "children":[
+
+               ],
+               "field":{
+                  "name":"FDC",
+                  "type":"STRING"
+               },
+               "valueMin":"3434",
+               "operator":"<",
+               "condition":"AND"
+            },
+            {
+               "id":17,
+               "type":"grupo",
+               "nivel":1,
+               "children":[
+                  {
+                     "id":16,
+                     "type":"condicao",
+                     "nivel":2,
+                     "children":[
+
+                     ],
+                     "field":{
+                        "name":"FDC",
+                        "type":"STRING"
+                     },
+                     "valueMin":"10",
+                     "operator":"between",
+                     "valueMax":"50",
+                     "condition":"AND"
+                  },
+                  {
+                     "id":19,
+                     "type":"grupo",
+                     "nivel":1,
+                     "children":[
+                        {
+                           "id":18,
+                           "type":"condicao",
+                           "nivel":2,
+                           "children":[
+
+                           ],
+                           "field":{
+                              "name":"FDC",
+                              "type":"STRING"
+                           },
+                           "valueMin":"100",
+                           "operator":"<",
+                           "condition":"AND"
+                        }
+                     ]
+                  }
+               ]
+            },
+            {
+               "id":20,
+               "type":"condicao",
+               "nivel":1,
+               "field":{
+                  "name":"admveFqdn",
+                  "type":"STRING"
+               },
+               "valueMin":"10010",
+               "operator":">",
+               "condition":"AND"
+            }
+         ]
+      },
+      {
+         "id":21,
+         "type":"condicao",
+         "nivel":0,
+         "field":{
+            "name":"FDC",
+            "type":"STRING"
+         },
+         "valueMin":"100",
+         "operator":"<",
+         "condition":"AND"
+      },
+      {
+         "id":23,
+         "type":"grupo",
+         "nivel":0,
+         "children":[
+            {
+               "id":22,
+               "type":"condicao",
+               "nivel":1,
+               "children":[
+
+               ],
+               "field":{
+                  "name":"FDC",
+                  "type":"STRING"
+               },
+               "valueMin":"10110",
+               "operator":"==",
+               "condition":"AND"
+            },
+            {
+               "id":24,
+               "type":"condicao",
+               "nivel":1,
+               "field":{
+                  "name":"FDC",
+                  "type":"STRING"
+               },
+               "valueMin":"1010",
+               "operator":"==",
+               "condition":"AND"
+            }
+         ]
+      }
+   ]
 }
