@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -45,17 +44,17 @@ public class MetricsServiceClient {
 
 		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("tools/zabbix.json");
 
-		String json = "";
-		try {
-			json = IOUtils.toString(inputStream);
-		} catch (IOException e1) {
-		}
+		// String json = "";
+		// try {
+		// json = IOUtils.toString(inputStream);
+		// } catch (IOException e1) {
+		// }
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		String[] list = null;
 		try {
-			list = mapper.readValue(json, String[].class);
+			list = mapper.readValue(inputStream, String[].class);
 		} catch (IOException e) {
 			return null;
 		}

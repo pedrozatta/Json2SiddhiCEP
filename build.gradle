@@ -127,24 +127,15 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-devtools')
     compile("org.springframework.boot:spring-boot-starter-security")
-    compile("org.springframework.boot:spring-boot-starter-cache")
     
     compile("org.freemarker:freemarker")
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
     compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2'
-    
-	compile group: 'tools.devnull', name: 'trugger', version: '5.1'
-
-	compile group: 'org.ehcache', name: 'ehcache', version: '3.0.2'
-	compile group: 'javax.cache', name: 'cache-api', version: '1.0.0'
-    
 
 	compile("org.springframework.ws:spring-ws-core")
     compile(files(genJaxb.classesDir).builtBy(genJaxb))
     compile(files(genJaxb2.classesDir).builtBy(genJaxb2))
     
-    compile("org.springframework.boot:spring-boot-starter-data-gemfire")
-
     jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
     
     runtime("org.springframework.shell:spring-shell:1.0.0.RELEASE")

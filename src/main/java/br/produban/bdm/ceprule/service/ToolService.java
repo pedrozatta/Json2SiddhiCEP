@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.cache.annotation.CacheResult;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +48,6 @@ public class ToolService {
 
 	}
 
-	@CacheResult(cacheName = "cache-tool")
 	public Tool findById(String id) {
 		String jsonTool = eventStreamAdminServiceClient.getStreamDetailsForStreamId(id);
 		return createTool(id, jsonTool);

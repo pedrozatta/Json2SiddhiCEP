@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.gemfire.mapping.Region;
 import org.springframework.util.CollectionUtils;
 
 import br.produban.bdm.ceprule.enumeration.ItemType;
@@ -14,7 +13,6 @@ import br.produban.bdm.ceprule.enumeration.ItemType;
  * Created by bera on 23/06/16.
  */
 
-@Region("CepRule")
 public class CepRule implements Serializable {
 
 	private static final long serialVersionUID = 1L;
