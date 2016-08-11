@@ -230,7 +230,12 @@ public class CepRuleService {
 
 	protected String generateSituationPrefix(CepRule cepRule) {
 		String situation = cepRule.getTool().getNickName();
-		CepRuleItem item = cepRule.getField("metric");
+		CepRuleItem item = null;
+		try {
+			item = cepRule.getField("metric");
+		} catch (NullPointerException e) {
+			item = cepRule.getField("metricName");
+		}
 		if (item != null) {
 			situation += "_metric_" + item.getValueMin();
 		}
