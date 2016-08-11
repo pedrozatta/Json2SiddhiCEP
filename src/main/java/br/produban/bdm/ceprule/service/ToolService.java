@@ -62,7 +62,7 @@ public class ToolService {
 			tool = mapper.readValue(jsonTool, Tool.class);
 			List<String> metrics = metricsServiceClient.findByTool(tool.getNickName());
 			for (ToolField field : tool.getFields()) {
-				if ("metric".equals(field.getName())) {
+				if (ToolField.FIELD_METRIC.equals(field.getName()) || ToolField.FIELD_METRIC_NAME.equals(field.getName()) ) {
 					field.setValues(metrics);
 				}
 			}

@@ -8,6 +8,9 @@ import br.produban.bdm.ceprule.enumeration.FieldType;
 public class ToolField implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public static final String FIELD_METRIC = "metric";
+	public static final String FIELD_METRIC_NAME = "metricName";
 
 	private String name;
 	private FieldType type;

@@ -232,9 +232,9 @@ public class CepRuleService {
 		String situation = cepRule.getTool().getNickName();
 		CepRuleItem item = null;
 		try {
-			item = cepRule.getField("metric");
+			item = cepRule.getField(ToolField.FIELD_METRIC);
 		} catch (NullPointerException e) {
-			item = cepRule.getField("metricName");
+			item = cepRule.getField(ToolField.FIELD_METRIC_NAME);
 		}
 		if (item != null) {
 			situation += "_metric_" + item.getValueMin();
