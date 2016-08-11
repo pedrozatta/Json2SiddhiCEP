@@ -92,7 +92,7 @@ public class CepRuleService {
 	}
 
 	protected void normalizeCondition(final CepRule cepRule, CepRuleItem condition) {
-		ToolField field = cache.get(condition.getField());
+		ToolField field = cache.get(condition.getField().getName());
 		if (field == null) {
 			// condition.setFieldType(FieldType.STRING.external);
 		} else {

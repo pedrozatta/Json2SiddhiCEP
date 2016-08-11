@@ -52,6 +52,7 @@ public class SiddhiServiceTest {
 		populator = new PopulatorBuilder().build();
 		mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		siddhiService.templatesPath = "src/main/resources/templates/";
 	}
 
 	@Test

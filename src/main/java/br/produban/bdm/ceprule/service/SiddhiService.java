@@ -1,5 +1,6 @@
 package br.produban.bdm.ceprule.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -34,6 +35,9 @@ import freemarker.template.TemplateException;
 public class SiddhiService {
 
 	final static Logger logger = Logger.getLogger(SiddhiService.class);
+
+	@Value("${br.produban.template.path}")
+	protected String templatesPath;
 
 	@Autowired
 	private ToolService toolService;
@@ -185,9 +189,14 @@ public class SiddhiService {
 	protected String freemarker(CepRule cepRule) {
 
 		Configuration cfg = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-		cfg.setClassForTemplateLoading(this.getClass(), "/templates");
+		// cfg.setClassForTemplateLoading(this.getClass(), "/templates");
 
 		try {
+			File dir = new File(templatesPath);
+			logger.info("TemplatePath " + dir.getAbsolutePath());
+
+			cfg.setDirectoryForTemplateLoading(dir);
+
 			Template template = cfg.getTemplate("siddhi.ftl");
 			logger.info("Tempalte " + template.getName());
 

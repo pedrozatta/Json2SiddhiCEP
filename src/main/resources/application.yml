@@ -13,6 +13,8 @@ security:
 
 br:
   produban:
+    template: 
+      path: src/main/resources/templates/
     gemfire:
       endpoint:
         queries: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/queries
