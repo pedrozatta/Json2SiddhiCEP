@@ -64,7 +64,7 @@ select  "${CEP_RULE.situation}" as situation
 , tool as tool
 [#if groupBy?has_content]
 
-groupBy 
+group by 
 [#list groupBy as item]
 ${item.name}[#if item?has_next], [/#if]
 [/#list]
