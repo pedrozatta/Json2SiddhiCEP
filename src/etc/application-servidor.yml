@@ -1,12 +1,9 @@
 spring:
   application:
     name: rule-service
-  cache:
-    jcache:
-      config: classpath:ehcache.xml
 
 server:
-  port: 8090
+  port: 8091
   
 security:
   oauth2:
@@ -15,10 +12,16 @@ security:
 
 br:
   produban:
+    template: 
+      path: src/main/resources/templates/
+
     gemfire:
-      persistent: false
       endpoint:
+        queries: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/queries
         CepRule: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/CepRule
+        CepRuleBySituationStartingWith: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/queries/CepRuleBySituationStartingWith
+        CepRuleByRemoved: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/queries/CepRuleByRemoved
+
     camel:
       endpoint:
         metricsByTool: http://srvbigpvlbr10.bs.br.bsch:8083/camel/get/elasticsearch/tools/{tool}/metrics

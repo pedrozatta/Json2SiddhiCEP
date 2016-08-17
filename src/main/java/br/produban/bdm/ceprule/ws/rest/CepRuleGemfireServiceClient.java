@@ -42,6 +42,9 @@ public class CepRuleGemfireServiceClient {
 	@Value("${br.produban.gemfire.endpoint.CepRuleBySituationStartingWith}")
 	protected String endpointCepRuleBySituationStartingWith;
 
+	@Value("${br.produban.gemfire.endpoint.CepRuleByRemoved}")
+	protected String endpointCepRuleByRemoved;
+
 	@Value("${br.produban.gemfire.endpoint.queries}")
 	protected String endpointQueries;
 
@@ -159,13 +162,15 @@ public class CepRuleGemfireServiceClient {
 	}
 
 	public List<CepRule> findByRemoved(@Param("removed") Boolean removed) {
-		Map<String, String> vars = new HashMap<String, String>();
-		vars.put("q", "SELECT c FROM /CepRule c WHERE c.removed = " + removed);
+
+		ExtendableBean bean = new ExtendableBean();
+		bean.add("@type", "boolean");
+		bean.add("@value", removed);
 
 		RestTemplate restTemplate = new RestTemplate();
 		try {
 
-			String result = restTemplate.getForObject(endpointQueries + "/adhoc?q={q}", String.class, vars);
+			String result = restTemplate.postForObject(endpointCepRuleByRemoved, bean, String.class);
 			List<CepRule> list = mapper.readValue(result, collectionType);
 
 			return list;

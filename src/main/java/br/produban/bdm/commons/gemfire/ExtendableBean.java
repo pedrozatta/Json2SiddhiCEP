@@ -8,17 +8,17 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 public class ExtendableBean {
 
 	public ExtendableBean() {
-		properties = new HashMap<String, String>();
+		properties = new HashMap<String, Object>();
 	}
 
-	public void add(String key, String value) {
+	public void add(String key, Object value) {
 		properties.put(key, value);
 	}
 
-	private Map<String, String> properties;
+	private Map<String, Object> properties;
 
 	@JsonAnyGetter
-	public Map<String, String> getProperties() {
+	public Map<String, Object> getProperties() {
 		return properties;
 	}
 

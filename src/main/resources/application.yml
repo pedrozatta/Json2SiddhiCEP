@@ -15,14 +15,18 @@ br:
   produban:
     template: 
       path: src/main/resources/templates/
+
     gemfire:
       endpoint:
         queries: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/queries
-        CepRule: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/CepRule
-        CepRuleBySituationStartingWith: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/queries/CepRuleBySituationStartingWith
+        CepRule: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/CepRuleHomologacao
+        CepRuleBySituationStartingWith: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/queries/CepRuleHomologacaoBySituationStartingWith
+        CepRuleByRemoved: http://srvbigpvlbr10.bs.br.bsch:8282/gemfire-api/v1/queries/CepRuleHomologacaoByRemoved
+
     camel:
       endpoint:
         metricsByTool: http://srvbigpvlbr10.bs.br.bsch:8083/camel/get/elasticsearch/tools/{tool}/metrics 
+        
     wso2:
       cep: 
         outputStreamId: OUT_SiddhiToAlerts:1.0.0
@@ -32,6 +36,3 @@ br:
         EventStreamAdminServiceSoap: https://srvbigpvlbr12.bs.br.bsch:9443/services/EventStreamAdminService.EventStreamAdminServiceHttpsSoap11Endpoint
         EventProcessorAdminServiceSoap: https://srvbigpvlbr12.bs.br.bsch:9443/services/EventProcessorAdminService.EventProcessorAdminServiceHttpsSoap11Endpoint
         
-        
-
-

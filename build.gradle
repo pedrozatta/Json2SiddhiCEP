@@ -115,7 +115,7 @@ targetCompatibility = 1.8
 
 jar {
 	baseName = 'rule-service'
-	version = '0.0.8-SNAPSHOT'
+	version = '1.0.0-SNAPSHOT'
 	excludes = ['**/application.yml', '**/*.ftl']
 	
     from genJaxb.classesDir
