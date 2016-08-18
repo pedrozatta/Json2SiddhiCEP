@@ -23,6 +23,7 @@ import br.produban.bdm.ceprule.model.CepRuleItem;
 import br.produban.bdm.ceprule.model.Tool;
 import br.produban.bdm.ceprule.model.ToolField;
 import br.produban.bdm.ceprule.ws.rest.CepRuleGemfireServiceClient;
+import br.produban.bdm.commons.gemfire.ExtendableBean;
 
 /**
  * Created by pedrozatta
@@ -250,6 +251,40 @@ public class CepRuleService {
 	public Iterable<CepRule> findAll() {
 		logger.info("findAll()");
 		return cepRuleRepository.findAll();
+	}
+
+	public ExtendableBean getHighlights() {
+		logger.info("getHighlights(..) ");
+		long rules = 0;
+		long trash = 0;
+
+		long myRules = 0;
+		long myTrash = 0;
+
+		final String user = userService.getAuthenticatedUserName();
+
+		Iterable<CepRule> list = cepRuleRepository.findAll();
+		for (CepRule item : list) {
+			rules++;
+			if (item.getRemoved()) {
+				trash++;
+			}
+			if (user.equalsIgnoreCase(item.getCreatedBy())) {
+				myRules++;
+				if (item.getRemoved()) {
+					myTrash++;
+				}
+			}
+		}
+
+		ExtendableBean value = new ExtendableBean();
+		value.add("rules", rules);
+		value.add("trash", trash);
+		value.add("active", rules);
+		value.add("myRules", myRules);
+		value.add("myTrash", myTrash);
+		value.add("myActive", myRules);
+		return value;
 	}
 
 	public Iterable<CepRule> findAtivos() {

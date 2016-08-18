@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.service.CepRuleService;
+import br.produban.bdm.commons.gemfire.ExtendableBean;
 
 /**
  * Created by bera on 30/06/16.
@@ -88,6 +89,12 @@ public class CepRuleController {
 	public Iterable<CepRule> findBySituation(@PathVariable("situation") String situation) {
 		logger.info("findBySituation(..) " + situation);
 		return cepRuleService.findBySituation(situation);
+	}
+
+	@RequestMapping(value = "/highlights", method = RequestMethod.GET)
+	public ExtendableBean getHighlights() {
+		logger.info("getHighlights(..) ");
+		return cepRuleService.getHighlights();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
