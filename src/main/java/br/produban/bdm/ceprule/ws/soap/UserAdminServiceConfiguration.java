@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
-import br.produban.bdm.commons.WebServiceMessageSenderWithAuth;
+import br.produban.bdm.ceprule.commons.WebServiceMessageSenderWithAuth;
 
 @Configuration
 public class UserAdminServiceConfiguration {
@@ -20,15 +20,18 @@ public class UserAdminServiceConfiguration {
 	@Value("${br.produban.wso2.endpoint.UserAdminServiceSoap}")
 	public String endpoint;
 
-	@Bean
-	public Jaxb2Marshaller marshaller() {
-		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		marshaller.setContextPath("br.produban.bdm.wso2.useradmin");
-		return marshaller;
-	}
+	// @Bean
+	// public Jaxb2Marshaller marshaller() {
+	// Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+	// marshaller.setContextPath("br.produban.bdm.wso2.useradmin");
+	// return marshaller;
+	// }
 
 	@Bean
-	public UserAdminServiceClient userAdminServiceClient(Jaxb2Marshaller marshaller) {
+	public UserAdminServiceClient userAdminServiceClient() {
+		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+		marshaller.setContextPath("br.produban.bdm.wso2.useradmin");
+
 		UserAdminServiceClient client = new UserAdminServiceClient(endpoint);
 		client.setDefaultUri("http://admin.stream.event.carbon.wso2.org");
 		client.setMarshaller(marshaller);

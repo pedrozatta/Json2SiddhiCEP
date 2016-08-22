@@ -1,4 +1,4 @@
-package br.produban.bdm.commons;
+package br.produban.bdm.ceprule.commons;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

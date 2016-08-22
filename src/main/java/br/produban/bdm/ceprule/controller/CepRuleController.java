@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.produban.bdm.ceprule.commons.ExtendableBean;
 import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.service.CepRuleService;
-import br.produban.bdm.commons.ExtendableBean;
 
 /**
  * Created by bera on 30/06/16.

@@ -1,4 +1,4 @@
-package br.produban.bdm.commons;
+package br.produban.bdm.ceprule.commons;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;

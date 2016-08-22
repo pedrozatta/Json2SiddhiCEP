@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.produban.bdm.ceprule.commons.ExtendableBean;
 import br.produban.bdm.ceprule.service.UserService;
-import br.produban.bdm.commons.ExtendableBean;
 
 /**
  * Created by pedrozatta

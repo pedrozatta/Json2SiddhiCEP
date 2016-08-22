@@ -9,7 +9,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
-import br.produban.bdm.commons.SSLUtil;
+import br.produban.bdm.ceprule.commons.SSLUtil;
 
 /**
  * Created by pedrozatta

@@ -13,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import br.produban.bdm.ceprule.commons.ExtendableBean;
 import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.model.CepRuleItem;
 import br.produban.bdm.ceprule.model.ToolField;
 import br.produban.bdm.ceprule.ws.rest.CepRuleGemfireServiceClient;
-import br.produban.bdm.commons.ExtendableBean;
 
 /**
  * Created by pedrozatta

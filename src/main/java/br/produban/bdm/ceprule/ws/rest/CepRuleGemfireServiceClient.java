@@ -23,9 +23,9 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
+import br.produban.bdm.ceprule.commons.ExtendableBean;
+import br.produban.bdm.ceprule.commons.Region;
 import br.produban.bdm.ceprule.model.CepRule;
-import br.produban.bdm.commons.ExtendableBean;
-import br.produban.bdm.commons.Region;
 
 /**
  * Created by pedrozatta

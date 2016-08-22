@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
-import br.produban.bdm.commons.WebServiceMessageSenderWithAuth;
+import br.produban.bdm.ceprule.commons.WebServiceMessageSenderWithAuth;
 
 @Configuration
 public class EventProcessorAdminServiceConfiguration {
@@ -21,19 +21,15 @@ public class EventProcessorAdminServiceConfiguration {
 	public String endpoint;
 
 	@Bean
-	public Jaxb2Marshaller eventProcessorAdminServiceMarshaller() {
+	public EventProcessorAdminServiceClient eventProcessorAdminServiceClient() {
+
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 		marshaller.setContextPath("br.produban.bdm.wso2.eventprocessoradmin");
-		return marshaller;
-	}
 
-	@Bean
-	public EventProcessorAdminServiceClient eventProcessorAdminServiceClient(
-			Jaxb2Marshaller eventProcessorAdminServiceMarshaller) {
 		EventProcessorAdminServiceClient client = new EventProcessorAdminServiceClient(endpoint);
 		client.setDefaultUri("http://admin.stream.event.carbon.wso2.org");
-		client.setMarshaller(eventProcessorAdminServiceMarshaller);
-		client.setUnmarshaller(eventProcessorAdminServiceMarshaller);
+		client.setMarshaller(marshaller);
+		client.setUnmarshaller(marshaller);
 
 		WebServiceTemplate template = client.getWebServiceTemplate();
 		template.setMessageSender(new WebServiceMessageSenderWithAuth(this.user, this.pass));
