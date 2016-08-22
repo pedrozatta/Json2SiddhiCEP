@@ -37,7 +37,6 @@ public class CepRuleService {
 	@Autowired
 	private UserService userService;
 
-
 	public CepRule save(final CepRule value) {
 		Validate.notNull(value, "CepRule can not be null");
 		Validate.notNull(value.getTool());
@@ -116,11 +115,17 @@ public class CepRuleService {
 	}
 
 	protected void checkPrivilegesToUpdate(final String user, CepRule cepRule) {
-		Validate.isTrue(user.equals(cepRule.getCreatedBy()));
+		boolean admin = userService.isAcepAdmin();
+		if (!admin) {
+			Validate.isTrue(user.equals(cepRule.getCreatedBy()));
+		}
 	}
 
 	protected void checkPrivilegesToRemove(final String user, CepRule cepRule) {
-		Validate.isTrue(user.equals(cepRule.getCreatedBy()));
+		boolean admin = userService.isAcepAdmin();
+		if (!admin) {
+			Validate.isTrue(user.equals(cepRule.getCreatedBy()));
+		}
 	}
 
 	protected void populateSituation(CepRule cepRule) {

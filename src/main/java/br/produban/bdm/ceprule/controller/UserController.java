@@ -35,8 +35,7 @@ public class UserController {
 
 	@RequestMapping(value = "/info", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ExtendableBean info() {
-		ExtendableBean extendableBean = new ExtendableBean();
-		extendableBean.add("acep-admin", userService.isAcepAdmin());
+		ExtendableBean extendableBean = userService.getAuthenticatedUserInfo();
 		return extendableBean;
 	}
 
