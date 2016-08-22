@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import br.produban.bdm.ceprule.model.CepRule;
-import br.produban.bdm.commons.gemfire.Region;
+import br.produban.bdm.commons.Region;
 
 public class CepRuleGemfireServiceDeserializer extends JsonDeserializer<Region<?>> {
 

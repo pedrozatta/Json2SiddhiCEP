@@ -5,7 +5,6 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.SerializationUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.service.CepRuleService;
-import br.produban.bdm.commons.gemfire.ExtendableBean;
+import br.produban.bdm.commons.ExtendableBean;
 
 /**
  * Created by bera on 30/06/16.
@@ -65,17 +64,8 @@ public class CepRuleController {
 	public CepRule createCepRule(@RequestBody final CepRule cepRule, Principal principal)
 			throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
 		logger.info("createCepRule(..)");
-		CepRule clone = (CepRule) SerializationUtils.clone(cepRule);
-		cepRuleService.save(clone);
-		cepRule.setCepRuleId(clone.getCepRuleId());
-		cepRule.setSituation(clone.getSituation());
-		cepRule.setPlan(clone.getPlan());
-		cepRule.setChangedBy(clone.getChangedBy());
-		cepRule.setChangedDate(clone.getChangedDate());
-		cepRule.setCreatedBy(clone.getCreatedBy());
-		cepRule.setCreatedDate(clone.getCreatedDate());
-		cepRule.setRemoved(clone.getRemoved());
-		return cepRule;
+		CepRule value = cepRuleService.save(cepRule);
+		return value;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

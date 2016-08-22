@@ -24,8 +24,8 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import br.produban.bdm.ceprule.model.CepRule;
-import br.produban.bdm.commons.gemfire.ExtendableBean;
-import br.produban.bdm.commons.gemfire.Region;
+import br.produban.bdm.commons.ExtendableBean;
+import br.produban.bdm.commons.Region;
 
 /**
  * Created by pedrozatta
@@ -94,7 +94,6 @@ public class CepRuleGemfireServiceClient {
 	}
 
 	public CepRule save(CepRule cepRule) {
-
 		if (StringUtils.isEmpty(cepRule.getCepRuleId())) {
 			return this.create(cepRule);
 		} else {

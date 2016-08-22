@@ -4,9 +4,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -15,15 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import br.produban.bdm.ceprule.enumeration.Condition;
-import br.produban.bdm.ceprule.enumeration.FieldType;
-import br.produban.bdm.ceprule.enumeration.ItemType;
 import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.model.CepRuleItem;
-import br.produban.bdm.ceprule.model.Tool;
 import br.produban.bdm.ceprule.model.ToolField;
 import br.produban.bdm.ceprule.ws.rest.CepRuleGemfireServiceClient;
-import br.produban.bdm.commons.gemfire.ExtendableBean;
+import br.produban.bdm.commons.ExtendableBean;
 
 /**
  * Created by pedrozatta
@@ -43,78 +37,13 @@ public class CepRuleService {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private ToolService toolService;
-
-	protected Map<String, ToolField> cache;
-
-	public void normalize(final CepRule cepRule) {
-		cacheFields(cepRule.getTool().getId());
-
-		if (!CollectionUtils.isEmpty(cepRule.getChildren())) {
-			for (CepRuleItem item : cepRule.getChildren()) {
-				normalizeCepRuleItem(cepRule, item);
-			}
-		}
-
-	}
-
-	protected void cacheFields(String toolId) {
-		cache = new HashMap<String, ToolField>();
-		Tool tool = toolService.findById(toolId);
-		if (tool != null && !CollectionUtils.isEmpty(tool.getFields())) {
-			for (ToolField field : tool.getFields()) {
-				cache.put(field.getName(), field);
-			}
-		}
-	}
-
-	protected CepRule normalizeCepRuleItem(final CepRule cepRule, CepRuleItem item) {
-		switch (ItemType.fromExternal(item.getType())) {
-		case GROUP:
-			normalizeGroup(cepRule, item);
-			break;
-		case CONDITION:
-			normalizeCondition(cepRule, item);
-			break;
-		}
-		return cepRule;
-	}
-
-	protected void normalizeGroup(final CepRule cepRule, CepRuleItem group) {
-		CepRuleItem lastCepRuleItem = null;
-		for (CepRuleItem cepRuleItem : group.getChildren()) {
-			lastCepRuleItem = cepRuleItem;
-			normalizeCepRuleItem(cepRule, cepRuleItem);
-		}
-		if (lastCepRuleItem != null && StringUtils.isNotEmpty(group.getConditionGroup())) {
-			lastCepRuleItem.setCondition(group.getConditionGroup());
-		}
-	}
-
-	protected void normalizeCondition(final CepRule cepRule, CepRuleItem condition) {
-		ToolField field = cache.get(condition.getField().getName());
-		if (field == null) {
-			// condition.setFieldType(FieldType.STRING.external);
-		} else {
-			// condition.setFieldType(field.getType().external);
-			if (FieldType.DOUBLE == field.getType()) {
-				if (condition.getValueMin().indexOf('.') == -1) {
-					condition.setValueMin(condition.getValueMin() + ".0");
-				}
-			}
-		}
-		if (StringUtils.isEmpty(condition.getCondition())) {
-			condition.setCondition(Condition.AND.external);
-		}
-	}
 
 	public CepRule save(final CepRule value) {
 		Validate.notNull(value, "CepRule can not be null");
 		Validate.notNull(value.getTool());
 		Validate.notEmpty(value.getMessage());
 
-		this.normalize(value);
+		// this.normalize(value);
 		if (StringUtils.isEmpty(value.getCepRuleId())) {
 			this.processCreate(value);
 		} else {
@@ -125,8 +54,8 @@ public class CepRuleService {
 		value.setRemoved(Boolean.FALSE);
 		value.setPlan(siddhiService.generateExecutionPlan(value));
 
-		CepRule cepRule = cepRuleRepository.save(value);
-		return cepRule;
+		cepRuleRepository.save(value);
+		return value;
 	}
 
 	protected void processCreate(final CepRule cepRule) {

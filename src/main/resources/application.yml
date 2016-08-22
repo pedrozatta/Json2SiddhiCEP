@@ -13,6 +13,7 @@ security:
 
 br:
   produban:
+  
     template: 
       path: src/main/resources/templates/
 
@@ -35,4 +36,5 @@ br:
       endpoint: 
         EventStreamAdminServiceSoap: https://srvbigpvlbr12.bs.br.bsch:9443/services/EventStreamAdminService.EventStreamAdminServiceHttpsSoap11Endpoint
         EventProcessorAdminServiceSoap: https://srvbigpvlbr12.bs.br.bsch:9443/services/EventProcessorAdminService.EventProcessorAdminServiceHttpsSoap11Endpoint
+        UserAdminServiceSoap: https://srvbigpvlbr12.bs.br.bsch:9443/services/UserAdmin.UserAdminHttpsSoap11Endpoint
         

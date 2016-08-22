@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.text.WordUtils;
@@ -17,11 +20,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import br.produban.bdm.ceprule.enumeration.Condition;
+import br.produban.bdm.ceprule.enumeration.FieldType;
 import br.produban.bdm.ceprule.enumeration.ItemType;
 import br.produban.bdm.ceprule.enumeration.Operator;
 import br.produban.bdm.ceprule.model.CepRule;
 import br.produban.bdm.ceprule.model.CepRuleItem;
 import br.produban.bdm.ceprule.model.ExecutionPlan;
+import br.produban.bdm.ceprule.model.Tool;
+import br.produban.bdm.ceprule.model.ToolField;
 import br.produban.bdm.ceprule.ws.soap.EventProcessorAdminServiceClient;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -36,14 +42,16 @@ public class SiddhiService {
 
 	final static Logger logger = Logger.getLogger(SiddhiService.class);
 
+	protected Map<String, ToolField> cache;
+
 	@Value("${br.produban.template.path}")
 	protected String templatesPath;
 
 	@Autowired
-	private ToolService toolService;
+	protected ToolService toolService;
 
 	@Autowired
-	private EventProcessorAdminServiceClient eventProcessorAdminServiceClient;
+	protected EventProcessorAdminServiceClient eventProcessorAdminServiceClient;
 
 	@Value("${br.produban.wso2.cep.outputStreamId}")
 	protected String outputStreamId;
@@ -133,9 +141,9 @@ public class SiddhiService {
 			sb.insert(sb.lastIndexOf("AND "), " ) ");
 		} else if (sb.lastIndexOf("OR ") == sb.length() - 3) {
 			sb.insert(sb.lastIndexOf("OR "), " ) ");
-		} else {
-			sb.append(" ) ");
 		}
+
+		sb.append(" ) ");
 
 	}
 
@@ -207,7 +215,7 @@ public class SiddhiService {
 			data.put("CEP_RULE", cepRule);
 			data.put(CepRule.FIELD_VALUE, cepRule.getField(CepRule.FIELD_VALUE));
 			data.put("CEP_RULE_NAME", cepRule.getRuleName().replaceAll("[^a-zA-Z1-9_]", "_"));
-			data.put("filter", generateFilter(cepRule));
+			data.put("FILTERS", cloneAndNormalize(cepRule));
 			data.put("message", cepRule.getMessage());
 			data.put("groupBy", cepRule.getGroupBy());
 
@@ -223,6 +231,7 @@ public class SiddhiService {
 		}
 	}
 
+	@Deprecated
 	protected String generateMessage(String message) {
 		Validate.notEmpty(message);
 
@@ -243,6 +252,71 @@ public class SiddhiService {
 			index = sb.indexOf("{");
 		}
 		return sb.toString();
+	}
+
+	protected void cacheFields(String toolId) {
+		cache = new HashMap<String, ToolField>();
+		Tool tool = toolService.findById(toolId);
+		if (tool != null && !CollectionUtils.isEmpty(tool.getFields())) {
+			for (ToolField field : tool.getFields()) {
+				cache.put(field.getName(), field);
+			}
+		}
+	}
+
+	public List<CepRuleItem> cloneAndNormalize(final CepRule cepRule) {
+		cacheFields(cepRule.getTool().getId());
+
+		if (CollectionUtils.isEmpty(cepRule.getChildren())) {
+			return null;
+		}
+
+		List<CepRuleItem> clone = (List<CepRuleItem>) SerializationUtils
+				.clone((ArrayList<CepRuleItem>) cepRule.getChildren());
+
+		for (CepRuleItem item : clone) {
+			normalizeCepRuleItem(item);
+		}
+		return clone;
+	}
+
+	protected void normalizeCepRuleItem(CepRuleItem item) {
+		switch (ItemType.fromExternal(item.getType())) {
+		case GROUP:
+			normalizeGroup(item);
+			break;
+		case CONDITION:
+			normalizeCondition(item);
+			break;
+		}
+	}
+
+	protected void normalizeGroup(final CepRuleItem group) {
+		CepRuleItem lastCepRuleItem = null;
+		for (CepRuleItem cepRuleItem : group.getChildren()) {
+			lastCepRuleItem = cepRuleItem;
+			normalizeCepRuleItem(cepRuleItem);
+		}
+		if (lastCepRuleItem != null && StringUtils.isNotEmpty(group.getConditionGroup())) {
+			lastCepRuleItem.setCondition(group.getConditionGroup());
+		}
+	}
+
+	protected void normalizeCondition(final CepRuleItem condition) {
+		ToolField field = cache.get(condition.getField().getName());
+		if (field == null) {
+			// condition.setFieldType(FieldType.STRING.external);
+		} else {
+			// condition.setFieldType(field.getType().external);
+			if (FieldType.DOUBLE == field.getType()) {
+				if (condition.getValueMin().indexOf('.') == -1) {
+					condition.setValueMin(condition.getValueMin() + ".0");
+				}
+			}
+		}
+		if (StringUtils.isEmpty(condition.getCondition())) {
+			condition.setCondition(Condition.AND.external);
+		}
 	}
 
 }

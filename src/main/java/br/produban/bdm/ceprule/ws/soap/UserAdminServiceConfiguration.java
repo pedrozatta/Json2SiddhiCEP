@@ -9,7 +9,7 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 import br.produban.bdm.commons.WebServiceMessageSenderWithAuth;
 
 @Configuration
-public class EventStreamAdminServiceConfiguration {
+public class UserAdminServiceConfiguration {
 
 	@Value("${br.produban.wso2.user}")
 	public String user;
@@ -17,19 +17,19 @@ public class EventStreamAdminServiceConfiguration {
 	@Value("${br.produban.wso2.pass}")
 	public String pass;
 
-	@Value("${br.produban.wso2.endpoint.EventStreamAdminServiceSoap}")
+	@Value("${br.produban.wso2.endpoint.UserAdminServiceSoap}")
 	public String endpoint;
 
 	@Bean
 	public Jaxb2Marshaller marshaller() {
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		marshaller.setContextPath("br.produban.bdm.wso2.eventstreamadmin");
+		marshaller.setContextPath("br.produban.bdm.wso2.useradmin");
 		return marshaller;
 	}
 
 	@Bean
-	public EventStreamAdminServiceClient eventStreamAdminServiceClient(Jaxb2Marshaller marshaller) {
-		EventStreamAdminServiceClient client = new EventStreamAdminServiceClient(endpoint);
+	public UserAdminServiceClient userAdminServiceClient(Jaxb2Marshaller marshaller) {
+		UserAdminServiceClient client = new UserAdminServiceClient(endpoint);
 		client.setDefaultUri("http://admin.stream.event.carbon.wso2.org");
 		client.setMarshaller(marshaller);
 		client.setUnmarshaller(marshaller);

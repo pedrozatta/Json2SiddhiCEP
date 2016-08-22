@@ -36,6 +36,7 @@ public class EventProcessorAdminServiceClient extends WebServiceGatewaySupport {
 		} else {
 			executionPlan.setValid(false);
 		}
+		logger.info(executionPlan.getMessage());
 		return executionPlan;
 	}
 

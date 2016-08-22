@@ -1,4 +1,4 @@
-package br.produban.bdm.commons.gemfire;
+package br.produban.bdm.commons;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,5 +1,32 @@
 [#ftl]
-[#macro formatFilter]${filter}[/#macro]
+[#setting locale="en_US"]
+
+[#macro formatFilter filters]
+[@compress single_line=true]
+[#if filters??]
+(
+    [#list filters as item]
+		[#if item.type == "grupo"]
+			[@formatFilter item.children /]
+		[#else]
+			[#if item.operator == "between"]
+				( ${item.field.name} >= ${item.valueMin?number?string["0.0#####"]} AND ${item.field.name} <= ${item.valueMax?number?string["0.0#####"]} ) 
+			[#else]
+				${item.field.name} ${item.operator} 
+				[#if item.field.type == "DOUBLE"]'
+					${item.valueMin?number?string["0.0#####"]}
+				[#else]
+					'${item.valueMin}'
+				[/#if]
+			[/#if]
+			[#if item?has_next]${item.condition}[/#if]
+		[/#if]
+		[#if item.conditionGroup??]${item.conditionGroup}[/#if]
+	[/#list]
+) 
+[/#if]
+[/@compress]
+[/#macro]
 
 [#macro formatMessage]
 [@compress single_line=true]
@@ -30,8 +57,7 @@ ${default}
 [/@compress]
 [/#macro]
 @Plan:name('${CEP_RULE_NAME}')
-
-[#if CEP_RULE.description??]@Plan:description('${CEP_RULE.description}')[/#if]
+[#if CEP_RULE.description??][@compress single_line=true]@Plan:description('${CEP_RULE.description}')[/@compress][/#if]
 
 @Import('${IN_STREAM.id}')
 define stream ${IN_STREAM.alias} ( [#list IN_STREAM.fields as field]${field.name} ${field.type.external}[#if field?has_next], [/#if][/#list] );
@@ -39,7 +65,7 @@ define stream ${IN_STREAM.alias} ( [#list IN_STREAM.fields as field]${field.name
 @Export('${OUT_STREAM.id}')
 define stream ${OUT_STREAM.alias} ( [#list OUT_STREAM.fields as field]${field.name} ${field.type.external}[#if field?has_next], [/#if][/#list] );
 
-from ${IN_STREAM.alias}[#if CEP_RULE.window??]#${CEP_RULE.window.name}(${CEP_RULE.window.value})[/#if] [ [@formatFilter /] ]
+from ${IN_STREAM.alias}[#if CEP_RULE.window??]#${CEP_RULE.window.name}(${CEP_RULE.window.value})[/#if] [ [@formatFilter FILTERS /] ]
 [@compress single_line=true]
 select  "${CEP_RULE.situation}" as situation
 , [@getOutputValue IN_STREAM.fields "csId" "'id'" /] as id
@@ -49,7 +75,7 @@ select  "${CEP_RULE.situation}" as situation
 , [@getOutputValue IN_STREAM.fields "value" "0.0" /] as value
 , "open" as eventstatus
 , "critical" as severity
-, [#if value??]${value.valueMin}[#else]0.0[/#if] as threshold
+, [#if value??]${value.valueMin?number?string["0.0#####"]}[#else]0.0[/#if] as threshold
 , [@getOutputValue IN_STREAM.fields "businessService" "'businessService'" /] as businessService
 , [@getOutputValue IN_STREAM.fields "technicalService" "'technicalService'" /] as technicalService
 , [@getOutputValue IN_STREAM.fields "serviceComponent" "'serviceComponent'" /] as serviceComponent
