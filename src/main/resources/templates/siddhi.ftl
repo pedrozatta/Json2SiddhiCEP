@@ -13,7 +13,7 @@
 				( ${item.field.name} >= ${item.valueMin?number?string["0.0#####"]} AND ${item.field.name} <= ${item.valueMax?number?string["0.0#####"]} ) 
 			[#else]
 				${item.field.name} ${item.operator} 
-				[#if item.field.type == "DOUBLE"]'
+				[#if item.field.type == "DOUBLE"]
 					${item.valueMin?number?string["0.0#####"]}
 				[#else]
 					'${item.valueMin}'
