@@ -64,13 +64,14 @@ public class CepRuleGemfireServiceClient {
 
 	public List<CepRule> findAll() {
 		Map<String, Object> vars = new HashMap<String, Object>();
+		vars.put("limit", 100000);
 
 		RestTemplate restTemplate = new RestTemplate();
 		try {
 
 			JavaType javaType = TypeFactory.defaultInstance().constructType(Region.class, CepRule.class);
 
-			String result = restTemplate.getForObject(endpoint, String.class, vars);
+			String result = restTemplate.getForObject(endpoint + "?limit={limit}", String.class, vars);
 			Region<CepRule> regionCepRule = mapper.readValue(result, javaType);
 
 			return regionCepRule.getList();

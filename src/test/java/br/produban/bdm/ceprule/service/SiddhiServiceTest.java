@@ -28,6 +28,7 @@ import br.produban.bdm.ceprule.ws.soap.EventProcessorAdminServiceClient;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
 
+@SuppressWarnings("deprecation")
 public class SiddhiServiceTest {
 
 	@Rule
@@ -87,7 +88,6 @@ public class SiddhiServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings("deprecation")
 	public void testGenerateExecutionPlanRequest1() throws JsonParseException, JsonMappingException, IOException {
 
 		CepRule cepRule = mapper.readValue(new File("src/test/resources/request1.json"), CepRule.class);
@@ -104,7 +104,6 @@ public class SiddhiServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings("deprecation")
 	public void testGenerateExecutionPlanRequest2() throws JsonParseException, JsonMappingException, IOException {
 
 		CepRule cepRule = mapper.readValue(new File("src/test/resources/request2.json"), CepRule.class);
@@ -121,7 +120,6 @@ public class SiddhiServiceTest {
 	}
 
 	@Test
-	@SuppressWarnings("deprecation")
 	public void testGenerateExecutionPlanRequest3() throws JsonParseException, JsonMappingException, IOException {
 
 		CepRule cepRule = mapper.readValue(new File("src/test/resources/request3.json"), CepRule.class);

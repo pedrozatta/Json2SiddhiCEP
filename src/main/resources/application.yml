@@ -3,13 +3,19 @@ spring:
     name: rule-service
 
 server:
-  port: 8080
-  
+  port: 8080 
 
 security:
   oauth2:
     resource:
       userInfoUri: https://srvbigpvlbr07.bs.br.bsch:8243/userinfo?schema=openid
+
+logging:     
+    level:
+        br.produban.bdm.ceprule: TRACE
+        br.produban.bdm.ceprule.service: TRACE
+        br.produban.bdm.ceprule.controller: INFO
+        br.produban.bdm.wso2: TRACE
 
 br:
   produban:

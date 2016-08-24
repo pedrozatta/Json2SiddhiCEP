@@ -165,6 +165,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-devtools')
     compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-aop")    
     
     compile("org.freemarker:freemarker")
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'

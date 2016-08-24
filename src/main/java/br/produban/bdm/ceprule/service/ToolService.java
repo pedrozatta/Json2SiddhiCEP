@@ -1,6 +1,5 @@
 package br.produban.bdm.ceprule.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,6 @@ public class ToolService {
 	}
 
 	public List<Tool> findTools() {
-
 		List<Tool> result = new ArrayList<Tool>();
 		List<String> list = eventStreamAdminServiceClient.getStreamNames();
 		for (String item : list) {
@@ -45,7 +43,6 @@ public class ToolService {
 			}
 		}
 		return result;
-
 	}
 
 	public Tool findById(String id) {
@@ -54,7 +51,6 @@ public class ToolService {
 	}
 
 	protected Tool createTool(String id, String jsonTool) {
-
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		Tool tool = null;
@@ -62,11 +58,12 @@ public class ToolService {
 			tool = mapper.readValue(jsonTool, Tool.class);
 			List<String> metrics = metricsServiceClient.findByTool(tool.getNickName());
 			for (ToolField field : tool.getFields()) {
-				if (ToolField.FIELD_METRIC.equals(field.getName()) || ToolField.FIELD_METRIC_NAME.equals(field.getName()) ) {
+				if (ToolField.FIELD_METRIC.equals(field.getName())
+						|| ToolField.FIELD_METRIC_NAME.equals(field.getName())) {
 					field.setValues(metrics);
 				}
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			tool = new Tool();
 		}
 		tool.setId(id);
